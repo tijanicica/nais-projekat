@@ -1,0 +1,21 @@
+# Build artifacts
+target/
+build/
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# Log files
+*.log
+
+# Dependency directories
+node_modules/

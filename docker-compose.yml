@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  eureka-server:
+    build:
+      context: ./eureka-service
+      dockerfile: Dockerfile
+    image: eureka-server:latest
+    ports:
+      - "8761:8761"
+
+  gateway-api:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    image: gateway-api:latest
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      # - elastic-search-service
+      # - relational-service
+      # - document-service
+      #- graph-service
+      #- timeseries-service
+      # - columnar-key-value-service
+      # - standalone
+    ports:
+      - "9003:9000"
+
+  history-service:
+    build:
+      context: ./history-service
+      dockerfile: Dockerfile
+    image: history-service:latest
+    depends_on:
+      - cassandradb
+      - eureka-server
+    restart: always
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_DATA_CASSANDRA_CONTACT_POINTS: cassandradb
+      SPRING_DATA_CASSANDRA_PORT: 9042
+      REDIS_HOST: redisdb
+      REDIS_PORT: 6379
+    ports:
+      - "9050:9050"
+
+  cassandradb:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    volumes:
+      - data:/var/lib/cassandra
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 30s
+      timeout: 10s
+
+  recommendation-service:
+    build:
+      context: ./recommendation-service
+      dockerfile: Dockerfile
+    image: recommendation-service:latest
+    depends_on:
+      - eureka-server
+      - neo4j
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_NEO4J_URI: "bolt://neo4j:7687"
+      SPRING_NEO4J_USERNAME: neo4j
+      SPRING_NEO4J_PASSWORD: password
+
+  analytics-service:
+    build:
+      context: ./analytics-service
+      dockerfile: Dockerfile
+    image: analytics-service:latest
+    restart: on-failure
+    depends_on:
+      - eureka-server
+      - influxdb
+    environment:
+      SPRING_INFLUX_URL: http://influxdb:8086
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+
+  influxdb:
+    image: influxdb:2.7.6
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=nais
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=nais_org
+      - DOCKER_INFLUXDB_INIT_BUCKET=nais_bucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
+
+  neo4j:
+    image: neo4j
+    container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/password
+    volumes:
+      - ./data:/data
+
+volumes:
+  data:
+  influxdb-storage:
