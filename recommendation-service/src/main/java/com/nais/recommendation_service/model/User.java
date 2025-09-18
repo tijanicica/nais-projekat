@@ -1,0 +1,21 @@
+package com.nais.recommendation_service.model;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.neo4j.core.schema.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Node("User")
+@Getter
+@Setter
+public class User {
+    @Id @GeneratedValue
+    private Long id;
+    private String username;
+
+    @Relationship(type = "WATCHED")
+    private Set<WatchedRelationship> watchedMovies = new HashSet<>();
+
+    // Getters and Setters
+}

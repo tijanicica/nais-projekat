@@ -28,4 +28,8 @@ spring:
           uri: http://analytics-service
           predicates:
             - Path=/analytics-service/**
+        - id: search-service
+          uri: http://search-service
+          predicates:
+            - Path=/search-service/**
 
