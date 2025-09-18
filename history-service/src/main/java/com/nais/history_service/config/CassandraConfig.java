@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
-@EnableCassandraRepositories
+@EnableCassandraRepositories(basePackages = "com.nais.history_service.repository")
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Value("${spring.cassandra.keyspace-name}")
@@ -52,12 +52,12 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         return Collections.singletonList(CreateKeyspaceSpecification.createKeyspace(KEYSPACE)
                 .ifNotExists()
                 .with(KeyspaceOption.DURABLE_WRITES, true)
-                .withSimpleReplication(3L));
+                .withSimpleReplication(1L));
     }
 
-//    @Override
-//    public String[] getEntityBasePackages() {
-//        return new String[] {"com.nais.history_service.entity"};
-//    }
+    @Override
+    public String[] getEntityBasePackages() {
+        return new String[] {"com.nais.history_service.model"};
+    }
 
 }
