@@ -1,14 +1,16 @@
 package com.nais.recommendation_service.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Node("User")
 @Getter
 @Setter
+@Data
+@Node("User")
 public class User {
     @Id @GeneratedValue
     private Long id;

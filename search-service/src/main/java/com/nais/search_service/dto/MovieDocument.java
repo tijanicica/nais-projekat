@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieDocument {
-    private String id;
     private String title;
+    //vektorizovano polje
     private String description;
     private Integer releaseYear;
     private String genre;

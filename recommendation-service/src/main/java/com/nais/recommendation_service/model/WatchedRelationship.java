@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.*;
 
+import java.time.LocalDateTime;
+
 @RelationshipProperties
 @Getter
 @Setter
@@ -14,6 +16,8 @@ public class WatchedRelationship {
     @Property("rating")
     private int rating; // Ocena od 1 do 10
 
+    @Property("watchedAt")
+    private LocalDateTime watchedAt;
     @TargetNode
     private Movie movie;
 
