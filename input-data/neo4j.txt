@@ -1,0 +1,107 @@
+// --- ČIŠĆENJE BAZE (OPCIONO, ZA TESTIRANJE) ---
+// MATCH (n) DETACH DELETE n;
+
+// --- KREIRANJE ČVOROVA ---
+
+// Žanrovi (Genre)
+MERGE (:Genre {name: 'Sci-Fi'});
+MERGE (:Genre {name: 'Action'});
+MERGE (:Genre {name: 'Thriller'});
+MERGE (:Genre {name: 'Drama'});
+MERGE (:Genre {name: 'Comedy'});
+MERGE (:Genre {name: 'Crime'});
+MERGE (:Genre {name: 'Adventure'});
+MERGE (:Genre {name: 'Fantasy'});
+
+// Režiseri (Director)
+MERGE (:Director {name: 'Christopher Nolan'});
+MERGE (:Director {name: 'Quentin Tarantino'});
+MERGE (:Director {name: 'Lana Wachowski'});
+MERGE (:Director {name: 'Francis Ford Coppola'});
+MERGE (:Director {name: 'Steven Spielberg'});
+MERGE (:Director {name: 'Peter Jackson'});
+
+// Glumci (Actor)
+MERGE (:Actor {name: 'Leonardo DiCaprio'});
+MERGE (:Actor {name: 'Keanu Reeves'});
+MERGE (:Actor {name: 'John Travolta'});
+MERGE (:Actor {name: 'Uma Thurman'});
+MERGE (:Actor {name: 'Joseph Gordon-Levitt'});
+MERGE (:Actor {name: 'Elliot Page'});
+MERGE (:Actor {name: 'Christian Bale'});
+MERGE (:Actor {name: 'Marlon Brando'});
+MERGE (:Actor {name: 'Al Pacino'});
+MERGE (:Actor {name: 'Harrison Ford'});
+MERGE (:Actor {name: 'Elijah Wood'});
+
+// Filmovi (Movie) - Dodajemo više filmova
+MERGE (m1:Movie {id: 1, title: 'Inception', releaseYear: 2010});
+MERGE (m2:Movie {id: 2, title: 'The Matrix', releaseYear: 1999});
+MERGE (m3:Movie {id: 3, title: 'Pulp Fiction', releaseYear: 1994});
+MERGE (m4:Movie {id: 4, title: 'The Dark Knight', releaseYear: 2008});
+MERGE (m5:Movie {id: 5, title: 'Forrest Gump', releaseYear: 1994});
+MERGE (m6:Movie {id: 6, title: 'The Godfather', releaseYear: 1972});
+MERGE (m7:Movie {id: 7, title: 'Raiders of the Lost Ark', releaseYear: 1981});
+MERGE (m8:Movie {id: 8, title: 'The Lord of the Rings: The Fellowship of the Ring', releaseYear: 2001});
+MERGE (m9:Movie {id: 9, title: 'Fight Club', releaseYear: 1999});
+MERGE (m10:Movie {id: 10, title: 'Interstellar', releaseYear: 2014});
+
+// Korisnici (User) - Dodajemo više korisnika
+MERGE (:User {id: 101, username: 'PeraPeric'});
+MERGE (:User {id: 102, username: 'MikaMikic'});
+MERGE (:User {id: 103, username: 'ZikaZikic'});
+MERGE (:User {id: 104, username: 'AnaAnic'});
+MERGE (:User {id: 105, username: 'IvaIvic'});
+MERGE (:User {id: 106, username: 'MarkoMarkovic'});
+MERGE (:User {id: 107, username: 'JovanJovanovic'});
+
+// --- KREIRANJE RELACIJA ---
+
+// Povezivanje filmova sa žanrovima (BELONGS_TO)
+MATCH (m:Movie {id: 1}), (g:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 1}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 2}), (g:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 2}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 3}), (g:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 4}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 4}), (g:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 6}), (g:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 6}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 7}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 7}), (g:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 8}), (g:Genre {name: 'Fantasy'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 8}), (g:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 10}), (g:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 10}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+
+// Povezivanje filmova sa režiserima (DIRECTED)
+MATCH (d:Director {name: 'Christopher Nolan'}), (m:Movie {id: 1}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Lana Wachowski'}), (m:Movie {id: 2}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Quentin Tarantino'}), (m:Movie {id: 3}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Christopher Nolan'}), (m:Movie {id: 4}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Francis Ford Coppola'}), (m:Movie {id: 6}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Steven Spielberg'}), (m:Movie {id: 7}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Peter Jackson'}), (m:Movie {id: 8}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (d:Director {name: 'Christopher Nolan'}), (m:Movie {id: 10}) MERGE (d)-[:DIRECTED]->(m);
+
+// Povezivanje glumaca sa filmovima (ACTED_IN)
+MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 1}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 2}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'John Travolta'}), (m:Movie {id: 3}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Christian Bale'}), (m:Movie {id: 4}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Marlon Brando'}), (m:Movie {id: 6}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Al Pacino'}), (m:Movie {id: 6}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 7}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Elijah Wood'}), (m:Movie {id: 8}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Povezivanje korisnika sa odgledanim filmovima (WATCHED)
+MATCH (u:User {id: 101}), (m:Movie {id: 1}) MERGE (u)-[:WATCHED {rating: 9, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 101}), (m:Movie {id: 2}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 102}), (m:Movie {id: 1}) MERGE (u)-[:WATCHED {rating: 8, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 102}), (m:Movie {id: 3}) MERGE (u)-[:WATCHED {rating: 9, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 103}), (m:Movie {id: 5}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 104}), (m:Movie {id: 4}) MERGE (u)-[:WATCHED {rating: 9, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 104}), (m:Movie {id: 10}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 105}), (m:Movie {id: 8}) MERGE (u)-[:WATCHED {rating: 8, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 105}), (m:Movie {id: 1}) MERGE (u)-[:WATCHED {rating: 7, watchedAt: datetime()}]->(m);
+MATCH (u:User {id: 106}), (m:Movie {id: 6}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
