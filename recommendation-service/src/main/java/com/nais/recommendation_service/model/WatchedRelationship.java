@@ -16,8 +16,6 @@ public class WatchedRelationship {
     @Property("rating")
     private int rating; // Ocena od 1 do 10
 
-    @Property("watchedAt")
-    private LocalDateTime watchedAt;
     @TargetNode
     private Movie movie;
 

@@ -1,12 +1,13 @@
 package com.nais.search_service.dto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ActorDocumentDto {
+    private Long actorId;
     // Nevektorizovana polja
     private String name;
     private Integer birthYear;

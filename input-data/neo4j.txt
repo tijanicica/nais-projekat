@@ -1,107 +1,1866 @@
-// --- ČIŠĆENJE BAZE (OPCIONO, ZA TESTIRANJE) ---
-// MATCH (n) DETACH DELETE n;
+// --- Žanrovi (Genre) ---
+MERGE (:Genre {id: 1, name: 'Sci-Fi'});
+MERGE (:Genre {id: 2, name: 'Action'});
+MERGE (:Genre {id: 3, name: 'Thriller'});
+MERGE (:Genre {id: 4, name: 'Drama'});
+MERGE (:Genre {id: 5, name: 'Comedy'});
+MERGE (:Genre {id: 6, name: 'Crime'});
+MERGE (:Genre {id: 7, name: 'Adventure'});
+MERGE (:Genre {id: 8, name: 'Fantasy'});
+MERGE (:Genre {id: 9, name: 'Horror'});
+MERGE (:Genre {id: 10, name: 'Romance'});
+MERGE (:Genre {id: 11, name: 'Mystery'});
+MERGE (:Genre {id: 12, name: 'Biography'});
+MERGE (:Genre {id: 13, name: 'War'});
+MERGE (:Genre {id: 14, name: 'Western'});
+MERGE (:Genre {id: 15, name: 'Animation'});
 
-// --- KREIRANJE ČVOROVA ---
+// --- Režiseri (Director) - 50 režisera ---
+MERGE (:Director {id: 101, name: 'Christopher Nolan'});
+MERGE (:Director {id: 102, name: 'Quentin Tarantino'});
+MERGE (:Director {id: 103, name: 'Lana Wachowski'});
+MERGE (:Director {id: 104, name: 'Francis Ford Coppola'});
+MERGE (:Director {id: 105, name: 'Steven Spielberg'});
+MERGE (:Director {id: 106, name: 'Peter Jackson'});
+MERGE (:Director {id: 107, name: 'James Cameron'});
+MERGE (:Director {id: 108, name: 'Martin Scorsese'});
+MERGE (:Director {id: 109, name: 'Ridley Scott'});
+MERGE (:Director {id: 110, name: 'David Fincher'});
+MERGE (:Director {id: 111, name: 'Denis Villeneuve'});
+MERGE (:Director {id: 112, name: 'Coen Brothers'});
+MERGE (:Director {id: 113, name: 'Paul Thomas Anderson'});
+MERGE (:Director {id: 114, name: 'Stanley Kubrick'});
+MERGE (:Director {id: 115, name: 'Alfred Hitchcock'});
+MERGE (:Director {id: 116, name: 'Orson Welles'});
+MERGE (:Director {id: 117, name: 'Akira Kurosawa'});
+MERGE (:Director {id: 118, name: 'Federico Fellini'});
+MERGE (:Director {id: 119, name: 'Ingmar Bergman'});
+MERGE (:Director {id: 120, name: 'Woody Allen'});
+MERGE (:Director {id: 121, name: 'Clint Eastwood'});
+MERGE (:Director {id: 122, name: 'Tim Burton'});
+MERGE (:Director {id: 123, name: 'Wes Anderson'});
+MERGE (:Director {id: 124, name: 'Darren Aronofsky'});
+MERGE (:Director {id: 125, name: 'Jordan Peele'});
+MERGE (:Director {id: 126, name: 'Rian Johnson'});
+MERGE (:Director {id: 127, name: 'Greta Gerwig'});
+MERGE (:Director {id: 128, name: 'Bong Joon-ho'});
+MERGE (:Director {id: 129, name: 'Damien Chazelle'});
+MERGE (:Director {id: 130, name: 'Guillermo del Toro'});
+MERGE (:Director {id: 131, name: 'George Lucas'});
+MERGE (:Director {id: 132, name: 'Ron Howard'});
+MERGE (:Director {id: 133, name: 'Robert Zemeckis'});
+MERGE (:Director {id: 134, name: 'Sam Mendes'});
+MERGE (:Director {id: 135, name: 'Ang Lee'});
+MERGE (:Director {id: 136, name: 'Danny Boyle'});
+MERGE (:Director {id: 137, name: 'Edgar Wright'});
+MERGE (:Director {id: 138, name: 'Guy Ritchie'});
+MERGE (:Director {id: 139, name: 'Michael Bay'});
+MERGE (:Director {id: 140, name: 'Zack Snyder'});
+MERGE (:Director {id: 141, name: 'J.J. Abrams'});
+MERGE (:Director {id: 142, name: 'Ryan Coogler'});
+MERGE (:Director {id: 143, name: 'Patty Jenkins'});
+MERGE (:Director {id: 144, name: 'Taika Waititi'});
+MERGE (:Director {id: 145, name: 'Barry Jenkins'});
+MERGE (:Director {id: 146, name: 'Chloé Zhao'});
+MERGE (:Director {id: 147, name: 'Lulu Wang'});
+MERGE (:Director {id: 148, name: 'Nia DaCosta'});
+MERGE (:Director {id: 149, name: 'Chloe Okwumabua'});
+MERGE (:Director {id: 150, name: 'Emerald Fennell'});
+MERGE (:Director {id: 151, name: 'Gareth Edwards'});
+MERGE (:Director {id: 152, name: 'Jon Favreau'});
+MERGE (:Director {id: 153, name: 'Joe Johnston'});
+MERGE (:Director {id: 154, name: 'Kenneth Branagh'});
+MERGE (:Director {id: 155, name: 'Louis Leterrier'});
+MERGE (:Director {id: 156, name: 'Anthony Russo'});
+MERGE (:Director {id: 157, name: 'James Gunn'});
+MERGE (:Director {id: 158, name: 'Joss Whedon'});
+MERGE (:Director {id: 159, name: 'Peyton Reed'});
+MERGE (:Director {id: 160, name: 'Scott Derrickson'});
+MERGE (:Director {id: 161, name: 'Jon Watts'});
+MERGE (:Director {id: 162, name: 'Anna Boden'});
+MERGE (:Director {id: 163, name: 'Matt Reeves'});
+MERGE (:Director {id: 164, name: 'David Ayer'});
+MERGE (:Director {id: 165, name: 'James Wan'});
+MERGE (:Director {id: 166, name: 'David F. Sandberg'});
+MERGE (:Director {id: 167, name: 'Cathy Yan'});
+MERGE (:Director {id: 168, name: 'Chad Stahelski'});
+MERGE (:Director {id: 169, name: 'Jan de Bont'});
+MERGE (:Director {id: 170, name: 'Kathryn Bigelow'});
+MERGE (:Director {id: 171, name: 'Francis Lawrence'});
+MERGE (:Director {id: 172, name: 'Taylor Hackford'});
+MERGE (:Director {id: 173, name: 'Richard Linklater'});
+MERGE (:Director {id: 174, name: 'Lasse Hallström'});
+MERGE (:Director {id: 175, name: 'Nancy Meyers'});
+MERGE (:Director {id: 176, name: 'Howard Deutch'});
+MERGE (:Director {id: 177, name: 'Charlize Theron'});
+MERGE (:Director {id: 178, name: 'Sam Raimi'});
+MERGE (:Director {id: 179, name: 'Bernardo Bertolucci'});
+MERGE (:Director {id: 180, name: 'Gus Van Sant'});
 
-// Žanrovi (Genre)
-MERGE (:Genre {name: 'Sci-Fi'});
-MERGE (:Genre {name: 'Action'});
-MERGE (:Genre {name: 'Thriller'});
-MERGE (:Genre {name: 'Drama'});
-MERGE (:Genre {name: 'Comedy'});
-MERGE (:Genre {name: 'Crime'});
-MERGE (:Genre {name: 'Adventure'});
-MERGE (:Genre {name: 'Fantasy'});
 
-// Režiseri (Director)
-MERGE (:Director {name: 'Christopher Nolan'});
-MERGE (:Director {name: 'Quentin Tarantino'});
-MERGE (:Director {name: 'Lana Wachowski'});
-MERGE (:Director {name: 'Francis Ford Coppola'});
-MERGE (:Director {name: 'Steven Spielberg'});
-MERGE (:Director {name: 'Peter Jackson'});
+// --- Glumci (Actor) - 200 glumaca ---
+MERGE (:Actor {id: 201, name: 'Leonardo DiCaprio'});
+MERGE (:Actor {id: 202, name: 'Keanu Reeves'});
+MERGE (:Actor {id: 203, name: 'John Travolta'});
+MERGE (:Actor {id: 204, name: 'Uma Thurman'});
+MERGE (:Actor {id: 205, name: 'Joseph Gordon-Levitt'});
+MERGE (:Actor {id: 206, name: 'Elliot Page'});
+MERGE (:Actor {id: 207, name: 'Christian Bale'});
+MERGE (:Actor {id: 208, name: 'Marlon Brando'});
+MERGE (:Actor {id: 209, name: 'Al Pacino'});
+MERGE (:Actor {id: 210, name: 'Harrison Ford'});
+MERGE (:Actor {id: 211, name: 'Elijah Wood'});
+MERGE (:Actor {id: 212, name: 'Tom Hanks'});
+MERGE (:Actor {id: 213, name: 'Morgan Freeman'});
+MERGE (:Actor {id: 214, name: 'Brad Pitt'});
+MERGE (:Actor {id: 215, name: 'Edward Norton'});
+MERGE (:Actor {id: 216, name: 'Matt Damon'});
+MERGE (:Actor {id: 217, name: 'Jessica Chastain'});
+MERGE (:Actor {id: 218, name: 'Anne Hathaway'});
+MERGE (:Actor {id: 219, name: 'Robert De Niro'});
+MERGE (:Actor {id: 220, name: 'Jodie Foster'});
+MERGE (:Actor {id: 221, name: 'Kate Winslet'});
+MERGE (:Actor {id: 222, name: 'Sigourney Weaver'});
+MERGE (:Actor {id: 223, name: 'Russell Crowe'});
+MERGE (:Actor {id: 224, name: 'Joaquin Phoenix'});
+MERGE (:Actor {id: 225, name: 'Scarlett Johansson'});
+MERGE (:Actor {id: 226, name: 'Chris Evans'});
+MERGE (:Actor {id: 227, name: 'Robert Downey Jr.'});
+MERGE (:Actor {id: 228, name: 'Mark Ruffalo'});
+MERGE (:Actor {id: 229, name: 'Samuel L. Jackson'});
+MERGE (:Actor {id: 230, name: 'Natalie Portman'});
+MERGE (:Actor {id: 231, name: 'Hugo Weaving'});
+MERGE (:Actor {id: 232, name: 'Laurence Fishburne'});
+MERGE (:Actor {id: 233, name: 'Carrie-Anne Moss'});
+MERGE (:Actor {id: 234, name: 'Ian McKellen'});
+MERGE (:Actor {id: 235, name: 'Viggo Mortensen'});
+MERGE (:Actor {id: 236, name: 'Orlando Bloom'});
+MERGE (:Actor {id: 237, name: 'Sean Astin'});
+MERGE (:Actor {id: 238, name: 'Gary Oldman'});
+MERGE (:Actor {id: 239, name: 'Heath Ledger'});
+MERGE (:Actor {id: 240, name: 'Aaron Eckhart'});
+MERGE (:Actor {id: 241, name: 'Michael Caine'});
+MERGE (:Actor {id: 242, name: 'Tim Robbins'});
+MERGE (:Actor {id: 243, name: 'Liam Neeson'});
+MERGE (:Actor {id: 244, name: 'Ben Kingsley'});
+MERGE (:Actor {id: 245, name: 'Matthew McConaughey'});
+MERGE (:Actor {id: 246, name: 'Helena Bonham Carter'});
+MERGE (:Actor {id: 247, name: 'Jake Gyllenhaal'});
+MERGE (:Actor {id: 248, name: 'Michelle Williams'});
+MERGE (:Actor {id: 249, name: 'Mark Wahlberg'});
+MERGE (:Actor {id: 250, name: 'Vera Farmiga'});
+MERGE (:Actor {id: 251, name: 'Ryan Gosling'});
+MERGE (:Actor {id: 252, name: 'Emma Stone'});
+MERGE (:Actor {id: 253, name: 'Jennifer Lawrence'});
+MERGE (:Actor {id: 254, name: 'Chris Hemsworth'});
+MERGE (:Actor {id: 255, name: 'Chris Pratt'});
+MERGE (:Actor {id: 256, name: 'Zendaya'});
+MERGE (:Actor {id: 257, name: 'Timothée Chalamet'});
+MERGE (:Actor {id: 258, name: 'Saoirse Ronan'});
+MERGE (:Actor {id: 259, name: 'Florence Pugh'});
+MERGE (:Actor {id: 260, name: 'Oscar Isaac'});
+MERGE (:Actor {id: 261, name: 'Adam Driver'});
+MERGE (:Actor {id: 262, name: 'John Boyega'});
+MERGE (:Actor {id: 263, name: 'Daisy Ridley'});
+MERGE (:Actor {id: 264, name: 'Anthony Mackie'});
+MERGE (:Actor {id: 265, name: 'Sebastian Stan'});
+MERGE (:Actor {id: 266, name: 'Tom Holland'});
+MERGE (:Actor {id: 267, name: 'Zoe Saldana'});
+MERGE (:Actor {id: 268, name: 'Gal Gadot'});
+MERGE (:Actor {id: 269, name: 'Margot Robbie'});
+MERGE (:Actor {id: 270, name: 'Ryan Reynolds'});
+MERGE (:Actor {id: 271, name: 'Will Smith'});
+MERGE (:Actor {id: 272, name: 'Denzel Washington'});
+MERGE (:Actor {id: 273, name: 'Jamie Foxx'});
+MERGE (:Actor {id: 274, name: 'Idris Elba'});
+MERGE (:Actor {id: 275, name: 'Michael B. Jordan'});
+MERGE (:Actor {id: 276, name: 'Lupita Nyong\'o'});
+MERGE (:Actor {id: 277, name: 'Chadwick Boseman'});
+MERGE (:Actor {id: 278, name: 'Mahershala Ali'});
+MERGE (:Actor {id: 279, name: 'Regina King'});
+MERGE (:Actor {id: 280, name: 'Viola Davis'});
+MERGE (:Actor {id: 281, name: 'Octavia Spencer'});
+MERGE (:Actor {id: 282, name: 'Taraji P. Henson'});
+MERGE (:Actor {id: 283, name: 'Forest Whitaker'});
+MERGE (:Actor {id: 284, name: 'Chiwetel Ejiofor'});
+MERGE (:Actor {id: 285, name: 'Daniel Kaluuya'});
+MERGE (:Actor {id: 286, name: 'LaKeith Stanfield'});
+MERGE (:Actor {id: 287, name: 'John David Washington'});
+MERGE (:Actor {id: 288, name: 'Anya Taylor-Joy'});
+MERGE (:Actor {id: 289, name: 'Elisabeth Moss'});
+MERGE (:Actor {id: 290, name: 'Amy Adams'});
+MERGE (:Actor {id: 291, name: 'Tilda Swinton'});
+MERGE (:Actor {id: 292, name: 'Cate Blanchett'});
+MERGE (:Actor {id: 293, name: 'Meryl Streep'});
+MERGE (:Actor {id: 294, name: 'Frances McDormand'});
+MERGE (:Actor {id: 295, name: 'Julianne Moore'});
+MERGE (:Actor {id: 296, name: 'Nicole Kidman'});
+MERGE (:Actor {id: 297, name: 'Charlize Theron'});
+MERGE (:Actor {id: 298, name: 'Reese Witherspoon'});
+MERGE (:Actor {id: 299, name: 'Sandra Bullock'});
+MERGE (:Actor {id: 300, name: 'Julia Roberts'});
+MERGE (:Actor {id: 301, name: 'George Clooney'});
+MERGE (:Actor {id: 302, name: 'Hugh Jackman'});
+MERGE (:Actor {id: 303, name: 'Christian Slater'});
+MERGE (:Actor {id: 304, name: 'Ethan Hawke'});
+MERGE (:Actor {id: 305, name: 'Philip Seymour Hoffman'});
+MERGE (:Actor {id: 306, name: 'Steve Carell'});
+MERGE (:Actor {id: 307, name: 'Paul Rudd'});
+MERGE (:Actor {id: 308, name: 'Adam Sandler'});
+MERGE (:Actor {id: 309, name: 'Ben Stiller'});
+MERGE (:Actor {id: 310, name: 'Owen Wilson'});
+MERGE (:Actor {id: 311, name: 'Vince Vaughn'});
+MERGE (:Actor {id: 312, name: 'Will Ferrell'});
+MERGE (:Actor {id: 313, name: 'Seth Rogen'});
+MERGE (:Actor {id: 314, name: 'James Franco'});
+MERGE (:Actor {id: 315, name: 'Jonah Hill'});
+MERGE (:Actor {id: 316, name: 'Michael Cera'});
+MERGE (:Actor {id: 317, name: 'Jesse Eisenberg'});
+MERGE (:Actor {id: 318, name: 'Andrew Garfield'});
+MERGE (:Actor {id: 319, name: 'Miles Teller'});
+MERGE (:Actor {id: 320, name: 'Shia LaBeouf'});
+MERGE (:Actor {id: 321, name: 'Zac Efron'});
+MERGE (:Actor {id: 322, name: 'Channing Tatum'});
+MERGE (:Actor {id: 323, name: 'Ryan Phillippe'});
+MERGE (:Actor {id: 324, name: 'Josh Hartnett'});
+MERGE (:Actor {id: 325, name: 'Colin Farrell'});
+MERGE (:Actor {id: 326, name: 'Javier Bardem'});
+MERGE (:Actor {id: 327, name: 'Benicio del Toro'});
+MERGE (:Actor {id: 328, name: 'Antonio Banderas'});
+MERGE (:Actor {id: 329, name: 'Penélope Cruz'});
+MERGE (:Actor {id: 330, name: 'Salma Hayek'});
+MERGE (:Actor {id: 331, name: 'Eva Mendes'});
+MERGE (:Actor {id: 332, name: 'Jennifer Lopez'});
+MERGE (:Actor {id: 333, name: 'Cameron Diaz'});
+MERGE (:Actor {id: 334, name: 'Drew Barrymore'});
+MERGE (:Actor {id: 335, name: 'Kristen Stewart'});
+MERGE (:Actor {id: 336, name: 'Anna Kendrick'});
+MERGE (:Actor {id: 337, name: 'Emma Watson'});
+MERGE (:Actor {id: 338, name: 'Mila Kunis'});
+MERGE (:Actor {id: 339, name: 'Natalie Dormer'});
+MERGE (:Actor {id: 340, name: 'Keira Knightley'});
+MERGE (:Actor {id: 341, name: 'Rachel McAdams'});
+MERGE (:Actor {id: 342, name: 'Amy Poehler'});
+MERGE (:Actor {id: 343, name: 'Tina Fey'});
+MERGE (:Actor {id: 344, name: 'Kristen Wiig'});
+MERGE (:Actor {id: 345, name: 'Melissa McCarthy'});
+MERGE (:Actor {id: 346, name: 'Rebel Wilson'});
+MERGE (:Actor {id: 347, name: 'Mindy Kaling'});
+MERGE (:Actor {id: 348, name: 'Awkwafina'});
+MERGE (:Actor {id: 349, name: 'Constance Wu'});
+MERGE (:Actor {id: 350, name: 'Sandra Oh'});
+MERGE (:Actor {id: 351, name: 'Lucy Liu'});
+MERGE (:Actor {id: 352, name: 'Jackie Chan'});
+MERGE (:Actor {id: 353, name: 'Jet Li'});
+MERGE (:Actor {id: 354, name: 'Donnie Yen'});
+MERGE (:Actor {id: 355, name: 'Tony Leung'});
+MERGE (:Actor {id: 356, name: 'Chow Yun-fat'});
+MERGE (:Actor {id: 357, name: 'Andy Lau'});
+MERGE (:Actor {id: 358, name: 'Stephen Chow'});
+MERGE (:Actor {id: 359, name: 'Michelle Yeoh'});
+MERGE (:Actor {id: 360, name: 'Zhang Ziyi'});
+MERGE (:Actor {id: 361, name: 'Gong Li'});
+MERGE (:Actor {id: 362, name: 'Maggie Cheung'});
+MERGE (:Actor {id: 363, name: 'Hiroyuki Sanada'});
+MERGE (:Actor {id: 364, name: 'Ken Watanabe'});
+MERGE (:Actor {id: 365, name: 'Rinko Kikuchi'});
+MERGE (:Actor {id: 366, name: 'Tadanobu Asano'});
+MERGE (:Actor {id: 367, name: 'Takeshi Kitano'});
+MERGE (:Actor {id: 368, name: 'Toshiro Mifune'});
+MERGE (:Actor {id: 369, name: 'Min-sik Choi'});
+MERGE (:Actor {id: 370, name: 'Song Kang-ho'});
+MERGE (:Actor {id: 371, name: 'Lee Byung-hun'});
+MERGE (:Actor {id: 372, name: 'Park So-dam'});
+MERGE (:Actor {id: 373, name: 'Choi Woo-shik'});
+MERGE (:Actor {id: 374, name: 'Youn Yuh-jung'});
+MERGE (:Actor {id: 375, name: 'Steven Yeun'});
+MERGE (:Actor {id: 376, name: 'John Cho'});
+MERGE (:Actor {id: 377, name: 'Daniel Dae Kim'});
+MERGE (:Actor {id: 378, name: 'Randall Park'});
+MERGE (:Actor {id: 379, name: 'Kal Penn'});
+MERGE (:Actor {id: 380, name: 'Dev Patel'});
+MERGE (:Actor {id: 381, name: 'Riz Ahmed'});
+MERGE (:Actor {id: 382, name: 'Aziz Ansari'});
+MERGE (:Actor {id: 383, name: 'Mindy Kaling'});
+MERGE (:Actor {id: 384, name: 'Priyanka Chopra'});
+MERGE (:Actor {id: 385, name: 'Freida Pinto'});
+MERGE (:Actor {id: 386, name: 'Irrfan Khan'});
+MERGE (:Actor {id: 387, name: 'Om Puri'});
+MERGE (:Actor {id: 388, name: 'Amitabh Bachchan'});
+MERGE (:Actor {id: 389, name: 'Shah Rukh Khan'});
+MERGE (:Actor {id: 390, name: 'Aamir Khan'});
+MERGE (:Actor {id: 391, name: 'Salman Khan'});
+MERGE (:Actor {id: 392, name: 'Hrithik Roshan'});
+MERGE (:Actor {id: 393, name: 'Ranbir Kapoor'});
+MERGE (:Actor {id: 394, name: 'Ranveer Singh'});
+MERGE (:Actor {id: 395, name: 'Shahid Kapoor'});
+MERGE (:Actor {id: 396, name: 'Deepika Padukone'});
+MERGE (:Actor {id: 397, name: 'Katrina Kaif'});
+MERGE (:Actor {id: 398, name: 'Aishwarya Rai'});
+MERGE (:Actor {id: 399, name: 'Kareena Kapoor'});
+MERGE (:Actor {id: 400, name: 'Vidya Balan'});
 
-// Glumci (Actor)
-MERGE (:Actor {name: 'Leonardo DiCaprio'});
-MERGE (:Actor {name: 'Keanu Reeves'});
-MERGE (:Actor {name: 'John Travolta'});
-MERGE (:Actor {name: 'Uma Thurman'});
-MERGE (:Actor {name: 'Joseph Gordon-Levitt'});
-MERGE (:Actor {name: 'Elliot Page'});
-MERGE (:Actor {name: 'Christian Bale'});
-MERGE (:Actor {name: 'Marlon Brando'});
-MERGE (:Actor {name: 'Al Pacino'});
-MERGE (:Actor {name: 'Harrison Ford'});
-MERGE (:Actor {name: 'Elijah Wood'});
+// --- Filmovi (Movie) - 200 filmova ---
+MERGE (:Movie {id: 1, title: 'Inception', releaseYear: 2010, durationMinutes: 148});
+MERGE (:Movie {id: 2, title: 'The Matrix', releaseYear: 1999, durationMinutes: 136});
+MERGE (:Movie {id: 3, title: 'Pulp Fiction', releaseYear: 1994, durationMinutes: 154});
+MERGE (:Movie {id: 4, title: 'The Dark Knight', releaseYear: 2008, durationMinutes: 152});
+MERGE (:Movie {id: 5, title: 'Forrest Gump', releaseYear: 1994, durationMinutes: 142});
+MERGE (:Movie {id: 6, title: 'The Godfather', releaseYear: 1972, durationMinutes: 175});
+MERGE (:Movie {id: 7, title: 'Raiders of the Lost Ark', releaseYear: 1981, durationMinutes: 115});
+MERGE (:Movie {id: 8, title: 'The Lord of the Rings: The Fellowship of the Ring', releaseYear: 2001, durationMinutes: 178});
+MERGE (:Movie {id: 9, title: 'Fight Club', releaseYear: 1999, durationMinutes: 139});
+MERGE (:Movie {id: 10, title: 'Interstellar', releaseYear: 2014, durationMinutes: 169});
+MERGE (:Movie {id: 11, title: 'The Shawshank Redemption', releaseYear: 1994, durationMinutes: 142});
+MERGE (:Movie {id: 12, title: 'Schindler\'s List', releaseYear: 1993, durationMinutes: 195});
+MERGE (:Movie {id: 13, title: 'Titanic', releaseYear: 1997, durationMinutes: 195});
+MERGE (:Movie {id: 14, title: 'Avatar', releaseYear: 2009, durationMinutes: 162});
+MERGE (:Movie {id: 15, title: 'Gladiator', releaseYear: 2000, durationMinutes: 155});
+MERGE (:Movie {id: 16, title: 'Alien', releaseYear: 1979, durationMinutes: 117});
+MERGE (:Movie {id: 17, title: 'Blade Runner', releaseYear: 1982, durationMinutes: 117});
+MERGE (:Movie {id: 18, title: 'The Departed', releaseYear: 2006, durationMinutes: 151});
+MERGE (:Movie {id: 19, title: 'Shutter Island', releaseYear: 2010, durationMinutes: 138});
+MERGE (:Movie {id: 20, title: 'Zodiac', releaseYear: 2007, durationMinutes: 157});
+MERGE (:Movie {id: 21, title: 'Se7en', releaseYear: 1995, durationMinutes: 127});
+MERGE (:Movie {id: 22, title: 'The Silence of the Lambs', releaseYear: 1991, durationMinutes: 118});
+MERGE (:Movie {id: 23, title: 'Goodfellas', releaseYear: 1990, durationMinutes: 146});
+MERGE (:Movie {id: 24, title: 'Casino', releaseYear: 1995, durationMinutes: 178});
+MERGE (:Movie {id: 25, title: 'The Avengers', releaseYear: 2012, durationMinutes: 143});
+MERGE (:Movie {id: 26, title: 'Jurassic Park', releaseYear: 1993, durationMinutes: 127});
+MERGE (:Movie {id: 27, title: 'E.T. the Extra-Terrestrial', releaseYear: 1982, durationMinutes: 115});
+MERGE (:Movie {id: 28, title: 'Saving Private Ryan', releaseYear: 1998, durationMinutes: 169});
+MERGE (:Movie {id: 29, title: 'The Green Mile', releaseYear: 1999, durationMinutes: 189});
+MERGE (:Movie {id: 30, title: 'Inglourious Basterds', releaseYear: 2009, durationMinutes: 153});
+MERGE (:Movie {id: 31, title: 'Django Unchained', releaseYear: 2012, durationMinutes: 165});
+MERGE (:Movie {id: 32, title: 'The Hateful Eight', releaseYear: 2015, durationMinutes: 187});
+MERGE (:Movie {id: 33, title: 'Kill Bill: Vol. 1', releaseYear: 2003, durationMinutes: 111});
+MERGE (:Movie {id: 34, title: 'Reservoir Dogs', releaseYear: 1992, durationMinutes: 99});
+MERGE (:Movie {id: 35, title: 'The Prestige', releaseYear: 2006, durationMinutes: 130});
+MERGE (:Movie {id: 36, title: 'Memento', releaseYear: 2000, durationMinutes: 113});
+MERGE (:Movie {id: 37, title: 'Batman Begins', releaseYear: 2005, durationMinutes: 140});
+MERGE (:Movie {id: 38, title: 'The Lord of the Rings: The Two Towers', releaseYear: 2002, durationMinutes: 179});
+MERGE (:Movie {id: 39, title: 'The Lord of the Rings: The Return of the King', releaseYear: 2003, durationMinutes: 201});
+MERGE (:Movie {id: 40, title: 'Apocalypse Now', releaseYear: 1979, durationMinutes: 147});
+MERGE (:Movie {id: 41, title: 'The Godfather: Part II', releaseYear: 1974, durationMinutes: 202});
+MERGE (:Movie {id: 42, title: 'V for Vendetta', releaseYear: 2005, durationMinutes: 132});
+MERGE (:Movie {id: 43, title: 'Children of Men', releaseYear: 2006, durationMinutes: 109});
+MERGE (:Movie {id: 44, title: 'No Country for Old Men', releaseYear: 2007, durationMinutes: 122});
+MERGE (:Movie {id: 45, title: 'There Will Be Blood', releaseYear: 2007, durationMinutes: 158});
+MERGE (:Movie {id: 46, title: 'Mad Max: Fury Road', releaseYear: 2015, durationMinutes: 120});
+MERGE (:Movie {id: 47, title: 'Parasite', releaseYear: 2019, durationMinutes: 132});
+MERGE (:Movie {id: 48, title: 'Joker', releaseYear: 2019, durationMinutes: 122});
+MERGE (:Movie {id: 49, title: 'Once Upon a Time in Hollywood', releaseYear: 2019, durationMinutes: 161});
+MERGE (:Movie {id: 50, title: 'The Social Network', releaseYear: 2010, durationMinutes: 120});
+MERGE (:Movie {id: 51, title: 'Dune', releaseYear: 2021, durationMinutes: 155});
+MERGE (:Movie {id: 52, title: 'Blade Runner 2049', releaseYear: 2017, durationMinutes: 164});
+MERGE (:Movie {id: 53, title: 'Arrival', releaseYear: 2016, durationMinutes: 116});
+MERGE (:Movie {id: 54, title: 'La La Land', releaseYear: 2016, durationMinutes: 128});
+MERGE (:Movie {id: 55, title: 'Whiplash', releaseYear: 2014, durationMinutes: 107});
+MERGE (:Movie {id: 56, title: 'Get Out', releaseYear: 2017, durationMinutes: 104});
+MERGE (:Movie {id: 57, title: 'Us', releaseYear: 2019, durationMinutes: 116});
+MERGE (:Movie {id: 58, title: 'Nope', releaseYear: 2022, durationMinutes: 130});
+MERGE (:Movie {id: 59, title: 'Knives Out', releaseYear: 2019, durationMinutes: 130});
+MERGE (:Movie {id: 60, title: 'Glass Onion', releaseYear: 2022, durationMinutes: 139});
+MERGE (:Movie {id: 61, title: 'Lady Bird', releaseYear: 2017, durationMinutes: 94});
+MERGE (:Movie {id: 62, title: 'Little Women', releaseYear: 2019, durationMinutes: 135});
+MERGE (:Movie {id: 63, title: 'Barbie', releaseYear: 2023, durationMinutes: 114});
+MERGE (:Movie {id: 64, title: 'Oppenheimer', releaseYear: 2023, durationMinutes: 180});
+MERGE (:Movie {id: 65, title: 'Tenet', releaseYear: 2020, durationMinutes: 150});
+MERGE (:Movie {id: 66, title: 'Dunkirk', releaseYear: 2017, durationMinutes: 106});
+MERGE (:Movie {id: 67, title: 'The Shape of Water', releaseYear: 2017, durationMinutes: 123});
+MERGE (:Movie {id: 68, title: 'Pan\'s Labyrinth', releaseYear: 2006, durationMinutes: 118});
+MERGE (:Movie {id: 69, title: 'Moonlight', releaseYear: 2016, durationMinutes: 111});
+MERGE (:Movie {id: 70, title: 'Black Panther', releaseYear: 2018, durationMinutes: 134});
+MERGE (:Movie {id: 71, title: 'Wonder Woman', releaseYear: 2017, durationMinutes: 141});
+MERGE (:Movie {id: 72, title: 'Thor: Ragnarok', releaseYear: 2017, durationMinutes: 130});
+MERGE (:Movie {id: 73, title: 'Jojo Rabbit', releaseYear: 2019, durationMinutes: 108});
+MERGE (:Movie {id: 74, title: 'The Grand Budapest Hotel', releaseYear: 2014, durationMinutes: 99});
+MERGE (:Movie {id: 75, title: 'Moonrise Kingdom', releaseYear: 2012, durationMinutes: 94});
+MERGE (:Movie {id: 76, title: 'The Royal Tenenbaums', releaseYear: 2001, durationMinutes: 110});
+MERGE (:Movie {id: 77, title: 'Rushmore', releaseYear: 1998, durationMinutes: 93});
+MERGE (:Movie {id: 78, title: 'The Darjeeling Limited', releaseYear: 2007, durationMinutes: 91});
+MERGE (:Movie {id: 79, title: 'Bottle Rocket', releaseYear: 1996, durationMinutes: 91});
+MERGE (:Movie {id: 80, title: 'Fantastic Mr. Fox', releaseYear: 2009, durationMinutes: 87});
+MERGE (:Movie {id: 81, title: 'Isle of Dogs', releaseYear: 2018, durationMinutes: 101});
+MERGE (:Movie {id: 82, title: 'The French Dispatch', releaseYear: 2021, durationMinutes: 107});
+MERGE (:Movie {id: 83, title: 'Asteroid City', releaseYear: 2023, durationMinutes: 105});
+MERGE (:Movie {id: 84, title: 'Black Swan', releaseYear: 2010, durationMinutes: 108});
+MERGE (:Movie {id: 85, title: 'Requiem for a Dream', releaseYear: 2000, durationMinutes: 102});
+MERGE (:Movie {id: 86, title: 'Pi', releaseYear: 1998, durationMinutes: 84});
+MERGE (:Movie {id: 87, title: 'The Fountain', releaseYear: 2006, durationMinutes: 97});
+MERGE (:Movie {id: 88, title: 'Mother!', releaseYear: 2017, durationMinutes: 121});
+MERGE (:Movie {id: 89, title: 'The Wrestler', releaseYear: 2008, durationMinutes: 109});
+MERGE (:Movie {id: 90, title: 'Noah', releaseYear: 2014, durationMinutes: 138});
+MERGE (:Movie {id: 91, title: 'Star Wars: A New Hope', releaseYear: 1977, durationMinutes: 121});
+MERGE (:Movie {id: 92, title: 'The Empire Strikes Back', releaseYear: 1980, durationMinutes: 124});
+MERGE (:Movie {id: 93, title: 'Return of the Jedi', releaseYear: 1983, durationMinutes: 131});
+MERGE (:Movie {id: 94, title: 'The Phantom Menace', releaseYear: 1999, durationMinutes: 136});
+MERGE (:Movie {id: 95, title: 'Attack of the Clones', releaseYear: 2002, durationMinutes: 142});
+MERGE (:Movie {id: 96, title: 'Revenge of the Sith', releaseYear: 2005, durationMinutes: 140});
+MERGE (:Movie {id: 97, title: 'The Force Awakens', releaseYear: 2015, durationMinutes: 138});
+MERGE (:Movie {id: 98, title: 'The Last Jedi', releaseYear: 2017, durationMinutes: 152});
+MERGE (:Movie {id: 99, title: 'The Rise of Skywalker', releaseYear: 2019, durationMinutes: 142});
+MERGE (:Movie {id: 100, title: 'Rogue One', releaseYear: 2016, durationMinutes: 133});
+MERGE (:Movie {id: 101, title: 'Solo', releaseYear: 2018, durationMinutes: 135});
+MERGE (:Movie {id: 102, title: 'Iron Man', releaseYear: 2008, durationMinutes: 126});
+MERGE (:Movie {id: 103, title: 'Captain America: The First Avenger', releaseYear: 2011, durationMinutes: 124});
+MERGE (:Movie {id: 104, title: 'Thor', releaseYear: 2011, durationMinutes: 115});
+MERGE (:Movie {id: 105, title: 'Iron Man 2', releaseYear: 2010, durationMinutes: 124});
+MERGE (:Movie {id: 106, title: 'The Incredible Hulk', releaseYear: 2008, durationMinutes: 112});
+MERGE (:Movie {id: 107, title: 'Captain America: The Winter Soldier', releaseYear: 2014, durationMinutes: 136});
+MERGE (:Movie {id: 108, title: 'Guardians of the Galaxy', releaseYear: 2014, durationMinutes: 121});
+MERGE (:Movie {id: 109, title: 'Avengers: Age of Ultron', releaseYear: 2015, durationMinutes: 141});
+MERGE (:Movie {id: 110, title: 'Ant-Man', releaseYear: 2015, durationMinutes: 117});
+MERGE (:Movie {id: 111, title: 'Captain America: Civil War', releaseYear: 2016, durationMinutes: 147});
+MERGE (:Movie {id: 112, title: 'Doctor Strange', releaseYear: 2016, durationMinutes: 115});
+MERGE (:Movie {id: 113, title: 'Guardians of the Galaxy Vol. 2', releaseYear: 2017, durationMinutes: 136});
+MERGE (:Movie {id: 114, title: 'Spider-Man: Homecoming', releaseYear: 2017, durationMinutes: 133});
+MERGE (:Movie {id: 115, title: 'Avengers: Infinity War', releaseYear: 2018, durationMinutes: 149});
+MERGE (:Movie {id: 116, title: 'Ant-Man and the Wasp', releaseYear: 2018, durationMinutes: 118});
+MERGE (:Movie {id: 117, title: 'Captain Marvel', releaseYear: 2019, durationMinutes: 123});
+MERGE (:Movie {id: 118, title: 'Avengers: Endgame', releaseYear: 2019, durationMinutes: 181});
+MERGE (:Movie {id: 119, title: 'Spider-Man: Far From Home', releaseYear: 2019, durationMinutes: 129});
+MERGE (:Movie {id: 120, title: 'Spider-Man: No Way Home', releaseYear: 2021, durationMinutes: 148});
+MERGE (:Movie {id: 121, title: 'The Batman', releaseYear: 2022, durationMinutes: 176});
+MERGE (:Movie {id: 122, title: 'Justice League', releaseYear: 2017, durationMinutes: 120});
+MERGE (:Movie {id: 123, title: 'Man of Steel', releaseYear: 2013, durationMinutes: 143});
+MERGE (:Movie {id: 124, title: 'Batman v Superman', releaseYear: 2016, durationMinutes: 151});
+MERGE (:Movie {id: 125, title: 'Suicide Squad', releaseYear: 2016, durationMinutes: 123});
+MERGE (:Movie {id: 126, title: 'Aquaman', releaseYear: 2018, durationMinutes: 143});
+MERGE (:Movie {id: 127, title: 'Shazam!', releaseYear: 2019, durationMinutes: 132});
+MERGE (:Movie {id: 128, title: 'Birds of Prey', releaseYear: 2020, durationMinutes: 109});
+MERGE (:Movie {id: 129, title: 'The Suicide Squad', releaseYear: 2021, durationMinutes: 132});
+MERGE (:Movie {id: 130, title: 'The Matrix Reloaded', releaseYear: 2003, durationMinutes: 138});
+MERGE (:Movie {id: 131, title: 'The Matrix Revolutions', releaseYear: 2003, durationMinutes: 129});
+MERGE (:Movie {id: 132, title: 'The Matrix Resurrections', releaseYear: 2021, durationMinutes: 148});
+MERGE (:Movie {id: 133, title: 'John Wick', releaseYear: 2014, durationMinutes: 101});
+MERGE (:Movie {id: 134, title: 'John Wick: Chapter 2', releaseYear: 2017, durationMinutes: 122});
+MERGE (:Movie {id: 135, title: 'John Wick: Chapter 3', releaseYear: 2019, durationMinutes: 131});
+MERGE (:Movie {id: 136, title: 'John Wick: Chapter 4', releaseYear: 2023, durationMinutes: 169});
+MERGE (:Movie {id: 137, title: 'Speed', releaseYear: 1994, durationMinutes: 116});
+MERGE (:Movie {id: 138, title: 'Point Break', releaseYear: 1991, durationMinutes: 122});
+MERGE (:Movie {id: 139, title: 'Constantine', releaseYear: 2005, durationMinutes: 121});
+MERGE (:Movie {id: 140, title: 'The Devil\'s Advocate', releaseYear: 1997, durationMinutes: 144});
+MERGE (:Movie {id: 141, title: 'A Scanner Darkly', releaseYear: 2006, durationMinutes: 100});
+MERGE (:Movie {id: 142, title: 'The Lake House', releaseYear: 2006, durationMinutes: 99});
+MERGE (:Movie {id: 143, title: 'Something\'s Gotta Give', releaseYear: 2003, durationMinutes: 128});
+MERGE (:Movie {id: 144, title: 'The Replacements', releaseYear: 2000, durationMinutes: 118});
+MERGE (:Movie {id: 145, title: 'Sweet November', releaseYear: 2001, durationMinutes: 119});
+MERGE (:Movie {id: 146, title: 'Hardball', releaseYear: 2001, durationMinutes: 106});
+MERGE (:Movie {id: 147, title: 'The Gift', releaseYear: 2000, durationMinutes: 111});
+MERGE (:Movie {id: 148, title: 'Bram Stoker\'s Dracula', releaseYear: 1992, durationMinutes: 128});
+MERGE (:Movie {id: 149, title: 'Little Buddha', releaseYear: 1993, durationMinutes: 123});
+MERGE (:Movie {id: 150, title: 'My Own Private Idaho', releaseYear: 1991, durationMinutes: 104});
+MERGE (:Movie {id: 151, title: 'Bill & Ted\'s Excellent Adventure', releaseYear: 1989, durationMinutes: 90});
+MERGE (:Movie {id: 152, title: 'Bill & Ted\'s Bogus Journey', releaseYear: 1991, durationMinutes: 93});
+MERGE (:Movie {id: 153, title: 'River\'s Edge', releaseYear: 1986, durationMinutes: 99});
+MERGE (:Movie {id: 154, title: 'Dangerous Liaisons', releaseYear: 1988, durationMinutes: 119});
+MERGE (:Movie {id: 155, title: 'Parenthood', releaseYear: 1989, durationMinutes: 124});
+MERGE (:Movie {id: 156, title: 'I Love You to Death', releaseYear: 1990, durationMinutes: 97});
+MERGE (:Movie {id: 157, title: 'Much Ado About Nothing', releaseYear: 1993, durationMinutes: 111});
+MERGE (:Movie {id: 158, title: 'Even Cowgirls Get the Blues', releaseYear: 1993, durationMinutes: 106});
+MERGE (:Movie {id: 159, title: 'Tune in Tomorrow', releaseYear: 1990, durationMinutes: 102});
+MERGE (:Movie {id: 160, title: 'Prince of Pennsylvania', releaseYear: 1988, durationMinutes: 87});
+MERGE (:Movie {id: 161, title: 'Youngblood', releaseYear: 1986, durationMinutes: 110});
+MERGE (:Movie {id: 162, title: 'Flying', releaseYear: 1986, durationMinutes: 85});
+MERGE (:Movie {id: 163, title: 'Under the Cherry Moon', releaseYear: 1986, durationMinutes: 100});
+MERGE (:Movie {id: 164, title: 'The Night Before', releaseYear: 1988, durationMinutes: 90});
+MERGE (:Movie {id: 165, title: 'Permanent Record', releaseYear: 1988, durationMinutes: 91});
+MERGE (:Movie {id: 166, title: 'The Dude', releaseYear: 1998, durationMinutes: 117});
+MERGE (:Movie {id: 167, title: 'Chain Reaction', releaseYear: 1996, durationMinutes: 107});
+MERGE (:Movie {id: 168, title: 'Feeling Minnesota', releaseYear: 1996, durationMinutes: 99});
+MERGE (:Movie {id: 169, title: 'A Walk in the Clouds', releaseYear: 1995, durationMinutes: 102});
+MERGE (:Movie {id: 170, title: 'Johnny Mnemonic', releaseYear: 1995, durationMinutes: 96});
+MERGE (:Movie {id: 171, title: 'The Watcher', releaseYear: 2000, durationMinutes: 97});
+MERGE (:Movie {id: 172, title: 'The Day the Earth Stood Still', releaseYear: 2008, durationMinutes: 104});
+MERGE (:Movie {id: 173, title: '47 Ronin', releaseYear: 2013, durationMinutes: 128});
+MERGE (:Movie {id: 174, title: 'Knock Knock', releaseYear: 2015, durationMinutes: 99});
+MERGE (:Movie {id: 175, title: 'Exposed', releaseYear: 2016, durationMinutes: 102});
+MERGE (:Movie {id: 176, title: 'The Neon Demon', releaseYear: 2016, durationMinutes: 118});
+MERGE (:Movie {id: 177, title: 'Siberia', releaseYear: 2018, durationMinutes: 104});
+MERGE (:Movie {id: 178, title: 'Replicas', releaseYear: 2018, durationMinutes: 107});
+MERGE (:Movie {id: 179, title: 'Destination Wedding', releaseYear: 2018, durationMinutes: 90});
+MERGE (:Movie {id: 180, title: 'Always Be My Maybe', releaseYear: 2019, durationMinutes: 101});
+MERGE (:Movie {id: 181, title: 'Toy Story 4', releaseYear: 2019, durationMinutes: 100});
+MERGE (:Movie {id: 182, title: 'SpongeBob Movie: Sponge on the Run', releaseYear: 2020, durationMinutes: 95});
+MERGE (:Movie {id: 183, title: 'Bill & Ted Face the Music', releaseYear: 2020, durationMinutes: 91});
+MERGE (:Movie {id: 184, title: 'The SpongeBob Movie: Sponge Out of Water', releaseYear: 2015, durationMinutes: 92});
+MERGE (:Movie {id: 185, title: 'BRZN', releaseYear: 2021, durationMinutes: 126});
+MERGE (:Movie {id: 186, title: 'Generation Um...', releaseYear: 2012, durationMinutes: 96});
+MERGE (:Movie {id: 187, title: 'Man of Tai Chi', releaseYear: 2013, durationMinutes: 105});
+MERGE (:Movie {id: 188, title: 'Side by Side', releaseYear: 2012, durationMinutes: 99});
+MERGE (:Movie {id: 189, title: 'Henry\'s Crime', releaseYear: 2010, durationMinutes: 108});
+MERGE (:Movie {id: 190, title: 'The Private Lives of Pippa Lee', releaseYear: 2009, durationMinutes: 98});
+MERGE (:Movie {id: 191, title: 'Street Kings', releaseYear: 2008, durationMinutes: 109});
+MERGE (:Movie {id: 192, title: 'The Lake House', releaseYear: 2006, durationMinutes: 99});
+MERGE (:Movie {id: 193, title: 'Thumbsucker', releaseYear: 2005, durationMinutes: 96});
+MERGE (:Movie {id: 194, title: 'Ellie Parker', releaseYear: 2005, durationMinutes: 95});
+MERGE (:Movie {id: 195, title: 'Something New', releaseYear: 2006, durationMinutes: 99});
+MERGE (:Movie {id: 196, title: 'The Animatrix', releaseYear: 2003, durationMinutes: 102});
+MERGE (:Movie {id: 197, title: 'Enter the Matrix', releaseYear: 2003, durationMinutes: 88});
+MERGE (:Movie {id: 198, title: 'Neo Yokio: Pink Christmas', releaseYear: 2018, durationMinutes: 65});
+MERGE (:Movie {id: 199, title: 'BRZN II', releaseYear: 2022, durationMinutes: 125});
+MERGE (:Movie {id: 200, title: 'The Matrix: Path of Neo', releaseYear: 2005, durationMinutes: 95});
 
-// Filmovi (Movie) - Dodajemo više filmova
-MERGE (m1:Movie {id: 1, title: 'Inception', releaseYear: 2010});
-MERGE (m2:Movie {id: 2, title: 'The Matrix', releaseYear: 1999});
-MERGE (m3:Movie {id: 3, title: 'Pulp Fiction', releaseYear: 1994});
-MERGE (m4:Movie {id: 4, title: 'The Dark Knight', releaseYear: 2008});
-MERGE (m5:Movie {id: 5, title: 'Forrest Gump', releaseYear: 1994});
-MERGE (m6:Movie {id: 6, title: 'The Godfather', releaseYear: 1972});
-MERGE (m7:Movie {id: 7, title: 'Raiders of the Lost Ark', releaseYear: 1981});
-MERGE (m8:Movie {id: 8, title: 'The Lord of the Rings: The Fellowship of the Ring', releaseYear: 2001});
-MERGE (m9:Movie {id: 9, title: 'Fight Club', releaseYear: 1999});
-MERGE (m10:Movie {id: 10, title: 'Interstellar', releaseYear: 2014});
+// --- Korisnici (User) - 20 korisnika ---
+MERGE (:User {id: 1001, username: 'PeraPeric'});
+MERGE (:User {id: 1002, username: 'MikaMikic'});
+MERGE (:User {id: 1003, username: 'ZikaZikic'});
+MERGE (:User {id: 1004, username: 'AnaAnic'});
+MERGE (:User {id: 1005, username: 'IvaIvic'});
+MERGE (:User {id: 1006, username: 'MarkoMarkovic'});
+MERGE (:User {id: 1007, username: 'JovanJovanovic'});
+MERGE (:User {id: 1008, username: 'NikolaNikolic'});
+MERGE (:User {id: 1009, username: 'StefanStefanovic'});
+MERGE (:User {id: 1010, username: 'MilicaMilic'});
+MERGE (:User {id: 1011, username: 'KatarinaKatic'});
+MERGE (:User {id: 1012, username: 'AleksandarAleksic'});
+MERGE (:User {id: 1013, username: 'JelenaJelic'});
+MERGE (:User {id: 1014, username: 'IvanIvanovic'});
+MERGE (:User {id: 1015, username: 'TamaraTomic'});
+MERGE (:User {id: 1016, username: 'LukaLukic'});
+MERGE (:User {id: 1017, username: 'SaraSaric'});
+MERGE (:User {id: 1018, username: 'FilipFilipovic'});
+MERGE (:User {id: 1019, username: 'DraganaDragic'});
+MERGE (:User {id: 1020, username: 'NemanjaNedic'});
 
-// Korisnici (User) - Dodajemo više korisnika
-MERGE (:User {id: 101, username: 'PeraPeric'});
-MERGE (:User {id: 102, username: 'MikaMikic'});
-MERGE (:User {id: 103, username: 'ZikaZikic'});
-MERGE (:User {id: 104, username: 'AnaAnic'});
-MERGE (:User {id: 105, username: 'IvaIvic'});
-MERGE (:User {id: 106, username: 'MarkoMarkovic'});
-MERGE (:User {id: 107, username: 'JovanJovanovic'});
+// --- Film -> Žanr (BELONGS_TO) - Svaki film ima bar jedan žanr ---
+MATCH (m:Movie {id: 1}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 2}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 3}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 4}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}), (g3:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2) MERGE (m)-[:BELONGS_TO]->(g3);
+MATCH (m:Movie {id: 5}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 6}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 7}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 8}), (g1:Genre {name: 'Fantasy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 9}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 10}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 11}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 12}), (g1:Genre {name: 'Drama'}), (g2:Genre {name: 'Biography'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 13}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 14}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 15}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 16}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 17}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 18}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 19}), (g1:Genre {name: 'Mystery'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 20}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Mystery'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 21}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 22}), (g1:Genre {name: 'Thriller'}), (g2:Genre {name: 'Horror'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 23}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Biography'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 24}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 25}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 26}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 27}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 28}), (g1:Genre {name: 'War'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 29}), (g1:Genre {name: 'Fantasy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 30}), (g1:Genre {name: 'War'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 31}), (g1:Genre {name: 'Western'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 32}), (g1:Genre {name: 'Western'}), (g2:Genre {name: 'Mystery'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 33}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 34}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 35}), (g1:Genre {name: 'Mystery'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 36}), (g1:Genre {name: 'Mystery'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 37}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 38}), (g1:Genre {name: 'Fantasy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 39}), (g1:Genre {name: 'Fantasy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 40}), (g1:Genre {name: 'War'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 41}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 42}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 43}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 44}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 45}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 46}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 47}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 48}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 49}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 50}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 51}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 52}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 53}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 54}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 55}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 56}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 57}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 58}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 59}), (g1:Genre {name: 'Mystery'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 60}), (g1:Genre {name: 'Mystery'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 61}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 62}), (g1:Genre {name: 'Drama'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 63}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 64}), (g1:Genre {name: 'Drama'}), (g2:Genre {name: 'Biography'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 65}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 66}), (g1:Genre {name: 'War'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 67}), (g1:Genre {name: 'Fantasy'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 68}), (g1:Genre {name: 'Fantasy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 69}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 70}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 71}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Fantasy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 72}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 73}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 74}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 75}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 76}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 77}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 78}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 79}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 80}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 81}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 82}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 83}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 84}), (g1:Genre {name: 'Thriller'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 85}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 86}), (g1:Genre {name: 'Thriller'}), (g2:Genre {name: 'Mystery'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 87}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 88}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Mystery'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 89}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 90}), (g1:Genre {name: 'Adventure'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 91}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 92}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 93}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 94}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 95}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 96}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 97}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 98}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 99}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 100}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'War'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 101}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 102}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 103}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 104}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 105}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 106}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 107}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 108}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 109}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 110}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 111}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 112}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 113}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 114}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 115}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 116}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 117}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 118}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 119}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 120}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 121}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 122}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 123}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 124}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 125}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 126}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 127}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 128}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 129}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 130}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 131}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 132}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 133}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 134}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 135}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 136}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 137}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 138}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 139}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Horror'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 140}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 141}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 142}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 143}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 144}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 145}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 146}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 147}), (g1:Genre {name: 'Thriller'}), (g2:Genre {name: 'Horror'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 148}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 149}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 150}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 151}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 152}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 153}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 154}), (g1:Genre {name: 'Drama'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 155}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 156}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 157}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 158}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 159}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 160}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 161}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 162}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 163}), (g1:Genre {name: 'Drama'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 164}), (g:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 165}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 166}), (g:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 167}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 168}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 169}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 170}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 171}), (g1:Genre {name: 'Thriller'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 172}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 173}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Fantasy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 174}), (g1:Genre {name: 'Thriller'}), (g2:Genre {name: 'Horror'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 175}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 176}), (g1:Genre {name: 'Horror'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 177}), (g1:Genre {name: 'Crime'}), (g2:Genre {name: 'Romance'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 178}), (g1:Genre {name: 'Sci-Fi'}), (g2:Genre {name: 'Thriller'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 179}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 180}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 181}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 182}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 183}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 184}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 185}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 186}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 187}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 188}), (g:Genre {name: 'Documentary'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 189}), (g1:Genre {name: 'Comedy'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 190}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 191}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 192}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 193}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 194}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
+MATCH (m:Movie {id: 195}), (g1:Genre {name: 'Romance'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 196}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 197}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 198}), (g1:Genre {name: 'Animation'}), (g2:Genre {name: 'Comedy'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 199}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
+MATCH (m:Movie {id: 200}), (g1:Genre {name: 'Action'}), (g2:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g1) MERGE (m)-[:BELONGS_TO]->(g2);
 
-// --- KREIRANJE RELACIJA ---
 
-// Povezivanje filmova sa žanrovima (BELONGS_TO)
-MATCH (m:Movie {id: 1}), (g:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 1}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 2}), (g:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 2}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 3}), (g:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 4}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 4}), (g:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 6}), (g:Genre {name: 'Crime'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 6}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 7}), (g:Genre {name: 'Action'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 7}), (g:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 8}), (g:Genre {name: 'Fantasy'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 8}), (g:Genre {name: 'Adventure'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 10}), (g:Genre {name: 'Sci-Fi'}) MERGE (m)-[:BELONGS_TO]->(g);
-MATCH (m:Movie {id: 10}), (g:Genre {name: 'Drama'}) MERGE (m)-[:BELONGS_TO]->(g);
 
-// Povezivanje filmova sa režiserima (DIRECTED)
-MATCH (d:Director {name: 'Christopher Nolan'}), (m:Movie {id: 1}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Lana Wachowski'}), (m:Movie {id: 2}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Quentin Tarantino'}), (m:Movie {id: 3}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Christopher Nolan'}), (m:Movie {id: 4}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Francis Ford Coppola'}), (m:Movie {id: 6}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Steven Spielberg'}), (m:Movie {id: 7}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Peter Jackson'}), (m:Movie {id: 8}) MERGE (d)-[:DIRECTED]->(m);
-MATCH (d:Director {name: 'Christopher Nolan'}), (m:Movie {id: 10}) MERGE (d)-[:DIRECTED]->(m);
 
-// Povezivanje glumaca sa filmovima (ACTED_IN)
+// --- Režiseri filmova (DIRECTED) - Svaki film mora imati režisera ---
+MATCH (m:Movie {id: 1}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 2}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 3}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 4}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 5}), (d:Director {name: 'Robert Zemeckis'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 6}), (d:Director {name: 'Francis Ford Coppola'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 7}), (d:Director {name: 'Steven Spielberg'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 8}), (d:Director {name: 'Peter Jackson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 9}), (d:Director {name: 'David Fincher'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 10}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 11}), (d:Director {name: 'Danny Boyle'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 12}), (d:Director {name: 'Steven Spielberg'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 13}), (d:Director {name: 'James Cameron'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 14}), (d:Director {name: 'James Cameron'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 15}), (d:Director {name: 'Ridley Scott'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 16}), (d:Director {name: 'Ridley Scott'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 17}), (d:Director {name: 'Ridley Scott'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 18}), (d:Director {name: 'Martin Scorsese'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 19}), (d:Director {name: 'Martin Scorsese'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 20}), (d:Director {name: 'David Fincher'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 21}), (d:Director {name: 'David Fincher'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 22}), (d:Director {name: 'Jonathan Demme'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 23}), (d:Director {name: 'Martin Scorsese'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 24}), (d:Director {name: 'Martin Scorsese'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 25}), (d:Director {name: 'J.J. Abrams'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 26}), (d:Director {name: 'Steven Spielberg'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 27}), (d:Director {name: 'Steven Spielberg'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 28}), (d:Director {name: 'Steven Spielberg'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 29}), (d:Director {name: 'Frank Darabont'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 30}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 31}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 32}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 33}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 34}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 35}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 36}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 37}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 38}), (d:Director {name: 'Peter Jackson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 39}), (d:Director {name: 'Peter Jackson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 40}), (d:Director {name: 'Francis Ford Coppola'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 41}), (d:Director {name: 'Francis Ford Coppola'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 42}), (d:Director {name: 'James McTeigue'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 43}), (d:Director {name: 'Alfonso Cuarón'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 44}), (d:Director {name: 'Coen Brothers'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 45}), (d:Director {name: 'Paul Thomas Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 46}), (d:Director {name: 'George Miller'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 47}), (d:Director {name: 'Bong Joon-ho'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 48}), (d:Director {name: 'Todd Phillips'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 49}), (d:Director {name: 'Quentin Tarantino'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 50}), (d:Director {name: 'David Fincher'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 51}), (d:Director {name: 'Denis Villeneuve'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 52}), (d:Director {name: 'Denis Villeneuve'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 53}), (d:Director {name: 'Denis Villeneuve'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 54}), (d:Director {name: 'Damien Chazelle'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 55}), (d:Director {name: 'Damien Chazelle'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 56}), (d:Director {name: 'Jordan Peele'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 57}), (d:Director {name: 'Jordan Peele'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 58}), (d:Director {name: 'Jordan Peele'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 59}), (d:Director {name: 'Rian Johnson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 60}), (d:Director {name: 'Rian Johnson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 61}), (d:Director {name: 'Greta Gerwig'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 62}), (d:Director {name: 'Greta Gerwig'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 63}), (d:Director {name: 'Greta Gerwig'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 64}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 65}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 66}), (d:Director {name: 'Christopher Nolan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 67}), (d:Director {name: 'Guillermo del Toro'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 68}), (d:Director {name: 'Guillermo del Toro'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 69}), (d:Director {name: 'Barry Jenkins'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 70}), (d:Director {name: 'Ryan Coogler'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 71}), (d:Director {name: 'Patty Jenkins'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 72}), (d:Director {name: 'Taika Waititi'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 73}), (d:Director {name: 'Taika Waititi'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 74}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 75}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 76}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 77}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 78}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 79}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 80}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 81}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 82}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 83}), (d:Director {name: 'Wes Anderson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 84}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 85}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 86}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 87}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 88}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 89}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 90}), (d:Director {name: 'Darren Aronofsky'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 91}), (d:Director {name: 'George Lucas'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 92}), (d:Director {name: 'George Lucas'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 93}), (d:Director {name: 'George Lucas'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 94}), (d:Director {name: 'George Lucas'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 95}), (d:Director {name: 'George Lucas'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 96}), (d:Director {name: 'George Lucas'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 97}), (d:Director {name: 'J.J. Abrams'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 98}), (d:Director {name: 'Rian Johnson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 99}), (d:Director {name: 'J.J. Abrams'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 100}), (d:Director {name: 'Gareth Edwards'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 101}), (d:Director {name: 'Ron Howard'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 102}), (d:Director {name: 'Jon Favreau'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 103}), (d:Director {name: 'Joe Johnston'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 104}), (d:Director {name: 'Kenneth Branagh'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 105}), (d:Director {name: 'Jon Favreau'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 106}), (d:Director {name: 'Louis Leterrier'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 107}), (d:Director {name: 'Anthony Russo'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 108}), (d:Director {name: 'James Gunn'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 109}), (d:Director {name: 'Joss Whedon'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 110}), (d:Director {name: 'Peyton Reed'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 111}), (d:Director {name: 'Anthony Russo'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 112}), (d:Director {name: 'Scott Derrickson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 113}), (d:Director {name: 'James Gunn'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 114}), (d:Director {name: 'Jon Watts'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 115}), (d:Director {name: 'Anthony Russo'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 116}), (d:Director {name: 'Peyton Reed'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 117}), (d:Director {name: 'Anna Boden'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 118}), (d:Director {name: 'Anthony Russo'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 119}), (d:Director {name: 'Jon Watts'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 120}), (d:Director {name: 'Jon Watts'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 121}), (d:Director {name: 'Matt Reeves'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 122}), (d:Director {name: 'Zack Snyder'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 123}), (d:Director {name: 'Zack Snyder'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 124}), (d:Director {name: 'Zack Snyder'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 125}), (d:Director {name: 'David Ayer'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 126}), (d:Director {name: 'James Wan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 127}), (d:Director {name: 'David F. Sandberg'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 128}), (d:Director {name: 'Cathy Yan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 129}), (d:Director {name: 'James Gunn'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 130}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 131}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 132}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 133}), (d:Director {name: 'Chad Stahelski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 134}), (d:Director {name: 'Chad Stahelski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 135}), (d:Director {name: 'Chad Stahelski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 136}), (d:Director {name: 'Chad Stahelski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 137}), (d:Director {name: 'Jan de Bont'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 138}), (d:Director {name: 'Kathryn Bigelow'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 139}), (d:Director {name: 'Francis Lawrence'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 140}), (d:Director {name: 'Taylor Hackford'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 141}), (d:Director {name: 'Richard Linklater'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 142}), (d:Director {name: 'Alejandro Agresti'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 143}), (d:Director {name: 'Nancy Meyers'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 144}), (d:Director {name: 'Howard Deutch'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 145}), (d:Director {name: 'Pat O\'Connor'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 146}), (d:Director {name: 'Brian Robbins'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 147}), (d:Director {name: 'Sam Raimi'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 148}), (d:Director {name: 'Francis Ford Coppola'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 149}), (d:Director {name: 'Bernardo Bertolucci'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 150}), (d:Director {name: 'Gus Van Sant'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 151}), (d:Director {name: 'Stephen Herek'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 152}), (d:Director {name: 'Peter Hewitt'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 153}), (d:Director {name: 'Tim Hunter'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 154}), (d:Director {name: 'Stephen Frears'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 155}), (d:Director {name: 'Ron Howard'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 156}), (d:Director {name: 'Lawrence Kasdan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 157}), (d:Director {name: 'Kenneth Branagh'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 158}), (d:Director {name: 'Gus Van Sant'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 159}), (d:Director {name: 'Jon Amiel'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 160}), (d:Director {name: 'Matthew Robbins'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 161}), (d:Director {name: 'Peter Markle'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 162}), (d:Director {name: 'Paul Lynch'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 163}), (d:Director {name: 'Prince'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 164}), (d:Director {name: 'Thom Eberhardt'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 165}), (d:Director {name: 'Marisa Silver'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 166}), (d:Director {name: 'Joel Coen'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 167}), (d:Director {name: 'Andrew Davis'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 168}), (d:Director {name: 'Steven Baigelman'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 169}), (d:Director {name: 'Alfonso Arau'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 170}), (d:Director {name: 'Robert Longo'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 171}), (d:Director {name: 'Joe Charbanic'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 172}), (d:Director {name: 'Scott Derrickson'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 173}), (d:Director {name: 'Carl Rinsch'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 174}), (d:Director {name: 'Eli Roth'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 175}), (d:Director {name: 'Declan Dale'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 176}), (d:Director {name: 'Nicolas Winding Refn'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 177}), (d:Director {name: 'Matthew Ross'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 178}), (d:Director {name: 'Jeffrey Nachmanoff'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 179}), (d:Director {name: 'Victor Levin'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 180}), (d:Director {name: 'Nahnatchka Khan'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 181}), (d:Director {name: 'Josh Cooley'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 182}), (d:Director {name: 'Tim Hill'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 183}), (d:Director {name: 'Dean Parisot'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 184}), (d:Director {name: 'Paul Tibbitt'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 185}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 186}), (d:Director {name: 'Mark Mann'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 187}), (d:Director {name: 'Keanu Reeves'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 188}), (d:Director {name: 'Christopher Kenneally'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 189}), (d:Director {name: 'Malcolm Venville'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 190}), (d:Director {name: 'Rebecca Miller'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 191}), (d:Director {name: 'David Ayer'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 192}), (d:Director {name: 'Alejandro Agresti'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 193}), (d:Director {name: 'Mike Mills'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 194}), (d:Director {name: 'Scott Coffey'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 195}), (d:Director {name: 'Sanaa Hamri'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 196}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 197}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 198}), (d:Director {name: 'Ezra Koenig'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 199}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+MATCH (m:Movie {id: 200}), (d:Director {name: 'Lana Wachowski'}) MERGE (d)-[:DIRECTED]->(m);
+
+// --- Glumci u filmovima (ACTED_IN) - Povezujemo glumce sa filmovima ---
 MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 1}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Joseph Gordon-Levitt'}), (m:Movie {id: 1}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Elliot Page'}), (m:Movie {id: 1}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Hardy'}), (m:Movie {id: 1}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 2}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Laurence Fishburne'}), (m:Movie {id: 2}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Carrie-Anne Moss'}), (m:Movie {id: 2}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Hugo Weaving'}), (m:Movie {id: 2}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'John Travolta'}), (m:Movie {id: 3}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Uma Thurman'}), (m:Movie {id: 3}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Samuel L. Jackson'}), (m:Movie {id: 3}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'Christian Bale'}), (m:Movie {id: 4}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Heath Ledger'}), (m:Movie {id: 4}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Aaron Eckhart'}), (m:Movie {id: 4}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gary Oldman'}), (m:Movie {id: 4}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Caine'}), (m:Movie {id: 4}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Hanks'}), (m:Movie {id: 5}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'Marlon Brando'}), (m:Movie {id: 6}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'Al Pacino'}), (m:Movie {id: 6}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 7}) MERGE (a)-[:ACTED_IN]->(m);
 MATCH (a:Actor {name: 'Elijah Wood'}), (m:Movie {id: 8}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ian McKellen'}), (m:Movie {id: 8}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Viggo Mortensen'}), (m:Movie {id: 8}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Orlando Bloom'}), (m:Movie {id: 8}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sean Astin'}), (m:Movie {id: 8}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Brad Pitt'}), (m:Movie {id: 9}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Edward Norton'}), (m:Movie {id: 9}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Helena Bonham Carter'}), (m:Movie {id: 9}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Matthew McConaughey'}), (m:Movie {id: 10}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Anne Hathaway'}), (m:Movie {id: 10}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jessica Chastain'}), (m:Movie {id: 10}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Caine'}), (m:Movie {id: 10}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tim Robbins'}), (m:Movie {id: 11}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Morgan Freeman'}), (m:Movie {id: 11}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Liam Neeson'}), (m:Movie {id: 12}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ben Kingsley'}), (m:Movie {id: 12}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 13}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Kate Winslet'}), (m:Movie {id: 13}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sigourney Weaver'}), (m:Movie {id: 14}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zoe Saldana'}), (m:Movie {id: 14}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Russell Crowe'}), (m:Movie {id: 15}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Joaquin Phoenix'}), (m:Movie {id: 15}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sigourney Weaver'}), (m:Movie {id: 16}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Skerritt'}), (m:Movie {id: 16}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 17}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Rutger Hauer'}), (m:Movie {id: 17}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 18}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Matt Damon'}), (m:Movie {id: 18}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Wahlberg'}), (m:Movie {id: 18}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Vera Farmiga'}), (m:Movie {id: 18}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 19}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Ruffalo'}), (m:Movie {id: 19}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jake Gyllenhaal'}), (m:Movie {id: 20}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Ruffalo'}), (m:Movie {id: 20}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 20}) MERGE (a)-[:ACTED_IN]->(m);
 
-// Povezivanje korisnika sa odgledanim filmovima (WATCHED)
-MATCH (u:User {id: 101}), (m:Movie {id: 1}) MERGE (u)-[:WATCHED {rating: 9, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 101}), (m:Movie {id: 2}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 102}), (m:Movie {id: 1}) MERGE (u)-[:WATCHED {rating: 8, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 102}), (m:Movie {id: 3}) MERGE (u)-[:WATCHED {rating: 9, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 103}), (m:Movie {id: 5}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 104}), (m:Movie {id: 4}) MERGE (u)-[:WATCHED {rating: 9, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 104}), (m:Movie {id: 10}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 105}), (m:Movie {id: 8}) MERGE (u)-[:WATCHED {rating: 8, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 105}), (m:Movie {id: 1}) MERGE (u)-[:WATCHED {rating: 7, watchedAt: datetime()}]->(m);
-MATCH (u:User {id: 106}), (m:Movie {id: 6}) MERGE (u)-[:WATCHED {rating: 10, watchedAt: datetime()}]->(m);
+// Nastavak dodavanja ACTED_IN veza za filmove 21-200
+
+// Film 21 - Se7en
+MATCH (a:Actor {name: 'Brad Pitt'}), (m:Movie {id: 21}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Morgan Freeman'}), (m:Movie {id: 21}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Kevin Spacey'}), (m:Movie {id: 21}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 22 - The Silence of the Lambs
+MATCH (a:Actor {name: 'Jodie Foster'}), (m:Movie {id: 22}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Anthony Hopkins'}), (m:Movie {id: 22}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 23 - Goodfellas
+MATCH (a:Actor {name: 'Robert De Niro'}), (m:Movie {id: 23}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ray Liotta'}), (m:Movie {id: 23}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Joe Pesci'}), (m:Movie {id: 23}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 24 - Casino
+MATCH (a:Actor {name: 'Robert De Niro'}), (m:Movie {id: 24}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sharon Stone'}), (m:Movie {id: 24}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Joe Pesci'}), (m:Movie {id: 24}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 25 - The Avengers
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 25}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 25}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Ruffalo'}), (m:Movie {id: 25}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Hemsworth'}), (m:Movie {id: 25}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 25}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeremy Renner'}), (m:Movie {id: 25}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 26 - Jurassic Park
+MATCH (a:Actor {name: 'Sam Neill'}), (m:Movie {id: 26}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Laura Dern'}), (m:Movie {id: 26}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeff Goldblum'}), (m:Movie {id: 26}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 27 - E.T. the Extra-Terrestrial
+MATCH (a:Actor {name: 'Henry Thomas'}), (m:Movie {id: 27}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Drew Barrymore'}), (m:Movie {id: 27}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 28 - Saving Private Ryan
+MATCH (a:Actor {name: 'Tom Hanks'}), (m:Movie {id: 28}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Matt Damon'}), (m:Movie {id: 28}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Sizemore'}), (m:Movie {id: 28}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 29 - The Green Mile
+MATCH (a:Actor {name: 'Tom Hanks'}), (m:Movie {id: 29}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Clarke Duncan'}), (m:Movie {id: 29}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 30 - Inglourious Basterds
+MATCH (a:Actor {name: 'Brad Pitt'}), (m:Movie {id: 30}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Christoph Waltz'}), (m:Movie {id: 30}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 31 - Django Unchained
+MATCH (a:Actor {name: 'Jamie Foxx'}), (m:Movie {id: 31}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Christoph Waltz'}), (m:Movie {id: 31}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 31}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 32 - The Hateful Eight
+MATCH (a:Actor {name: 'Samuel L. Jackson'}), (m:Movie {id: 32}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Kurt Russell'}), (m:Movie {id: 32}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 33 - Kill Bill: Vol. 1
+MATCH (a:Actor {name: 'Uma Thurman'}), (m:Movie {id: 33}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Lucy Liu'}), (m:Movie {id: 33}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 34 - Reservoir Dogs
+MATCH (a:Actor {name: 'Harvey Keitel'}), (m:Movie {id: 34}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tim Roth'}), (m:Movie {id: 34}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 35 - The Prestige
+MATCH (a:Actor {name: 'Christian Bale'}), (m:Movie {id: 35}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Hugh Jackman'}), (m:Movie {id: 35}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Caine'}), (m:Movie {id: 35}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 36 - Memento
+MATCH (a:Actor {name: 'Guy Pearce'}), (m:Movie {id: 36}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Carrie-Anne Moss'}), (m:Movie {id: 36}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 37 - Batman Begins
+MATCH (a:Actor {name: 'Christian Bale'}), (m:Movie {id: 37}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Caine'}), (m:Movie {id: 37}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Liam Neeson'}), (m:Movie {id: 37}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 38 - The Lord of the Rings: The Two Towers
+MATCH (a:Actor {name: 'Elijah Wood'}), (m:Movie {id: 38}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ian McKellen'}), (m:Movie {id: 38}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Viggo Mortensen'}), (m:Movie {id: 38}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 39 - The Lord of the Rings: The Return of the King
+MATCH (a:Actor {name: 'Elijah Wood'}), (m:Movie {id: 39}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ian McKellen'}), (m:Movie {id: 39}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Viggo Mortensen'}), (m:Movie {id: 39}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 40 - Apocalypse Now
+MATCH (a:Actor {name: 'Martin Sheen'}), (m:Movie {id: 40}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Marlon Brando'}), (m:Movie {id: 40}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 41 - The Godfather: Part II
+MATCH (a:Actor {name: 'Al Pacino'}), (m:Movie {id: 41}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert De Niro'}), (m:Movie {id: 41}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 42 - V for Vendetta
+MATCH (a:Actor {name: 'Natalie Portman'}), (m:Movie {id: 42}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Hugo Weaving'}), (m:Movie {id: 42}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 43 - Children of Men
+MATCH (a:Actor {name: 'Clive Owen'}), (m:Movie {id: 43}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Julianne Moore'}), (m:Movie {id: 43}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 44 - No Country for Old Men
+MATCH (a:Actor {name: 'Tommy Lee Jones'}), (m:Movie {id: 44}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Josh Brolin'}), (m:Movie {id: 44}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Javier Bardem'}), (m:Movie {id: 44}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 45 - There Will Be Blood
+MATCH (a:Actor {name: 'Daniel Day-Lewis'}), (m:Movie {id: 45}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Paul Dano'}), (m:Movie {id: 45}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 46 - Mad Max: Fury Road
+MATCH (a:Actor {name: 'Tom Hardy'}), (m:Movie {id: 46}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Charlize Theron'}), (m:Movie {id: 46}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 47 - Parasite
+MATCH (a:Actor {name: 'Song Kang-ho'}), (m:Movie {id: 47}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Lee Sun-kyun'}), (m:Movie {id: 47}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Cho Yeo-jeong'}), (m:Movie {id: 47}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Choi Woo-shik'}), (m:Movie {id: 47}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Park So-dam'}), (m:Movie {id: 47}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 48 - Joker
+MATCH (a:Actor {name: 'Joaquin Phoenix'}), (m:Movie {id: 48}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert De Niro'}), (m:Movie {id: 48}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 49 - Once Upon a Time in Hollywood
+MATCH (a:Actor {name: 'Leonardo DiCaprio'}), (m:Movie {id: 49}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Brad Pitt'}), (m:Movie {id: 49}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Margot Robbie'}), (m:Movie {id: 49}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 50 - The Social Network
+MATCH (a:Actor {name: 'Jesse Eisenberg'}), (m:Movie {id: 50}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Andrew Garfield'}), (m:Movie {id: 50}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Justin Timberlake'}), (m:Movie {id: 50}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 51 - Dune
+MATCH (a:Actor {name: 'Timothée Chalamet'}), (m:Movie {id: 51}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Rebecca Ferguson'}), (m:Movie {id: 51}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Oscar Isaac'}), (m:Movie {id: 51}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Josh Brolin'}), (m:Movie {id: 51}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zendaya'}), (m:Movie {id: 51}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 52 - Blade Runner 2049
+MATCH (a:Actor {name: 'Ryan Gosling'}), (m:Movie {id: 52}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 52}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ana de Armas'}), (m:Movie {id: 52}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 53 - Arrival
+MATCH (a:Actor {name: 'Amy Adams'}), (m:Movie {id: 53}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeremy Renner'}), (m:Movie {id: 53}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 54 - La La Land
+MATCH (a:Actor {name: 'Ryan Gosling'}), (m:Movie {id: 54}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Emma Stone'}), (m:Movie {id: 54}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 55 - Whiplash
+MATCH (a:Actor {name: 'Miles Teller'}), (m:Movie {id: 55}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'J.K. Simmons'}), (m:Movie {id: 55}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 56 - Get Out
+MATCH (a:Actor {name: 'Daniel Kaluuya'}), (m:Movie {id: 56}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Allison Williams'}), (m:Movie {id: 56}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 57 - Us
+MATCH (a:Actor {name: 'Lupita Nyong\'o'}), (m:Movie {id: 57}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Winston Duke'}), (m:Movie {id: 57}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 58 - Nope
+MATCH (a:Actor {name: 'Daniel Kaluuya'}), (m:Movie {id: 58}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Keke Palmer'}), (m:Movie {id: 58}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Steven Yeun'}), (m:Movie {id: 58}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 59 - Knives Out
+MATCH (a:Actor {name: 'Daniel Craig'}), (m:Movie {id: 59}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ana de Armas'}), (m:Movie {id: 59}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 59}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 60 - Glass Onion
+MATCH (a:Actor {name: 'Daniel Craig'}), (m:Movie {id: 60}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Edward Norton'}), (m:Movie {id: 60}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Janelle Monáe'}), (m:Movie {id: 60}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 61 - Lady Bird
+MATCH (a:Actor {name: 'Saoirse Ronan'}), (m:Movie {id: 61}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Laurie Metcalf'}), (m:Movie {id: 61}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 62 - Little Women
+MATCH (a:Actor {name: 'Saoirse Ronan'}), (m:Movie {id: 62}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Emma Watson'}), (m:Movie {id: 62}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Florence Pugh'}), (m:Movie {id: 62}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Timothée Chalamet'}), (m:Movie {id: 62}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 63 - Barbie
+MATCH (a:Actor {name: 'Margot Robbie'}), (m:Movie {id: 63}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ryan Gosling'}), (m:Movie {id: 63}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 64 - Oppenheimer
+MATCH (a:Actor {name: 'Cillian Murphy'}), (m:Movie {id: 64}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 64}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Emily Blunt'}), (m:Movie {id: 64}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Matt Damon'}), (m:Movie {id: 64}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 65 - Tenet
+MATCH (a:Actor {name: 'John David Washington'}), (m:Movie {id: 65}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert Pattinson'}), (m:Movie {id: 65}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Elizabeth Debicki'}), (m:Movie {id: 65}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 66 - Dunkirk
+MATCH (a:Actor {name: 'Fionn Whitehead'}), (m:Movie {id: 66}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Hardy'}), (m:Movie {id: 66}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Cillian Murphy'}), (m:Movie {id: 66}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 67 - The Shape of Water
+MATCH (a:Actor {name: 'Sally Hawkins'}), (m:Movie {id: 67}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Shannon'}), (m:Movie {id: 67}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Richard Jenkins'}), (m:Movie {id: 67}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 68 - Pan's Labyrinth
+MATCH (a:Actor {name: 'Ivana Baquero'}), (m:Movie {id: 68}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sergi López'}), (m:Movie {id: 68}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Maribel Verdú'}), (m:Movie {id: 68}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 69 - Moonlight
+MATCH (a:Actor {name: 'Trevante Rhodes'}), (m:Movie {id: 69}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'André Holland'}), (m:Movie {id: 69}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Janelle Monáe'}), (m:Movie {id: 69}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mahershala Ali'}), (m:Movie {id: 69}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 70 - Black Panther
+MATCH (a:Actor {name: 'Chadwick Boseman'}), (m:Movie {id: 70}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael B. Jordan'}), (m:Movie {id: 70}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Lupita Nyong\'o'}), (m:Movie {id: 70}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 71 - Wonder Woman
+MATCH (a:Actor {name: 'Gal Gadot'}), (m:Movie {id: 71}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Pine'}), (m:Movie {id: 71}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 72 - Thor: Ragnarok
+MATCH (a:Actor {name: 'Chris Hemsworth'}), (m:Movie {id: 72}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Hiddleston'}), (m:Movie {id: 72}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Cate Blanchett'}), (m:Movie {id: 72}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 73 - Jojo Rabbit
+MATCH (a:Actor {name: 'Roman Griffin Davis'}), (m:Movie {id: 73}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Thomasin McKenzie'}), (m:Movie {id: 73}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 73}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 74 - The Grand Budapest Hotel
+MATCH (a:Actor {name: 'Ralph Fiennes'}), (m:Movie {id: 74}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'F. Murray Abraham'}), (m:Movie {id: 74}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mathieu Amalric'}), (m:Movie {id: 74}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 75 - Moonrise Kingdom
+MATCH (a:Actor {name: 'Jared Gilman'}), (m:Movie {id: 75}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Kara Hayward'}), (m:Movie {id: 75}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Bruce Willis'}), (m:Movie {id: 75}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 76 - The Royal Tenenbaums
+MATCH (a:Actor {name: 'Gene Hackman'}), (m:Movie {id: 76}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Anjelica Huston'}), (m:Movie {id: 76}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ben Stiller'}), (m:Movie {id: 76}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gwyneth Paltrow'}), (m:Movie {id: 76}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 77 - Rushmore
+MATCH (a:Actor {name: 'Jason Schwartzman'}), (m:Movie {id: 77}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Bill Murray'}), (m:Movie {id: 77}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Olivia Williams'}), (m:Movie {id: 77}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 78 - The Darjeeling Limited
+MATCH (a:Actor {name: 'Owen Wilson'}), (m:Movie {id: 78}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Adrien Brody'}), (m:Movie {id: 78}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jason Schwartzman'}), (m:Movie {id: 78}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 79 - Bottle Rocket
+MATCH (a:Actor {name: 'Owen Wilson'}), (m:Movie {id: 79}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Luke Wilson'}), (m:Movie {id: 79}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert Musgrave'}), (m:Movie {id: 79}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 80 - Fantastic Mr. Fox
+MATCH (a:Actor {name: 'George Clooney'}), (m:Movie {id: 80}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Meryl Streep'}), (m:Movie {id: 80}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jason Schwartzman'}), (m:Movie {id: 80}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 81 - Isle of Dogs
+MATCH (a:Actor {name: 'Bryan Cranston'}), (m:Movie {id: 81}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Edward Norton'}), (m:Movie {id: 81}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Bill Murray'}), (m:Movie {id: 81}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 82 - The French Dispatch
+MATCH (a:Actor {name: 'Bill Murray'}), (m:Movie {id: 82}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Frances McDormand'}), (m:Movie {id: 82}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Timothée Chalamet'}), (m:Movie {id: 82}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 83 - Asteroid City
+MATCH (a:Actor {name: 'Jason Schwartzman'}), (m:Movie {id: 83}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 83}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Hanks'}), (m:Movie {id: 83}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 84 - Black Swan
+MATCH (a:Actor {name: 'Natalie Portman'}), (m:Movie {id: 84}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mila Kunis'}), (m:Movie {id: 84}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Vincent Cassel'}), (m:Movie {id: 84}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 85 - Requiem for a Dream
+MATCH (a:Actor {name: 'Ellen Burstyn'}), (m:Movie {id: 85}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jared Leto'}), (m:Movie {id: 85}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jennifer Connelly'}), (m:Movie {id: 85}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 86 - Pi
+MATCH (a:Actor {name: 'Sean Gullette'}), (m:Movie {id: 86}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Margolis'}), (m:Movie {id: 86}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 87 - The Fountain
+MATCH (a:Actor {name: 'Hugh Jackman'}), (m:Movie {id: 87}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Rachel Weisz'}), (m:Movie {id: 87}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 88 - Mother!
+MATCH (a:Actor {name: 'Jennifer Lawrence'}), (m:Movie {id: 88}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Javier Bardem'}), (m:Movie {id: 88}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michelle Pfeiffer'}), (m:Movie {id: 88}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 89 - The Wrestler
+MATCH (a:Actor {name: 'Mickey Rourke'}), (m:Movie {id: 89}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Marisa Tomei'}), (m:Movie {id: 89}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 90 - Noah
+MATCH (a:Actor {name: 'Russell Crowe'}), (m:Movie {id: 90}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jennifer Connelly'}), (m:Movie {id: 90}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Anthony Hopkins'}), (m:Movie {id: 90}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 91-99 - Star Wars films
+MATCH (a:Actor {name: 'Mark Hamill'}), (m:Movie {id: 91}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 91}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Carrie Fisher'}), (m:Movie {id: 91}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Mark Hamill'}), (m:Movie {id: 92}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 92}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Carrie Fisher'}), (m:Movie {id: 92}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Mark Hamill'}), (m:Movie {id: 93}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Harrison Ford'}), (m:Movie {id: 93}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Carrie Fisher'}), (m:Movie {id: 93}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Liam Neeson'}), (m:Movie {id: 94}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ewan McGregor'}), (m:Movie {id: 94}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Natalie Portman'}), (m:Movie {id: 94}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Hayden Christensen'}), (m:Movie {id: 95}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Natalie Portman'}), (m:Movie {id: 95}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ewan McGregor'}), (m:Movie {id: 95}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Hayden Christensen'}), (m:Movie {id: 96}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ewan McGregor'}), (m:Movie {id: 96}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Natalie Portman'}), (m:Movie {id: 96}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Daisy Ridley'}), (m:Movie {id: 97}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'John Boyega'}), (m:Movie {id: 97}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Oscar Isaac'}), (m:Movie {id: 97}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Adam Driver'}), (m:Movie {id: 97}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Daisy Ridley'}), (m:Movie {id: 98}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'John Boyega'}), (m:Movie {id: 98}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Adam Driver'}), (m:Movie {id: 98}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Oscar Isaac'}), (m:Movie {id: 98}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Daisy Ridley'}), (m:Movie {id: 99}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'John Boyega'}), (m:Movie {id: 99}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Oscar Isaac'}), (m:Movie {id: 99}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Adam Driver'}), (m:Movie {id: 99}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Felicity Jones'}), (m:Movie {id: 100}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Diego Luna'}), (m:Movie {id: 100}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ben Mendelsohn'}), (m:Movie {id: 100}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Alden Ehrenreich'}), (m:Movie {id: 101}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Woody Harrelson'}), (m:Movie {id: 101}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Emilia Clarke'}), (m:Movie {id: 101}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 102-120 - Marvel films
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 102}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gwyneth Paltrow'}), (m:Movie {id: 102}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeff Bridges'}), (m:Movie {id: 102}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 103}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Hayley Atwell'}), (m:Movie {id: 103}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sebastian Stan'}), (m:Movie {id: 103}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Chris Hemsworth'}), (m:Movie {id: 104}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Natalie Portman'}), (m:Movie {id: 104}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tom Hiddleston'}), (m:Movie {id: 104}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 105}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gwyneth Paltrow'}), (m:Movie {id: 105}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Don Cheadle'}), (m:Movie {id: 105}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 105}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Edward Norton'}), (m:Movie {id: 106}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Liv Tyler'}), (m:Movie {id: 106}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Tim Roth'}), (m:Movie {id: 106}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 107}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 107}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sebastian Stan'}), (m:Movie {id: 107}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Anthony Mackie'}), (m:Movie {id: 107}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Chris Pratt'}), (m:Movie {id: 108}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zoe Saldana'}), (m:Movie {id: 108}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Dave Bautista'}), (m:Movie {id: 108}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Bradley Cooper'}), (m:Movie {id: 108}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 109}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 109}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Ruffalo'}), (m:Movie {id: 109}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Hemsworth'}), (m:Movie {id: 109}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 109}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeremy Renner'}), (m:Movie {id: 109}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Paul Rudd'}), (m:Movie {id: 110}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Evangeline Lilly'}), (m:Movie {id: 110}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Douglas'}), (m:Movie {id: 110}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 111}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 111}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 111}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Sebastian Stan'}), (m:Movie {id: 111}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Anthony Mackie'}), (m:Movie {id: 111}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Benedict Cumberbatch'}), (m:Movie {id: 112}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chiwetel Ejiofor'}), (m:Movie {id: 112}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Rachel McAdams'}), (m:Movie {id: 112}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Chris Pratt'}), (m:Movie {id: 113}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zoe Saldana'}), (m:Movie {id: 113}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Dave Bautista'}), (m:Movie {id: 113}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Kurt Russell'}), (m:Movie {id: 113}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Tom Holland'}), (m:Movie {id: 114}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Keaton'}), (m:Movie {id: 114}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 114}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Hemsworth'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Ruffalo'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeremy Renner'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Don Cheadle'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Paul Rudd'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Brie Larson'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Karen Gillan'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Danai Gurira'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Benedict Wong'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jon Favreau'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Bradley Cooper'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gwyneth Paltrow'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Josh Brolin'}), (m:Movie {id: 115}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Paul Rudd'}), (m:Movie {id: 116}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Evangeline Lilly'}), (m:Movie {id: 116}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Douglas'}), (m:Movie {id: 116}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michelle Pfeiffer'}), (m:Movie {id: 116}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Brie Larson'}), (m:Movie {id: 117}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Samuel L. Jackson'}), (m:Movie {id: 117}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Ben Mendelsohn'}), (m:Movie {id: 117}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Robert Downey Jr.'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Evans'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Ruffalo'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Chris Hemsworth'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Scarlett Johansson'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jeremy Renner'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Don Cheadle'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Paul Rudd'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Brie Larson'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Karen Gillan'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Danai Gurira'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Benedict Wong'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jon Favreau'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Bradley Cooper'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gwyneth Paltrow'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Josh Brolin'}), (m:Movie {id: 118}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Tom Holland'}), (m:Movie {id: 119}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Samuel L. Jackson'}), (m:Movie {id: 119}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jake Gyllenhaal'}), (m:Movie {id: 119}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zendaya'}), (m:Movie {id: 119}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Tom Holland'}), (m:Movie {id: 120}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zendaya'}), (m:Movie {id: 120}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Benedict Cumberbatch'}), (m:Movie {id: 120}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Willem Dafoe'}), (m:Movie {id: 120}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 121-129 - DC films
+MATCH (a:Actor {name: 'Robert Pattinson'}), (m:Movie {id: 121}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Zoë Kravitz'}), (m:Movie {id: 121}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Paul Dano'}), (m:Movie {id: 121}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Ben Affleck'}), (m:Movie {id: 122}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gal Gadot'}), (m:Movie {id: 122}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Henry Cavill'}), (m:Movie {id: 122}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Henry Cavill'}), (m:Movie {id: 123}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Amy Adams'}), (m:Movie {id: 123}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Michael Shannon'}), (m:Movie {id: 123}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Ben Affleck'}), (m:Movie {id: 124}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Henry Cavill'}), (m:Movie {id: 124}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Amy Adams'}), (m:Movie {id: 124}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Gal Gadot'}), (m:Movie {id: 124}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Will Smith'}), (m:Movie {id: 125}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Margot Robbie'}), (m:Movie {id: 125}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jared Leto'}), (m:Movie {id: 125}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Jason Momoa'}), (m:Movie {id: 126}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Amber Heard'}), (m:Movie {id: 126}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Willem Dafoe'}), (m:Movie {id: 126}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Zachary Levi'}), (m:Movie {id: 127}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mark Strong'}), (m:Movie {id: 127}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Asher Angel'}), (m:Movie {id: 127}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Margot Robbie'}), (m:Movie {id: 128}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Mary Elizabeth Winstead'}), (m:Movie {id: 128}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Jurnee Smollett'}), (m:Movie {id: 128}) MERGE (a)-[:ACTED_IN]->(m);
+
+MATCH (a:Actor {name: 'Margot Robbie'}), (m:Movie {id: 129}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Idris Elba'}), (m:Movie {id: 129}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'John Cena'}), (m:Movie {id: 129}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 130-136 - Matrix and John Wick
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 130}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Laurence Fishburne'}), (m:Movie {id: 130}) MERGE (a)-[:ACTED_IN]->(m);
+MATCH (a:Actor {name: 'Carrie-Anne Moss'}), (m:Movie {id: 130}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 131 - The Matrix Revolutions
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 131}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 132 - The Matrix Resurrections
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 132}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 133 - John Wick
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 133}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 134 - John Wick: Chapter 2
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 134}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 135 - John Wick: Chapter 3
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 135}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 136 - John Wick: Chapter 4
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 136}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 137 - Speed
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 137}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 138 - Point Break
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 138}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 139 - Constantine
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 139}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 140 - The Devil's Advocate
+MATCH (a:Actor {name: 'Al Pacino'}), (m:Movie {id: 140}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 141 - A Scanner Darkly
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 141}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 142 - The Lake House
+MATCH (a:Actor {name: 'Sandra Bullock'}), (m:Movie {id: 142}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 143 - Something's Gotta Give
+MATCH (a:Actor {name: 'Jack Nicholson'}), (m:Movie {id: 143}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 144 - The Replacements
+MATCH (a:Actor {name: 'Gene Hackman'}), (m:Movie {id: 144}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 145 - Sweet November
+MATCH (a:Actor {name: 'Charlize Theron'}), (m:Movie {id: 145}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 146 - Hardball
+MATCH (a:Actor {name: 'Diane Lane'}), (m:Movie {id: 146}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 147 - The Gift
+MATCH (a:Actor {name: 'Cate Blanchett'}), (m:Movie {id: 147}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 148 - Bram Stoker's Dracula
+MATCH (a:Actor {name: 'Gary Oldman'}), (m:Movie {id: 148}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 149 - Little Buddha
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 149}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 150 - My Own Private Idaho
+MATCH (a:Actor {name: 'River Phoenix'}), (m:Movie {id: 150}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 151 - Bill & Ted's Excellent Adventure
+MATCH (a:Actor {name: 'Alex Winter'}), (m:Movie {id: 151}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 152 - Bill & Ted's Bogus Journey
+MATCH (a:Actor {name: 'Alex Winter'}), (m:Movie {id: 152}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 153 - River's Edge
+MATCH (a:Actor {name: 'Crispin Glover'}), (m:Movie {id: 153}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 154 - Dangerous Liaisons
+MATCH (a:Actor {name: 'Glenn Close'}), (m:Movie {id: 154}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 155 - Parenthood
+MATCH (a:Actor {name: 'Steve Martin'}), (m:Movie {id: 155}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 156 - I Love You to Death
+MATCH (a:Actor {name: 'Kevin Kline'}), (m:Movie {id: 156}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 157 - Much Ado About Nothing
+MATCH (a:Actor {name: 'Kenneth Branagh'}), (m:Movie {id: 157}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 158 - Even Cowgirls Get the Blues
+MATCH (a:Actor {name: 'Uma Thurman'}), (m:Movie {id: 158}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 159 - Tune in Tomorrow
+MATCH (a:Actor {name: 'Peter Falk'}), (m:Movie {id: 159}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 160 - Prince of Pennsylvania
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 160}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 161 - Youngblood
+MATCH (a:Actor {name: 'Rob Lowe'}), (m:Movie {id: 161}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 162 - Flying
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 162}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 163 - Under the Cherry Moon
+MATCH (a:Actor {name: 'Jerome Benton'}), (m:Movie {id: 163}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 164 - The Night Before
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 164}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 165 - Permanent Record
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 165}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 166 - The Dude
+MATCH (a:Actor {name: 'Jeff Bridges'}), (m:Movie {id: 166}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 167 - Chain Reaction
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 167}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 168 - Feeling Minnesota
+MATCH (a:Actor {name: 'Cameron Diaz'}), (m:Movie {id: 168}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 169 - A Walk in the Clouds
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 169}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 170 - Johnny Mnemonic
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 170}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 171 - The Watcher
+MATCH (a:Actor {name: 'James Spader'}), (m:Movie {id: 171}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 172 - The Day the Earth Stood Still
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 172}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 173 - 47 Ronin
+MATCH (a:Actor {name: 'Hiroyuki Sanada'}), (m:Movie {id: 173}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 174 - Knock Knock
+MATCH (a:Actor {name: 'Lorenza Izzo'}), (m:Movie {id: 174}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 175 - Exposed
+MATCH (a:Actor {name: 'Ana de Armas'}), (m:Movie {id: 175}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 176 - The Neon Demon
+MATCH (a:Actor {name: 'Elle Fanning'}), (m:Movie {id: 176}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 177 - Siberia
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 177}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 178 - Replicas
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 178}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 179 - Destination Wedding
+MATCH (a:Actor {name: 'Winona Ryder'}), (m:Movie {id: 179}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 180 - Always Be My Maybe
+MATCH (a:Actor {name: 'Ali Wong'}), (m:Movie {id: 180}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 181 - Toy Story 4
+MATCH (a:Actor {name: 'Tom Hanks'}), (m:Movie {id: 181}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 182 - SpongeBob Movie: Sponge on the Run
+MATCH (a:Actor {name: 'Tom Kenny'}), (m:Movie {id: 182}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 183 - Bill & Ted Face the Music
+MATCH (a:Actor {name: 'Alex Winter'}), (m:Movie {id: 183}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 184 - The SpongeBob Movie: Sponge Out of Water
+MATCH (a:Actor {name: 'Antonio Banderas'}), (m:Movie {id: 184}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 185 - BRZN
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 185}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 186 - Generation Um...
+MATCH (a:Actor {name: 'Bojana Novakovic'}), (m:Movie {id: 186}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 187 - Man of Tai Chi
+MATCH (a:Actor {name: 'Tiger Hu Chen'}), (m:Movie {id: 187}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 188 - Side by Side
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 188}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 189 - Henry's Crime
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 189}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 190 - The Private Lives of Pippa Lee
+MATCH (a:Actor {name: 'Robin Wright'}), (m:Movie {id: 190}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 191 - Street Kings
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 191}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 192 - The Lake House
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 192}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 193 - Thumbsucker
+MATCH (a:Actor {name: 'Lou Taylor Pucci'}), (m:Movie {id: 193}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 194 - Ellie Parker
+MATCH (a:Actor {name: 'Naomi Watts'}), (m:Movie {id: 194}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 195 - Something New
+MATCH (a:Actor {name: 'Sanaa Lathan'}), (m:Movie {id: 195}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 196 - The Animatrix
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 196}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 197 - Enter the Matrix
+MATCH (a:Actor {name: 'Jada Pinkett Smith'}), (m:Movie {id: 197}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 198 - Neo Yokio: Pink Christmas
+MATCH (a:Actor {name: 'Jaden Smith'}), (m:Movie {id: 198}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 199 - BRZN II
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 199}) MERGE (a)-[:ACTED_IN]->(m);
+
+// Film 200 - The Matrix: Path of Neo
+MATCH (a:Actor {name: 'Keanu Reeves'}), (m:Movie {id: 200}) MERGE (a)-[:ACTED_IN]->(m);
+
+
+
+
+
+
+// Dodajemo WATCHED veze između korisnika i filmova sa ocenama
+MATCH (u:User {id: 1001}), (m:Movie {id: 1}) 
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1001}), (m:Movie {id: 2})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1001}), (m:Movie {id: 4})
+MERGE (u)-[:WATCHED {rating: 10}]->(m);
+
+MATCH (u:User {id: 1002}), (m:Movie {id: 1})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1002}), (m:Movie {id: 3})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1002}), (m:Movie {id: 8})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1003}), (m:Movie {id: 2})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1003}), (m:Movie {id: 5})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1003}), (m:Movie {id: 10})
+MERGE (u)-[:WATCHED {rating: 10}]->(m);
+
+MATCH (u:User {id: 1004}), (m:Movie {id: 7})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1004}), (m:Movie {id: 11})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1004}), (m:Movie {id: 25})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1005}), (m:Movie {id: 13})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1005}), (m:Movie {id: 14})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1005}), (m:Movie {id: 30})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1006}), (m:Movie {id: 42})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1006}), (m:Movie {id: 50})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1006}), (m:Movie {id: 60})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1007}), (m:Movie {id: 70})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1007}), (m:Movie {id: 71})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1007}), (m:Movie {id: 72})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1008}), (m:Movie {id: 80})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1008}), (m:Movie {id: 81})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1008}), (m:Movie {id: 82})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1009}), (m:Movie {id: 91})
+MERGE (u)-[:WATCHED {rating: 10}]->(m);
+
+MATCH (u:User {id: 1009}), (m:Movie {id: 92})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1009}), (m:Movie {id: 93})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1010}), (m:Movie {id: 102})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1010}), (m:Movie {id: 105})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1010}), (m:Movie {id: 110})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1011}), (m:Movie {id: 121})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1011}), (m:Movie {id: 122})
+MERGE (u)-[:WATCHED {rating: 6}]->(m);
+
+MATCH (u:User {id: 1011}), (m:Movie {id: 125})
+MERGE (u)-[:WATCHED {rating: 5}]->(m);
+
+MATCH (u:User {id: 1012}), (m:Movie {id: 133})
+MERGE (u)-[:WATCHED {rating: 9}]->(m);
+
+MATCH (u:User {id: 1012}), (m:Movie {id: 137})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1013}), (m:Movie {id: 138})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+
+MATCH (u:User {id: 1014}), (m:Movie {id: 150})
+MERGE (u)-[:WATCHED {rating: 8}]->(m);
+
+MATCH (u:User {id: 1015}), (m:Movie {id: 160})
+MERGE (u)-[:WATCHED {rating: 6}]->(m);
+
+MATCH (u:User {id: 1016}), (m:Movie {id: 170})
+MERGE (u)-[:WATCHED {rating: 7}]->(m);
+

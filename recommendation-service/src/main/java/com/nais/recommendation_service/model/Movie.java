@@ -10,10 +10,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class Movie {
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String title;
-    private String description;
     private Integer releaseYear;
     private Long durationMinutes;
 

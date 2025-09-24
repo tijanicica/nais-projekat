@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.core.schema.*;
 @Data
 @Node("Genre")
 public class Genre {
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String name;
     // Getters and Setters

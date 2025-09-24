@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @Node("User")
 public class User {
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String username;
 

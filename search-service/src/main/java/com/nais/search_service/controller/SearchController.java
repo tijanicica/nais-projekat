@@ -1,6 +1,6 @@
 package com.nais.search_service.controller;
 
-import com.nais.search_service.dto.MovieDocument;
+import com.nais.search_service.dto.MovieDocumentDto;
 import com.nais.search_service.service.SearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class SearchController {
     // ... konstruktor
 
     @PostMapping("/movies")
-    public ResponseEntity<Void> addMovie(@RequestBody MovieDocument movie) {
+    public ResponseEntity<Void> addMovie(@RequestBody MovieDocumentDto movie) {
         searchService.addMovie(movie);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

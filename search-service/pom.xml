@@ -84,6 +84,7 @@
 			<artifactId>spring-ai-weaviate-store-spring-boot-starter</artifactId>
 		</dependency>
 
+
 		<!-- Utilities -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

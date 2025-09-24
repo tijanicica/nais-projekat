@@ -1,6 +1,6 @@
 package com.nais.search_service.service;
 
-import com.nais.search_service.dto.MovieDocument;
+import com.nais.search_service.dto.MovieDocumentDto;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -20,7 +20,7 @@ public class SearchService {
     }
 
     // CREATE
-    public void addMovie(MovieDocument movie) {
+    public void addMovie(MovieDocumentDto movie) {
         Document doc = new Document(movie.getDescription(), Map.of(
                 "title", movie.getTitle(),
                 "releaseYear", movie.getReleaseYear(),

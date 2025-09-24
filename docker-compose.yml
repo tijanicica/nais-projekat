@@ -110,6 +110,10 @@ services:
       - ./data:/data
 
   weaviate:
+    image: semitechnologies/weaviate:1.22.4
+    ports:
+      - "8080:8080"
+    restart: on-failure:0
     command:
       - --host
       - 0.0.0.0
@@ -117,26 +121,22 @@ services:
       - '8080'
       - --scheme
       - http
-    image: semitechnologies/weaviate:1.22.4
-    ports:
-      - "8080:8080"
-    restart: on-failure:0
+    volumes:
+      - weaviate_data:/var/lib/weaviate # Očuvan je vaš volumen
     environment:
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
-      DEFAULT_VECTORIZER_MODULE: 'text2vec-contextionary' # Promenjeno
-      ENABLE_MODULES: 'text2vec-contextionary' # Promenjeno
-      CONTEXTIONARY_URL: contextionary:9999 # Putanja 
+      DEFAULT_VECTORIZER_MODULE: 'none' # Vaša aplikacija pruža vektore (čak i lažne)
+      ENABLE_MODULES: 'text2vec-contextionary' # Ostavljamo modul da bi ga Konzola mogla koristiti
+      CONTEXTIONARY_URL: contextionary:9999
+      CLUSTER_HOSTNAME: 'node1'
     depends_on:
-      # Zavisnost od novog contextionary servisa
       - contextionary
-    volumes:
-      - weaviate_data:/var/lib/weaviate
-    healthcheck:
-      test: [ "CMD-SHELL", "wget -q --spider --timeout=10 http://localhost:8080/v1/.well-known/ready || exit 1" ]
-      interval: 30s
-      timeout: 10s
+    healthcheck: # Očuvan je vaš healthcheck da bi 'search-service' radio kako treba
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
       retries: 5
 
   contextionary:

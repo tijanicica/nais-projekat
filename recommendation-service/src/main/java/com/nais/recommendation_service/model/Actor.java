@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @Node("Actor")
 public class Actor {
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String name;
 
