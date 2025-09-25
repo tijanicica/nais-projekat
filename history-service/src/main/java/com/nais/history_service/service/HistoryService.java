@@ -4,6 +4,7 @@ import com.nais.history_service.model.ViewingHistoryByUser;
 import com.nais.history_service.repository.ViewingHistoryByUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class HistoryService {
     // ... konstruktor
 
     public ViewingHistoryByUser recordViewingActivity(ViewingHistoryByUser activity) {
-        activity.setViewingTimestamp(LocalDateTime.now()); // Postavi trenutno vreme
+        activity.setViewedAt(Instant.from(LocalDateTime.now())); // Postavi trenutno vreme
         return repository.save(activity);
     }
 

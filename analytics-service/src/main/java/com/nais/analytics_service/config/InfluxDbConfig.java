@@ -15,9 +15,12 @@ public class InfluxDbConfig {
     private char[] token;
     @Value("${spring.influx.org}")
     private String org;
+    @Value("${spring.influx.bucket}")
+    private String bucket;
+
 
     @Bean
     public InfluxDBClient influxDBClient() {
-        return InfluxDBClientFactory.create(influxUrl, token, org);
+        return InfluxDBClientFactory.create(influxUrl, token, org, bucket);
     }
 }

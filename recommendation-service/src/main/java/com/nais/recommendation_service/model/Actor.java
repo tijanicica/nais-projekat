@@ -1,18 +1,22 @@
 package com.nais.recommendation_service.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.*;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
-@Node("Actor")
 @Getter
 @Setter
+@Data
+@Node("Actor")
 public class Actor {
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String name;
-    // Getters and Setters
+
 }
 

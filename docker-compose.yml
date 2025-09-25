@@ -8,6 +8,12 @@ services:
     image: eureka-server:latest
     ports:
       - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 10s
 
   gateway-api:
     build:
@@ -17,11 +23,16 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
-      - eureka-server
-      - history-service
-      - recommendation-service
-      - search-service
-      - analytics-service
+      eureka-server:
+        condition: service_healthy
+      history-service:
+        condition: service_started
+      recommendation-service:
+        condition: service_started
+      search-service:
+        condition: service_started
+      analytics-service:
+        condition: service_started
     ports:
       - "9003:9000"
 
@@ -31,8 +42,10 @@ services:
       dockerfile: Dockerfile
     image: history-service:latest
     depends_on:
-      - cassandradb
-      - eureka-server
+      cassandradb:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
     restart: always
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
@@ -60,8 +73,10 @@ services:
       dockerfile: Dockerfile
     image: recommendation-service:latest
     depends_on:
-      - eureka-server
-      - neo4j
+      eureka-server:
+        condition: service_healthy
+      neo4j:
+        condition: service_started
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_NEO4J_URI: "bolt://neo4j:7687"
@@ -75,10 +90,15 @@ services:
     image: analytics-service:latest
     restart: on-failure
     depends_on:
-      - eureka-server
-      - influxdb
+      eureka-server:
+        condition: service_healthy
+      influxdb:
+        condition: service_started
     environment:
       SPRING_INFLUX_URL: http://influxdb:8086
+      SPRING_INFLUX_TOKEN: my-super-secret-auth-token
+      SPRING_INFLUX_ORG: nais_org
+      SPRING_INFLUX_BUCKET: nais_bucket
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
 
   influxdb:
@@ -107,6 +127,10 @@ services:
       - ./data:/data
 
   weaviate:
+    image: semitechnologies/weaviate:1.22.4
+    ports:
+      - "8080:8080"
+    restart: on-failure:0
     command:
       - --host
       - 0.0.0.0
@@ -114,26 +138,22 @@ services:
       - '8080'
       - --scheme
       - http
-    image: semitechnologies/weaviate:1.22.4
-    ports:
-      - "8080:8080"
-    restart: on-failure:0
+    volumes:
+      - weaviate_data:/var/lib/weaviate
     environment:
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
-      DEFAULT_VECTORIZER_MODULE: 'text2vec-contextionary' # Promenjeno
-      ENABLE_MODULES: 'text2vec-contextionary' # Promenjeno
-      CONTEXTIONARY_URL: contextionary:9999 # Putanja 
+      DEFAULT_VECTORIZER_MODULE: 'none'
+      ENABLE_MODULES: 'text2vec-contextionary'
+      CONTEXTIONARY_URL: contextionary:9999
+      CLUSTER_HOSTNAME: 'node1'
     depends_on:
-      # Zavisnost od novog contextionary servisa
       - contextionary
-    volumes:
-      - weaviate_data:/var/lib/weaviate
     healthcheck:
-      test: [ "CMD-SHELL", "wget -q --spider --timeout=10 http://localhost:8080/v1/.well-known/ready || exit 1" ]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
       retries: 5
 
   contextionary:
@@ -145,6 +165,14 @@ services:
       NEIGHBOR_OCCURRENCE_IGNORE_PERCENTILE: 5
       ENABLE_COMPOUND_SPLITTING: 'false'
 
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    container_name: ollama
+
   search-service:
     build: ./search-service
     ports:
@@ -153,13 +181,18 @@ services:
       weaviate:
         condition: service_healthy
       eureka-server:
+        condition: service_healthy
+      ollama:
         condition: service_started
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     restart: on-failure
 
+
+
 volumes:
   data:
   influxdb-storage:
   weaviate_data: {}
+  ollama_data : {}
