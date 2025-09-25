@@ -10,6 +10,7 @@ import io.weaviate.client.v1.filters.Operator;
 import io.weaviate.client.v1.filters.WhereFilter;
 import io.weaviate.client.v1.graphql.model.GraphQLResponse;
 import io.weaviate.client.v1.graphql.query.argument.WhereArgument;
+import io.weaviate.client.v1.schema.model.WeaviateClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -90,45 +91,52 @@ public class DataSeeder implements CommandLineRunner {
     /**
      * Brise sve objekte iz Weaviate klase definisane u application.properties.
      */
-    private void deleteAllDocuments() {
-        log.info("Deleting all existing documents from Weaviate class: '{}'", weaviateObjectClass);
-        try {
-            // Kreiramo 'where' filter koristeći stari API (WhereFilter)
-            // koji će obuhvatiti sve objekte.
-            WhereFilter whereFilter = WhereFilter.builder()
-                    .path(new String[]{"doc_type"}) // Koristimo polje koje sigurno postoji
-                    .operator(Operator.NotEqual)
-                    .valueString("a_non_existent_value") // Bilo koja vrednost koja se neće poklopiti
-                    .build();
+// U DataSeeder.java
 
-            // Starija verzija klijenta koristi batch().deleter() za brisanje sa filterom.
-            Result<BatchDeleteResponse> result = weaviateClient.batch().objectsBatchDeleter()
+    // U DataSeeder.java
+
+    // U DataSeeder.java
+// Potreban novi import
+
+    private void deleteAllDocuments() {
+        log.info("Attempting to delete Weaviate class: '{}' to ensure a clean seed.", weaviateObjectClass);
+        try {
+            // Pristup za veoma stare verzije klijenta:
+            // 1. Dobijamo celu šemu
+            Result<WeaviateClass> classSchemaResult = weaviateClient.schema().classGetter()
                     .withClassName(weaviateObjectClass)
-                    .withWhere(whereFilter)
                     .run();
 
-            if (result.hasErrors()) {
-                // Proveravamo da li je greška samo zato što klasa ne postoji, što je u redu
-                boolean classNotFoundError = result.getError().getMessages().stream()
+            // 2. Proveravamo da li je došlo do greške. Ako greška sadrži "not found", klasa ne postoji.
+            if (classSchemaResult.hasErrors()) {
+                boolean notFound = classSchemaResult.getError().getMessages().stream()
                         .anyMatch(m -> m.getMessage() != null && m.getMessage().contains("could not be found"));
-
-                if (classNotFoundError) {
-                    log.warn("Class '{}' not found. Nothing to delete. The class will be created on first add.", weaviateObjectClass);
+                if (notFound) {
+                    log.warn("Class '{}' does not exist. Nothing to delete.", weaviateObjectClass);
+                    return; // Izlazimo iz metode jer nema šta da se briše
                 } else {
-                    String errorMessages = result.getError().getMessages().stream()
-                            .map(msg -> msg.getMessage())
-                            .collect(Collectors.joining(", "));
-                    log.error("Error deleting documents from Weaviate: {}", errorMessages);
+                    // Neka druga greška se desila
+                    log.error("An error occurred while checking for class existence: {}", classSchemaResult.getError().getMessages());
+                    return;
                 }
-            } else if (result.getResult() != null && result.getResult().getResults() != null) {
-                log.info("Successfully initiated deletion of {} matching documents from class '{}'.",
-                        result.getResult().getResults().getMatches(), weaviateObjectClass);
-            } else {
-                log.info("Deletion command sent successfully for class '{}'.", weaviateObjectClass);
+            }
+
+            // 3. Ako nije bilo greške, znači da klasa postoji i možemo je obrisati.
+            if (classSchemaResult.getResult() != null) {
+                log.info("Class '{}' exists. Proceeding with deletion.", weaviateObjectClass);
+                Result<Boolean> deleteResult = weaviateClient.schema().classDeleter()
+                        .withClassName(weaviateObjectClass)
+                        .run();
+
+                if (deleteResult.hasErrors()) {
+                    log.error("Failed to delete class '{}'. Errors: {}", weaviateObjectClass, deleteResult.getError().getMessages());
+                } else {
+                    log.info("Successfully deleted class '{}'. It will be recreated on first add.", weaviateObjectClass);
+                }
             }
 
         } catch (Exception e) {
-            log.error("An unexpected error occurred while trying to delete documents from Weaviate.", e);
+            log.error("An unexpected error occurred while trying to delete the Weaviate class.", e);
         }
     }
 

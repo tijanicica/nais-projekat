@@ -8,6 +8,12 @@ services:
     image: eureka-server:latest
     ports:
       - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 10s
 
   gateway-api:
     build:
@@ -17,11 +23,16 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
-      - eureka-server
-      - history-service
-      - recommendation-service
-      - search-service
-      - analytics-service
+      eureka-server:
+        condition: service_healthy
+      history-service:
+        condition: service_started
+      recommendation-service:
+        condition: service_started
+      search-service:
+        condition: service_started
+      analytics-service:
+        condition: service_started
     ports:
       - "9003:9000"
 
@@ -31,8 +42,10 @@ services:
       dockerfile: Dockerfile
     image: history-service:latest
     depends_on:
-      - cassandradb
-      - eureka-server
+      cassandradb:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
     restart: always
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
@@ -60,8 +73,10 @@ services:
       dockerfile: Dockerfile
     image: recommendation-service:latest
     depends_on:
-      - eureka-server
-      - neo4j
+      eureka-server:
+        condition: service_healthy
+      neo4j:
+        condition: service_started
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_NEO4J_URI: "bolt://neo4j:7687"
@@ -75,8 +90,10 @@ services:
     image: analytics-service:latest
     restart: on-failure
     depends_on:
-      - eureka-server
-      - influxdb
+      eureka-server:
+        condition: service_healthy
+      influxdb:
+        condition: service_started
     environment:
       SPRING_INFLUX_URL: http://influxdb:8086
       SPRING_INFLUX_TOKEN: my-super-secret-auth-token
@@ -148,6 +165,14 @@ services:
       NEIGHBOR_OCCURRENCE_IGNORE_PERCENTILE: 5
       ENABLE_COMPOUND_SPLITTING: 'false'
 
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    container_name: ollama
+
   search-service:
     build: ./search-service
     ports:
@@ -156,6 +181,8 @@ services:
       weaviate:
         condition: service_healthy
       eureka-server:
+        condition: service_healthy
+      ollama:
         condition: service_started
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
@@ -166,3 +193,4 @@ volumes:
   data:
   influxdb-storage:
   weaviate_data: {}
+  ollama_data : {}
