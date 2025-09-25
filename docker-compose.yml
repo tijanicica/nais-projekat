@@ -122,18 +122,18 @@ services:
       - --scheme
       - http
     volumes:
-      - weaviate_data:/var/lib/weaviate # Očuvan je vaš volumen
+      - weaviate_data:/var/lib/weaviate
     environment:
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
-      DEFAULT_VECTORIZER_MODULE: 'none' # Vaša aplikacija pruža vektore (čak i lažne)
-      ENABLE_MODULES: 'text2vec-contextionary' # Ostavljamo modul da bi ga Konzola mogla koristiti
+      DEFAULT_VECTORIZER_MODULE: 'none'
+      ENABLE_MODULES: 'text2vec-contextionary'
       CONTEXTIONARY_URL: contextionary:9999
       CLUSTER_HOSTNAME: 'node1'
     depends_on:
       - contextionary
-    healthcheck: # Očuvan je vaš healthcheck da bi 'search-service' radio kako treba
+    healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/v1/.well-known/ready"]
       interval: 10s
       timeout: 5s

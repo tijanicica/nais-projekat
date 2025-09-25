@@ -1,5 +1,8 @@
 package com.nais.analytics_service.config;
 
+import com.influxdb.client.DeleteApi;
+import java.time.OffsetDateTime;
+import org.springframework.beans.factory.annotation.Value;
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.WriteApi;
 import com.nais.analytics_service.model.StreamingPerformance;
@@ -26,11 +29,19 @@ public class InfluxDBDataInitializer implements CommandLineRunner {
 
     @Autowired
     private InfluxDBClient influxDBClient;
+    @Value("${spring.influx.bucket}")
+    private String bucket;
+
+    @Value("${spring.influx.org}")
+    private String org;
 
     private record WatchedEvent(String userId, String movieId) {}
 
     @Override
     public void run(String... args) throws Exception {
+
+        clearPreviousData();
+
         logger.info("Starting InfluxDB data seeding...");
 
         List<WatchedEvent> watchedEvents = getWatchedEvents();
@@ -66,6 +77,27 @@ public class InfluxDBDataInitializer implements CommandLineRunner {
 
         writeDataToInflux(userInteractions, streamingPerformances);
         logger.info("InfluxDB data seeding finished successfully.");
+    }
+
+    private void clearPreviousData() {
+        logger.info("Clearing previous data from bucket: {}", bucket);
+        DeleteApi deleteApi = influxDBClient.getDeleteApi();
+
+        OffsetDateTime start = OffsetDateTime.parse("2023-01-01T00:00:00Z");
+        OffsetDateTime stop = OffsetDateTime.now().plusYears(1); // Sada + 1 godina, za svaki slučaj
+
+        try {
+            String predicateUserInteraction = "_measurement=\"user_interaction\"";
+            deleteApi.delete(start, stop, predicateUserInteraction, bucket, org);
+            logger.info("Cleared all data from 'user_interaction' measurement.");
+
+            String predicateStreamingPerformance = "_measurement=\"streaming_performance\"";
+            deleteApi.delete(start, stop, predicateStreamingPerformance, bucket, org);
+            logger.info("Cleared all data from 'streaming_performance' measurement.");
+
+        } catch (Exception e) {
+            logger.error("Failed to clear previous data from InfluxDB.", e);
+        }
     }
 
     private void generateUserInteractionsForEvent(List<UserInteraction> interactions, WatchedEvent event, Instant startTime, int count, Random random) {
