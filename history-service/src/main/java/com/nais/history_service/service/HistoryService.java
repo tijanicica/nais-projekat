@@ -134,4 +134,24 @@ public class HistoryService {
         // CassandraTemplate omogućava izvršavanje proizvoljnih CQL upita.
         cassandraTemplate.getCqlOperations().execute(cql);
     }
+
+    public void updateViewingProgress(Long userId, Long movieId, int newProgressSeconds) {
+        ViewingProgressByUserMovieKey progressKey = new ViewingProgressByUserMovieKey(userId, movieId);
+        ViewingProgressByUserMovie progress = new ViewingProgressByUserMovie();
+        progress.setKey(progressKey);
+        progress.setProgressSeconds(newProgressSeconds);
+        progress.setLastWatchedAt(Instant.now());
+
+        viewingProgressRepository.save(progress);
+    }
+
+    /**
+     * D (Delete): Briše jedan zapis iz glavne tabele istorije gledanja.
+     * NAPOMENA: Za potpunu konzistentnost, trebalo bi obrisati zapise i iz ostalih tabela,
+     * ali za potrebe demonstracije CRUD operacije, ovo je dovoljno.
+     */
+    public void deleteViewingHistoryEvent(Long userId, Instant viewedAt) {
+        ViewingHistoryByUserKey key = new ViewingHistoryByUserKey(userId, viewedAt);
+        viewingHistoryRepository.deleteById(key);
+    }
 }
