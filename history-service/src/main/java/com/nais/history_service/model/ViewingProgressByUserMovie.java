@@ -1,14 +1,22 @@
 package com.nais.history_service.model;
+
+import com.nais.history_service.model.key.ViewingProgressByUserMovieKey;
 import lombok.Data;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.*;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 import java.time.Instant;
-@Data @Table("viewing_progress_by_user_movie")
+
+@Data
+@Table("viewing_progress_by_user_movie")
 public class ViewingProgressByUserMovie {
-    @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-    private Long userId;
-    @PrimaryKeyColumn(name = "movie_id", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
-    private Long movieId;
-    @Column("progress_seconds") private int progressSeconds;
-    @Column("last_watched_at") private Instant lastWatchedAt;
+
+    @PrimaryKey
+    private ViewingProgressByUserMovieKey key;
+
+    @Column("progress_seconds")
+    private int progressSeconds;
+
+    @Column("last_watched_at")
+    private Instant lastWatchedAt;
 }
