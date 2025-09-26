@@ -4,139 +4,181 @@ import com.nais.search_service.dto.ActorDocumentDto;
 import com.nais.search_service.dto.MovieDocumentDto;
 import io.weaviate.client.WeaviateClient;
 import io.weaviate.client.base.Result;
-import io.weaviate.client.v1.batch.model.BatchDeleteResponse;
+import io.weaviate.client.v1.batch.model.ObjectGetResponse;
 import io.weaviate.client.v1.data.model.WeaviateObject;
-import io.weaviate.client.v1.filters.Operator;
-import io.weaviate.client.v1.filters.WhereFilter;
-import io.weaviate.client.v1.graphql.model.GraphQLResponse;
-import io.weaviate.client.v1.graphql.query.argument.WhereArgument;
+import io.weaviate.client.v1.schema.model.DataType;
+import io.weaviate.client.v1.schema.model.Property;
 import io.weaviate.client.v1.schema.model.WeaviateClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.document.Document;
-import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.boot.CommandLineRunner;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(DataSeeder.class);
-    private final VectorStore vectorStore;
-    private final WeaviateClient weaviateClient; // Injektujemo nativni Weaviate klijent
+    private final WeaviateClient client;
 
-    @Value("${spring.ai.vectorstore.weaviate.object-class:Document}") // Učitavamo ime klase iz propertija
-    private String weaviateObjectClass;
+    // Definišemo imena naših kolekcija (klasa)
+    public static final String MOVIE_CLASS = "Movie";
+    public static final String ACTOR_CLASS = "Actor";
 
-    public DataSeeder(VectorStore vectorStore, WeaviateClient weaviateClient) {
-        this.vectorStore = vectorStore;
-        this.weaviateClient = weaviateClient;
+    public DataSeeder(WeaviateClient weaviateClient) {
+        this.client = weaviateClient;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Starting Weaviate data seeding for ALL actors and movies...");
+        log.info("Starting Weaviate data seeding...");
 
-        // NOVI KORAK: Brisanje svih postojećih dokumenata pre dodavanja novih
-        deleteAllDocuments();
+        // 1. Kreiraj ili ponovo kreiraj šeme za obe kolekcije
+        createOrRecreateSchemas();
 
-        // 1. Kreiraj dokumente za glumce
-        List<ActorDocumentDto> actors = createCompleteActorList();
-        List<Document> actorDocuments = actors.stream()
-                .map(actor -> {
-                    Map<String, Object> metadata = new HashMap<>();
-                    metadata.put("actorId", actor.getActorId());
-                    metadata.put("name", actor.getName());
-                    metadata.put("birthYear", actor.getBirthYear());
-                    metadata.put("nationality", actor.getNationality());
-                    metadata.put("doc_type", "Actor"); // Tip dokumenta za filtriranje
-                    return new Document(actor.getBiography(), metadata);
-                })
-                .collect(Collectors.toList());
+        // 2. Popuni kolekciju filmova
+        seedMovies();
 
-        // 2. Kreiraj dokumente za filmove
-        List<MovieDocumentDto> movies = createCompleteMovieList();
-        List<Document> movieDocuments = movies.stream()
-                .map(movie -> {
-                    Map<String, Object> metadata = new HashMap<>();
-                    metadata.put("movieId", movie.getMovieId());
-                    metadata.put("title", movie.getTitle());
-                    metadata.put("releaseYear", movie.getReleaseYear());
-                    metadata.put("genre", movie.getGenre());
-                    metadata.put("doc_type", "Movie"); // Tip dokumenta za filtriranje
-                    return new Document(movie.getDescription(), metadata);
-                })
-                .collect(Collectors.toList());
+        // 3. Popuni kolekciju glumaca
+        seedActors();
 
-        // 3. Spoji sve dokumente i dodaj ih u Weaviate
-        List<Document> allDocuments = Stream.concat(actorDocuments.stream(), movieDocuments.stream())
-                .collect(Collectors.toList());
+        log.info("Data seeding completed successfully.");
+    }
 
-        if (!allDocuments.isEmpty()) {
-            vectorStore.add(allDocuments);
-            log.info("Successfully seeded all {} actor and {} movie documents into Weaviate.", actorDocuments.size(), movieDocuments.size());
+    private void createOrRecreateSchemas() {
+        log.info("Defining Weaviate schemas...");
+
+        // --- Kreiranje šeme za klasu Movie ---
+        deleteClassIfExists(MOVIE_CLASS);
+        WeaviateClass movieClass = WeaviateClass.builder()
+                .className(MOVIE_CLASS)
+                .description("A collection of movies")
+                .vectorizer("text2vec-contextionary") // ISPRAVKA: Koristi transformer umesto OpenAI
+                .properties(Arrays.asList(
+                        Property.builder().name("movieId").dataType(Arrays.asList(DataType.INT)).build(),
+                        Property.builder().name("title").dataType(Arrays.asList(DataType.TEXT)).build(),
+                        Property.builder().name("releaseYear").dataType(Arrays.asList(DataType.INT)).build(),
+                        Property.builder().name("genre").dataType(Arrays.asList(DataType.TEXT)).build(),
+                        // Vektorizovano polje sa eksplicitnim indexom
+                        Property.builder()
+                                .name("description")
+                                .dataType(Arrays.asList(DataType.TEXT))
+                                .indexSearchable(true) // DODATO: Eksplicitni indeks
+                                .build()
+                ))
+                .build();
+
+        Result<Boolean> movieClassResult = client.schema().classCreator().withClass(movieClass).run();
+        if (movieClassResult.hasErrors()) {
+            log.error("Failed to create Movie class: {}", movieClassResult.getError().getMessages());
         } else {
-            log.warn("No data to seed. Both actor and movie lists were empty.");
+            log.info("Successfully created Movie class.");
+        }
+
+        // --- Kreiranje šeme za klasu Actor ---
+        deleteClassIfExists(ACTOR_CLASS);
+        WeaviateClass actorClass = WeaviateClass.builder()
+                .className(ACTOR_CLASS)
+                .description("A collection of actors")
+                .vectorizer("text2vec-contextionary") // ISPRAVKA: Koristi transformer
+                .properties(Arrays.asList(
+                        Property.builder().name("actorId").dataType(Arrays.asList(DataType.INT)).build(),
+                        Property.builder()
+                                .name("name")
+                                .dataType(Arrays.asList(DataType.TEXT))
+                                .indexSearchable(true) // DODATO: Indeks za nevektorizovano polje
+                                .build(),
+                        Property.builder().name("birthYear").dataType(Arrays.asList(DataType.INT)).build(),
+                        Property.builder().name("nationality").dataType(Arrays.asList(DataType.TEXT)).build(),
+                        // Vektorizovano polje sa eksplicitnim indexom
+                        Property.builder()
+                                .name("biography")
+                                .dataType(Arrays.asList(DataType.TEXT))
+                                .indexSearchable(true) // DODATO: Eksplicitni indeks
+                                .build()
+                ))
+                .build();
+
+        Result<Boolean> actorClassResult = client.schema().classCreator().withClass(actorClass).run();
+        if (actorClassResult.hasErrors()) {
+            log.error("Failed to create Actor class: {}", actorClassResult.getError().getMessages());
+        } else {
+            log.info("Successfully created Actor class.");
         }
     }
 
-    /**
-     * Brise sve objekte iz Weaviate klase definisane u application.properties.
-     */
-// U DataSeeder.java
-
-    // U DataSeeder.java
-
-    // U DataSeeder.java
-// Potreban novi import
-
-    private void deleteAllDocuments() {
-        log.info("Attempting to delete Weaviate class: '{}' to ensure a clean seed.", weaviateObjectClass);
-        try {
-            // Pristup za veoma stare verzije klijenta:
-            // 1. Dobijamo celu šemu
-            Result<WeaviateClass> classSchemaResult = weaviateClient.schema().classGetter()
-                    .withClassName(weaviateObjectClass)
-                    .run();
-
-            // 2. Proveravamo da li je došlo do greške. Ako greška sadrži "not found", klasa ne postoji.
-            if (classSchemaResult.hasErrors()) {
-                boolean notFound = classSchemaResult.getError().getMessages().stream()
-                        .anyMatch(m -> m.getMessage() != null && m.getMessage().contains("could not be found"));
-                if (notFound) {
-                    log.warn("Class '{}' does not exist. Nothing to delete.", weaviateObjectClass);
-                    return; // Izlazimo iz metode jer nema šta da se briše
-                } else {
-                    // Neka druga greška se desila
-                    log.error("An error occurred while checking for class existence: {}", classSchemaResult.getError().getMessages());
-                    return;
-                }
+    private void deleteClassIfExists(String className) {
+        Result<Boolean> classExists = client.schema().exists().withClassName(className).run();
+        if (classExists.getResult() != null && classExists.getResult()) {
+            log.warn("Class '{}' already exists. Deleting it.", className);
+            Result<Boolean> deleteResult = client.schema().classDeleter().withClassName(className).run();
+            if (deleteResult.hasErrors()) {
+                log.error("Failed to delete class '{}': {}", className, deleteResult.getError().getMessages());
+            } else {
+                log.info("Class '{}' deleted successfully.", className);
             }
+        }
+    }
 
-            // 3. Ako nije bilo greške, znači da klasa postoji i možemo je obrisati.
-            if (classSchemaResult.getResult() != null) {
-                log.info("Class '{}' exists. Proceeding with deletion.", weaviateObjectClass);
-                Result<Boolean> deleteResult = weaviateClient.schema().classDeleter()
-                        .withClassName(weaviateObjectClass)
-                        .run();
+    private void seedMovies() {
+        log.info("Seeding movies...");
+        List<MovieDocumentDto> movies = createCompleteMovieList();
 
-                if (deleteResult.hasErrors()) {
-                    log.error("Failed to delete class '{}'. Errors: {}", weaviateObjectClass, deleteResult.getError().getMessages());
-                } else {
-                    log.info("Successfully deleted class '{}'. It will be recreated on first add.", weaviateObjectClass);
-                }
-            }
+        List<WeaviateObject> movieObjects = movies.stream().map(movie -> {
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("movieId", movie.getMovieId());
+            properties.put("title", movie.getTitle());
+            properties.put("description", movie.getDescription());
+            properties.put("releaseYear", movie.getReleaseYear());
+            properties.put("genre", movie.getGenre());
 
-        } catch (Exception e) {
-            log.error("An unexpected error occurred while trying to delete the Weaviate class.", e);
+            return WeaviateObject.builder()
+                    .className(MOVIE_CLASS)
+                    .id(UUID.randomUUID().toString())
+                    .properties(properties)
+                    .build();
+        }).collect(Collectors.toList());
+
+        Result<ObjectGetResponse[]> batchResult = client.batch().objectsBatcher()
+                .withObjects(movieObjects.toArray(new WeaviateObject[0]))
+                .run();
+
+        if (batchResult.hasErrors()) {
+            log.error("Failed to seed movies: {}", batchResult.getError().getMessages());
+        } else {
+            log.info("Successfully seeded {} movies.", batchResult.getResult().length);
+        }
+    }
+
+    private void seedActors() {
+        log.info("Seeding actors...");
+        List<ActorDocumentDto> actors = createCompleteActorList();
+
+        List<WeaviateObject> actorObjects = actors.stream().map(actor -> {
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("actorId", actor.getActorId());
+            properties.put("name", actor.getName());
+            properties.put("biography", actor.getBiography());
+            properties.put("birthYear", actor.getBirthYear());
+            properties.put("nationality", actor.getNationality());
+
+            return WeaviateObject.builder()
+                    .className(ACTOR_CLASS)
+                    .id(UUID.randomUUID().toString())
+                    .properties(properties)
+                    .build();
+        }).collect(Collectors.toList());
+
+        Result<ObjectGetResponse[]> batchResult = client.batch().objectsBatcher()
+                .withObjects(actorObjects.toArray(new WeaviateObject[0]))
+                .run();
+
+        if (batchResult.hasErrors()) {
+            log.error("Failed to seed actors: {}", batchResult.getError().getMessages());
+        } else {
+            log.info("Successfully seeded {} actors.", batchResult.getResult().length);
         }
     }
 
