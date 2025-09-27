@@ -66,7 +66,7 @@ public class HistoryService {
         viewingActivityByDateRepository.save(activityByDate);
 
         // Update: top_viewed_movies_by_month (uvek ažurira counter)
-        updateTopMovieCounter(currentYearMonth, movieId);
+//        updateTopMovieCounter(currentYearMonth, movieId);
     }
 
 
@@ -117,13 +117,13 @@ public class HistoryService {
     /**
      * UPDATE za 'top_viewed_movies_by_month'.
      */
-    private void updateTopMovieCounter(String yearMonth, Long movieId) {
-        String cql = String.format(
-                "UPDATE top_viewed_movies_by_month SET view_count = view_count + 1 WHERE year_month = '%s' AND movie_id = %d",
-                yearMonth, movieId
-        );
-        cassandraTemplate.getCqlOperations().execute(cql);
-    }
+//    private void updateTopMovieCounter(String yearMonth, Long movieId) {
+//        String cql = String.format(
+//                "UPDATE top_viewed_movies_by_month SET view_count = view_count + 1 WHERE year_month = '%s' AND movie_id = %d",
+//                yearMonth, movieId
+//        );
+//        cassandraTemplate.getCqlOperations().execute(cql);
+//    }
 
     // NAPOMENA: Za tabele 'ViewingHistoryByUser', 'UserActivityByDevice' i 'ViewingActivityByMovieDate'
     // klasično ažuriranje nema poslovnog smisla jer su one logovi događaja.
