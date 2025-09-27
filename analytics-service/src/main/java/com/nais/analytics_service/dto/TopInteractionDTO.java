@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class TopInteractionDTO {
     private String movieId;
     private String interactionType;
-    private Long count; // Broj ponavljanja
+    private Long count;
 }

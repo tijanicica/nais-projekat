@@ -80,10 +80,10 @@ public class AnalyticsRepositoryImpl implements AnalyticsRepository {
                 "from(bucket: \"%s\")\n" +
                         "  |> range(start: -%s)\n" +
                         "  |> filter(fn: (r) => r._measurement == \"streaming_performance\" and r._field == \"bitrateKbps\")\n" +
-                        "  |> group(columns: [\"userId\", \"movieId\"])\n" + // GRUPIŠEMO I PO FILMU!
+                        "  |> group(columns: [\"userId\", \"movieId\"])\n" +
                         "  |> mean()\n" +
-                        "  |> filter(fn: (r) => r._value < %d)\n" + // Filtriramo proseke
-                        "  |> sort(columns: [\"_value\"])", // Sortiramo da najgori budu prvi
+                        "  |> filter(fn: (r) => r._value < %d)\n" +
+                        "  |> sort(columns: [\"_value\"])", // najgori prvi
                 bucket, timeRange, bitrateThreshold
         );
         return influxDBClient.getQueryApi().query(fluxQuery, org);

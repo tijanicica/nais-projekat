@@ -15,13 +15,13 @@ public interface AnalyticsRepository {
     // delete
     void delete(OffsetDateTime start, OffsetDateTime stop, String predicate);
 
-    // slozeni upiti
-    // Upit 1: Prosečno vreme baferovanja po regionu i tipu uređaja
+
+    // prosecno vreme baferovanja po regionu i tipu uređaja
     List<FluxTable> findAvgBufferingByRegionAndDevice(String timeRange);
 
-    // Upit 2: Broj korisnika sa niskim bitrate-om
+    // korisnici sa niskim bitrateom
     List<FluxTable> findUsersWithLowBitrate(String timeRange, int bitrateThreshold);
 
-    // Upit 3: Top N najčešćih interakcija po filmu
+    // top n najcescih interakcija sa filmom
     List<FluxTable> findTopInteractionCombinations(String timeRange, int limit);
 }

@@ -32,4 +32,8 @@ spring:
           uri: http://search-service
           predicates:
             - Path=/search-service/**
+        - id: report-service
+          uri: http://report-service
+          predicates:
+            - Path=/report-service/**
 

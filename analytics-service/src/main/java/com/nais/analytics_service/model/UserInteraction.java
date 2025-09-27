@@ -16,7 +16,7 @@ public class UserInteraction {
     @Column(tag = true)
     private String deviceType;
     @Column(tag = true)
-    private String interactionType;  //PLAY, PAUSE, SEEK_FORWARD
+    private String interactionType;
 
     @Column
     private Long videoTimestampSec; //na kojoj sekundi se desila interakcija
