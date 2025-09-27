@@ -37,6 +37,4 @@ public class ActorService {
     public void deleteActor(Long id) {
         actorRepository.deleteById(id);
     }
-
-
 }

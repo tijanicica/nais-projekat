@@ -1,8 +1,8 @@
 package com.nais.recommendation_service.controller;
 
 import com.nais.recommendation_service.model.Movie;
-import com.nais.recommendation_service.repository.MovieRepository;
 import com.nais.recommendation_service.service.MovieService;
+import com.nais.recommendation_service.dto.TopRatedMovieDTO; // DODAJTE OVAJ IMPORT
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,86 +56,87 @@ public class MovieController {
 
     // --- Relationship Endpoints ---
 
-//    @PostMapping("/{movieId}/actors/{actorId}")
-//    public ResponseEntity<Movie> addActorToMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
-//        try {
-//            Movie movie = movieService.addActorToMovie(movieId, actorId);
-//            return ResponseEntity.ok(movie);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null); // Or specific error handling
-//        }
-//    }
-//
-//    @DeleteMapping("/{movieId}/actors/{actorId}")
-//    public ResponseEntity<Movie> removeActorFromMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
-//        try {
-//            Movie movie = movieService.removeActorFromMovie(movieId, actorId);
-//            return ResponseEntity.ok(movie);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-//
-//    @PostMapping("/{movieId}/genres/{genreId}")
-//    public ResponseEntity<Movie> addGenreToMovie(@PathVariable Long movieId, @PathVariable Long genreId) {
-//        try {
-//            Movie movie = movieService.addGenreToMovie(movieId, genreId);
-//            return ResponseEntity.ok(movie);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-//
-//    @DeleteMapping("/{movieId}/genres/{genreId}")
-//    public ResponseEntity<Movie> removeGenreFromMovie(@PathVariable Long movieId, @PathVariable Long genreId) {
-//        try {
-//            Movie movie = movieService.removeGenreFromMovie(movieId, genreId);
-//            return ResponseEntity.ok(movie);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-//
-//    @PostMapping("/{movieId}/director/{directorId}")
-//    public ResponseEntity<Movie> setDirectorForMovie(@PathVariable Long movieId, @PathVariable Long directorId) {
-//        try {
-//            Movie movie = movieService.setDirectorForMovie(movieId, directorId);
-//            return ResponseEntity.ok(movie);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-//
-//    @DeleteMapping("/{movieId}/director")
-//    public ResponseEntity<Movie> removeDirectorFromMovie(@PathVariable Long movieId) {
-//        try {
-//            Movie movie = movieService.removeDirectorFromMovie(movieId);
-//            return ResponseEntity.ok(movie);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-//    // Complex Query 1 Endpoint
-//    @GetMapping("/top-rated")
-//    public List<MovieRepository.MovieProjection> getTopRatedMovies(@RequestParam(defaultValue = "10") int limit) {
-//        return movieService.getTopNMoviesByAverageRating(limit);
-//    }
-//
-//    // Complex CRUD 1 Endpoint
-//    @PutMapping("/director/{directorId}/increment-release-year")
-//    public ResponseEntity<List<Movie>> incrementMoviesReleaseYearByDirector(
-//            @PathVariable Long directorId,
-//            @RequestParam(defaultValue = "1") Integer increment) {
-//        List<Movie> updatedMovies = movieService.incrementMovieReleaseYearByDirector(directorId, increment);
-//        return ResponseEntity.ok(updatedMovies);
-//    }
-//
-//    // Complex CRUD 2 Endpoint
-//    @PostMapping("/before-year/{year}/add-genre/{genreId}")
-//    public ResponseEntity<List<Movie>> addGenreToMoviesReleasedBeforeYear(
-//            @PathVariable Integer year,
-//            @PathVariable Long genreId) {
-//        List<Movie> updatedMovies = movieService.addGenreToMoviesReleasedBeforeYear(genreId, year);
-//        return ResponseEntity.ok(updatedMovies);
-//    }
+    @PostMapping("/{movieId}/actors/{actorId}")
+    public ResponseEntity<Movie> addActorToMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
+        try {
+            Movie movie = movieService.addActorToMovie(movieId, actorId);
+            return ResponseEntity.ok(movie);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @DeleteMapping("/{movieId}/actors/{actorId}")
+    public ResponseEntity<Movie> removeActorFromMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
+        try {
+            Movie movie = movieService.removeActorFromMovie(movieId, actorId);
+            return ResponseEntity.ok(movie);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/{movieId}/genres/{genreId}")
+    public ResponseEntity<Movie> addGenreToMovie(@PathVariable Long movieId, @PathVariable Long genreId) {
+        try {
+            Movie movie = movieService.addGenreToMovie(movieId, genreId);
+            return ResponseEntity.ok(movie);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @DeleteMapping("/{movieId}/genres/{genreId}")
+    public ResponseEntity<Movie> removeGenreFromMovie(@PathVariable Long movieId, @PathVariable Long genreId) {
+        try {
+            Movie movie = movieService.removeGenreFromMovie(movieId, genreId);
+            return ResponseEntity.ok(movie);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/{movieId}/director/{directorId}")
+    public ResponseEntity<Movie> setDirectorForMovie(@PathVariable Long movieId, @PathVariable Long directorId) {
+        try {
+            Movie movie = movieService.setDirectorForMovie(movieId, directorId);
+            return ResponseEntity.ok(movie);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @DeleteMapping("/{movieId}/director")
+    public ResponseEntity<Movie> removeDirectorFromMovie(@PathVariable Long movieId) {
+        try {
+            Movie movie = movieService.removeDirectorFromMovie(movieId);
+            return ResponseEntity.ok(movie);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    // Complex Query 1 Endpoint
+    @GetMapping("/top-rated")
+    public List<TopRatedMovieDTO> getTopRatedMovies(@RequestParam(defaultValue = "10") int limit) {
+        return movieService.getTopNMoviesByAverageRating(limit);
+    }
+
+    // Complex CRUD 1 Endpoint
+    @PutMapping("/director/{directorId}/increment-release-year")
+    public ResponseEntity<List<Movie>> incrementMoviesReleaseYearByDirector(
+            @PathVariable Long directorId,
+            @RequestParam(defaultValue = "1") Integer increment) {
+        List<Movie> updatedMovies = movieService.incrementMovieReleaseYearByDirector(directorId, increment);
+        return ResponseEntity.ok(updatedMovies);
+    }
+
+    // Complex CRUD 2 Endpoint
+    @PostMapping("/before-year/{year}/add-genre/{genreId}")
+    public ResponseEntity<List<Movie>> addGenreToMoviesReleasedBeforeYear(
+            @PathVariable Integer year,
+            @PathVariable Long genreId) {
+        List<Movie> updatedMovies = movieService.addGenreToMoviesReleasedBeforeYear(genreId, year);
+        return ResponseEntity.ok(updatedMovies);
+    }
 }
