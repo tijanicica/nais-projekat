@@ -51,8 +51,8 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_DATA_CASSANDRA_CONTACT_POINTS: cassandradb
       SPRING_DATA_CASSANDRA_PORT: 9042
-      REDIS_HOST: redisdb
-      REDIS_PORT: 6379
+      #REDIS_HOST: redisdb
+      #REDIS_PORT: 6379
     ports:
       - "9050:9050"
 
