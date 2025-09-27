@@ -40,21 +40,21 @@ public class PdfGeneratorService {
 
         document.open();
 
-        // Naslov
+        // naslov
         Paragraph title = new Paragraph("Mesečni Izveštaj o Aktivnosti za Korisnika: " + userId, TITLE_FONT);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
         document.add(Chunk.NEWLINE);
 
-        // --- Sekcija 1: Istorija Gledanja ---
+        // istorija gledanja
         addHistorySection(document, history);
         document.add(Chunk.NEWLINE);
 
-        // --- Sekcija 2: Lista za Nastavak Gledanja ---
+        // nastavak gledanja
         addProgressSection(document, progress);
         document.add(Chunk.NEWLINE);
 
-        // --- Sekcija 3: Analiza Kvaliteta Streama ---
+        // analiza kvaliteta steam-a
         addAnalyticsSection(document, lowBitrateExperiences);
 
         document.close();

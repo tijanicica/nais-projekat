@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LowBitrateUserDTO {
     private String userId;
-    private String movieId; // NOVI PODATAK
-    private Double averageBitrateKbps; // PREIMENOVANO radi jasnoće
+    private String movieId;
+    private Double averageBitrateKbps;
 }

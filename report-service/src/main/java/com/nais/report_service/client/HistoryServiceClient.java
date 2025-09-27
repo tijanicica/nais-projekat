@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "history-service") // Ime servisa kako je registrovan na Eureci
+@FeignClient(name = "history-service")
 public interface HistoryServiceClient {
 
     @GetMapping("/history/user/{userId}")

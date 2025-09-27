@@ -128,7 +128,6 @@ public class InfluxDBDataInitializer implements CommandLineRunner {
         }
     }
 
-    // IZMENA: Metoda sada prihvata 'startTime' kao argument
     private void generateStreamingPerformanceForEvent(List<StreamingPerformance> performances, WatchedEvent event, Instant startTime, int count, Random random) {
         String[] regions = {"EU-WEST", "EU-CENTRAL", "US-EAST", "US-WEST", "ASIA-SOUTH"};
         String[] deviceTypes = {"WEB", "MOBILE", "TV", "TABLET"};
