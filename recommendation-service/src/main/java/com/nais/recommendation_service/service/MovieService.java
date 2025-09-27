@@ -1,5 +1,7 @@
 package com.nais.recommendation_service.service;
 
+import com.nais.recommendation_service.dto.TopRatedMovieDTO;
+import com.nais.recommendation_service.dto.MovieRatingResult;
 import com.nais.recommendation_service.model.Actor;
 import com.nais.recommendation_service.model.Director;
 import com.nais.recommendation_service.model.Genre;
@@ -8,14 +10,15 @@ import com.nais.recommendation_service.repository.ActorRepository;
 import com.nais.recommendation_service.repository.DirectorRepository;
 import com.nais.recommendation_service.repository.GenreRepository;
 import com.nais.recommendation_service.repository.MovieRepository;
-//import com.nais.recommendation_service.repository.MovieRepository.MovieProjection;
+import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.HashSet; // Uverite se da je ovo uvezeno
+import java.util.HashSet;
 
 @Service
 public class MovieService {
@@ -23,12 +26,16 @@ public class MovieService {
     private final ActorRepository actorRepository;
     private final DirectorRepository directorRepository;
     private final GenreRepository genreRepository;
+    private final Neo4jClient neo4jClient; // Dodajemo Neo4jClient
 
-    public MovieService(MovieRepository movieRepository, ActorRepository actorRepository, DirectorRepository directorRepository, GenreRepository genreRepository) {
+    public MovieService(MovieRepository movieRepository, ActorRepository actorRepository,
+                        DirectorRepository directorRepository, GenreRepository genreRepository,
+                        Neo4jClient neo4jClient) {
         this.movieRepository = movieRepository;
         this.actorRepository = actorRepository;
         this.directorRepository = directorRepository;
         this.genreRepository = genreRepository;
+        this.neo4jClient = neo4jClient;
     }
 
     @Transactional
@@ -55,7 +62,7 @@ public class MovieService {
                 }
             }
         }
-        movie.setActors(managedActors); // Postavlja novi set sa učitanim podacima
+        movie.setActors(managedActors);
 
         // Obrada žanrova
         Set<Genre> managedGenres = new HashSet<>();
@@ -69,17 +76,20 @@ public class MovieService {
                 }
             }
         }
-        movie.setGenres(managedGenres); // Postavlja novi set sa učitanim podacima
+        movie.setGenres(managedGenres);
 
-        return movieRepository.save(movie);
+        Movie savedMovie = movieRepository.save(movie);
+        // Vratite ga ponovo učitanog sa svim relacijama
+        return movieRepository.findByIdWithAllRelationships(savedMovie.getId())
+                .orElse(savedMovie);
     }
 
     public Optional<Movie> getMovieById(Long id) {
-        return movieRepository.findById(id);
+        return movieRepository.findByIdWithAllRelationships(id); // Koristi metodu koja učitava sve relacije
     }
 
     public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+        return movieRepository.findAllWithAllRelationships(); // Koristi metodu koja učitava sve relacije
     }
 
     @Transactional
@@ -113,7 +123,7 @@ public class MovieService {
                     }
                 }
             }
-            movie.setActors(updatedActors); // Zamenite set sa ažuriranim podacima
+            movie.setActors(updatedActors);
 
             // Ažuriranje žanrova
             Set<Genre> updatedGenres = new HashSet<>();
@@ -127,12 +137,14 @@ public class MovieService {
                     }
                 }
             }
-            movie.setGenres(updatedGenres); // Zamenite set sa ažuriranim podacima
+            movie.setGenres(updatedGenres);
 
-            return movieRepository.save(movie);
+            Movie updatedMovie = movieRepository.save(movie);
+            // Vratite ga ponovo učitanog sa svim relacijama
+            return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                    .orElse(updatedMovie);
         }).orElseThrow(() -> new RuntimeException("Movie not found with id " + id));
     }
-
 
     public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
@@ -140,70 +152,124 @@ public class MovieService {
 
     // --- Relationship Management Methods ---
 
-//    @Transactional
-//    public Movie addActorToMovie(Long movieId, Long actorId) {
-//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-//        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new RuntimeException("Actor not found"));
-//        movie.getActors().add(actor); // HashSet osigurava jedinstvenost
-//        return movieRepository.save(movie);
-//    }
-//
-//    @Transactional
-//    public Movie removeActorFromMovie(Long movieId, Long actorId) {
-//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-//        // Prvo dohvatimo glumca da bismo ga mogli porediti po ID-u
-//        Actor actorToRemove = actorRepository.findById(actorId).orElseThrow(() -> new RuntimeException("Actor not found"));
-//        movie.getActors().removeIf(actor -> actor.getId().equals(actorToRemove.getId()));
-//        return movieRepository.save(movie);
-//    }
-//
-//    @Transactional
-//    public Movie addGenreToMovie(Long movieId, Long genreId) {
-//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-//        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
-//        movie.getGenres().add(genre); // HashSet osigurava jedinstvenost
-//        return movieRepository.save(movie);
-//    }
-//
-//    @Transactional
-//    public Movie removeGenreFromMovie(Long movieId, Long genreId) {
-//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-//        Genre genreToRemove = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
-//        movie.getGenres().removeIf(genre -> genre.getId().equals(genreToRemove.getId()));
-//        return movieRepository.save(movie);
-//    }
-//
-//    @Transactional
-//    public Movie setDirectorForMovie(Long movieId, Long directorId) {
-//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-//        Director director = directorRepository.findById(directorId).orElseThrow(() -> new RuntimeException("Director not found"));
-//        movie.setDirector(director);
-//        return movieRepository.save(movie);
-//    }
-//
-//    @Transactional
-//    public Movie removeDirectorFromMovie(Long movieId) {
-//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-//        movie.setDirector(null);
-//        return movieRepository.save(movie);
-//    }
-//
-//    // --- Complex Query Methods ---
-//
-//    // Complex Query 1
-//    public List<MovieProjection> getTopNMoviesByAverageRating(int limit) {
-//        return movieRepository.findTopNMoviesByAverageRating(limit);
-//    }
-//
-//    // Complex CRUD 1
-//    @Transactional
-//    public List<Movie> incrementMovieReleaseYearByDirector(Long directorId, Integer increment) {
-//        return movieRepository.incrementMovieReleaseYearByDirector(directorId, increment);
-//    }
-//
-//    // Complex CRUD 2
-//    @Transactional
-//    public List<Movie> addGenreToMoviesReleasedBeforeYear(Long genreId, Integer year) {
-//        return movieRepository.addGenreToMoviesReleasedBeforeYear(genreId, year);
-//    }
+    @Transactional
+    public Movie addActorToMovie(Long movieId, Long actorId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new RuntimeException("Actor not found"));
+        movie.getActors().add(actor);
+        Movie updatedMovie = movieRepository.save(movie);
+        return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                .orElse(updatedMovie);
+    }
+
+    @Transactional
+    public Movie removeActorFromMovie(Long movieId, Long actorId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        Actor actorToRemove = actorRepository.findById(actorId).orElseThrow(() -> new RuntimeException("Actor not found"));
+        movie.getActors().removeIf(actor -> actor.getId().equals(actorToRemove.getId()));
+        Movie updatedMovie = movieRepository.save(movie);
+        return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                .orElse(updatedMovie);
+    }
+
+    @Transactional
+    public Movie addGenreToMovie(Long movieId, Long genreId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
+        movie.getGenres().add(genre);
+        Movie updatedMovie = movieRepository.save(movie);
+        return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                .orElse(updatedMovie);
+    }
+
+    @Transactional
+    public Movie removeGenreFromMovie(Long movieId, Long genreId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        Genre genreToRemove = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
+        movie.getGenres().removeIf(genre -> genre.getId().equals(genreToRemove.getId()));
+        Movie updatedMovie = movieRepository.save(movie);
+        return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                .orElse(updatedMovie);
+    }
+
+    @Transactional
+    public Movie setDirectorForMovie(Long movieId, Long directorId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        Director director = directorRepository.findById(directorId).orElseThrow(() -> new RuntimeException("Director not found"));
+        movie.setDirector(director);
+        Movie updatedMovie = movieRepository.save(movie);
+        return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                .orElse(updatedMovie);
+    }
+
+    @Transactional
+    public Movie removeDirectorFromMovie(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        movie.setDirector(null);
+        Movie updatedMovie = movieRepository.save(movie);
+        return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
+                .orElse(updatedMovie);
+    }
+
+    // --- Complex Query Methods ---
+
+    public List<TopRatedMovieDTO> getTopNMoviesByAverageRating(int limit) {
+        String cypher = "MATCH (u:User)-[w:WATCHED]->(m:Movie) " +
+                "WITH m, AVG(w.rating) AS averageRating " +
+                "WHERE averageRating IS NOT NULL " +
+                "RETURN m.id AS movieId, elementId(m) AS elementId, averageRating " + // Vrati movieId i elementId
+                "ORDER BY averageRating DESC " +
+                "LIMIT $limit";
+
+        Collection<MovieRatingResult> topRatedResults = neo4jClient
+                .query(cypher)
+                .bind(limit).to("limit")
+                .fetchAs(MovieRatingResult.class)
+                .mappedBy((typeSystem, record) -> {
+                    return new MovieRatingResult(
+                            record.get("movieId").asLong(), // Long id
+                            record.get("elementId").asString(), //element ID
+                            record.get("averageRating").asDouble()
+                    );
+                })
+                .all();
+
+        System.out.println("topRatedResults: " + topRatedResults);
+
+        // Then, get the full movie details for each
+        List<TopRatedMovieDTO> result = new ArrayList<>();
+        for (MovieRatingResult ratingResult : topRatedResults) {
+            Optional<Movie> movieOpt = movieRepository.findByIdWithAllRelationships(ratingResult.getMovieId());//PROMENI NA GETMOVIEID!!!!
+            System.out.println("Obradjujem movieId: " + ratingResult.getElementId());
+
+            if (movieOpt.isPresent()) {
+                Movie movie = movieOpt.get();
+                System.out.println("Film pronadjen: " + movie);
+                TopRatedMovieDTO dto = new TopRatedMovieDTO();
+                dto.setId(movie.getId());
+                dto.setTitle(movie.getTitle());
+                dto.setReleaseYear(movie.getReleaseYear());
+                dto.setDurationMinutes(movie.getDurationMinutes());
+                dto.setAverageRating(ratingResult.getAverageRating());
+                dto.setGenres(movie.getGenres() != null ? new ArrayList<>(movie.getGenres()) : new ArrayList<>());
+                dto.setActors(movie.getActors() != null ? new ArrayList<>(movie.getActors()) : new ArrayList<>());
+                dto.setDirector(movie.getDirector());
+                result.add(dto);
+            } else {
+                System.out.println("Film NIJE pronadjen sa ID: " + ratingResult.getElementId());
+            }
+        }
+        return result;
+    }
+    // Complex CRUD 1
+    @Transactional
+    public List<Movie> incrementMovieReleaseYearByDirector(Long directorId, Integer increment) {
+        return movieRepository.incrementMovieReleaseYearByDirector(directorId, increment);
+    }
+
+    // Complex CRUD 2
+    @Transactional
+    public List<Movie> addGenreToMoviesReleasedBeforeYear(Long genreId, Integer year) {
+        return movieRepository.addGenreToMoviesReleasedBeforeYear(genreId, year);
+    }
 }

@@ -21,4 +21,10 @@ eureka:
 
 
 
-
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG # Omogućava detaljno logovanje Spring Web sloja
+    org.springframework.data.neo4j: DEBUG # Omogućava detaljno logovanje Spring Data Neo4j
+    org.springframework.transaction: DEBUG # Korisno za transakcije
+    com.nais.recommendation_service: DEBUG # Omogućava detaljno logovanje vaših klasa
