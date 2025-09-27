@@ -13,6 +13,7 @@ import java.util.Set;
 @Node("User")
 public class User {
     @Id
+    @GeneratedValue
     private Long id;
     private String username;
 

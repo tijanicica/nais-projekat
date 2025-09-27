@@ -1,8 +1,8 @@
 package com.nais.recommendation_service.repository;
 
-import com.nais.recommendation_service.model.Genre;
+import com.nais.recommendation_service.model.Director;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GenreRepository extends Neo4jRepository<Genre, Long> {}
+public interface DirectorRepository extends Neo4jRepository<Director, Long> {}
