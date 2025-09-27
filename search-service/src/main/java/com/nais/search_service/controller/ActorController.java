@@ -19,6 +19,13 @@ public class ActorController {
         this.actorService = actorService;
     }
 
+    @GetMapping("/weaviate/{weaviateId}")
+    public ResponseEntity<Map<String, Object>> getActorByWeaviateId(@PathVariable String weaviateId) {
+        Map<String, Object> actor = actorService.getActorByWeaviateId(weaviateId);
+        return actor != null ?
+                ResponseEntity.ok(actor) :
+                ResponseEntity.notFound().build();
+    }
     @PostMapping
     public ResponseEntity<String> addActor(@RequestBody ActorDocumentDto actor) {
         String id = actorService.createActor(actor);

@@ -231,6 +231,7 @@ public class ActorService {
                 .withClassName("Actor")
                 .withFields(fieldsToReturn)
                 .withWhere(where)
+                .withLimit(3)
                 .run();
 
         if (result.hasErrors() || result.getResult() == null) {
@@ -327,5 +328,43 @@ public class ActorService {
         Map<String, Object> get = (Map<String, Object>) data.get("Get");
         return (List<Map<String, Object>>) get.get("Actor");
     }
+    public Map<String, Object> getActorByWeaviateId(String weaviateId) {
+        Field[] fieldsToReturn = {
+                Field.builder().name("actorId").build(),
+                Field.builder().name("name").build(),
+                Field.builder().name("birthYear").build(),
+                Field.builder().name("nationality").build(),
+                Field.builder().name("biography").build(),
+                Field.builder().name("_additional").fields(
+                        Field.builder().name("id").build()
+                ).build()
+        };
 
+        WhereFilter idFilter = WhereFilter.builder()
+                .path(new String[]{"id"})
+                .operator(Operator.Equal)
+                .valueText(weaviateId)
+                .build();
+
+        WhereArgument where = WhereArgument.builder().filter(idFilter).build();
+
+        Result<GraphQLResponse> result = client.graphQL().get()
+                .withClassName("Actor")
+                .withFields(fieldsToReturn)
+                .withWhere(where)
+                .withLimit(1)
+                .run();
+
+        if (result.hasErrors() || result.getResult() == null) {
+            System.err.println("Error in GraphQL query by Weaviate ID: " +
+                    (result.hasErrors() ? result.getError().getMessages() : "Result is null"));
+            return null;
+        }
+
+        Map<String, Object> data = (Map<String, Object>) result.getResult().getData();
+        Map<String, Object> get = (Map<String, Object>) data.get("Get");
+        List<Map<String, Object>> actors = (List<Map<String, Object>>) get.get("Actor");
+
+        return actors.isEmpty() ? null : actors.get(0);
+    }
 }
