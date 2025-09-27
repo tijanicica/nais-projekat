@@ -72,6 +72,8 @@ services:
       context: ./recommendation-service
       dockerfile: Dockerfile
     image: recommendation-service:latest
+    ports:
+      - "9051:9050"
     depends_on:
       eureka-server:
         condition: service_healthy

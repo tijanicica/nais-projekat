@@ -15,8 +15,8 @@ import java.util.Set;
 @Node("Actor")
 public class Actor {
     @Id
+    @GeneratedValue // DODAJTE OVU LINIJU
     private Long id;
     private String name;
 
 }
-
