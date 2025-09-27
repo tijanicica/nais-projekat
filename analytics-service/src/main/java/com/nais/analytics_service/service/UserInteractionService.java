@@ -21,11 +21,12 @@ public class UserInteractionService {
         this.analyticsRepository = analyticsRepository;
     }
 
-    public void recordInteraction(UserInteraction data) {
-        data.setTime(Instant.now());
+     public void recordInteraction(UserInteraction data) {
+        if (data.getTime() == null) {
+            data.setTime(Instant.now());
+        }
         analyticsRepository.save(data);
     }
-
     public void deleteInteractionData(OffsetDateTime start, OffsetDateTime stop, String predicate) {
         analyticsRepository.delete(start, stop, predicate);
     }

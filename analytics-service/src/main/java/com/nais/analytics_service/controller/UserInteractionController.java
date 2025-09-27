@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.nais.analytics_service.dto.FirstWatchEventDTO;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -56,4 +57,18 @@ public class UserInteractionController {
         if (movieId != null && !movieId.isEmpty()) sb.append(String.format(" AND movieId=\"%s\"", movieId));
         return sb.toString();
     }
+
+    @PostMapping("/first-watch")
+    public ResponseEntity<Void> recordFirstWatchEvent(@RequestBody FirstWatchEventDTO eventDTO) {
+    UserInteraction interaction = new UserInteraction();
+    interaction.setUserId(eventDTO.getUserId());
+    interaction.setMovieId(eventDTO.getMovieId());
+    interaction.setDeviceType(eventDTO.getDeviceType());
+    interaction.setInteractionType("FIRST_WATCH");
+    interaction.setVideoTimestampSec(0L);
+    interaction.setTime(eventDTO.getEventTime()); // <-- KORISTIMO VREME IZ DTO-a
+
+    interactionService.recordInteraction(interaction);
+    return new ResponseEntity<>(HttpStatus.CREATED);
+}
 }
