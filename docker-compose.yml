@@ -84,6 +84,7 @@ services:
       SPRING_NEO4J_URI: "bolt://neo4j:7687"
       SPRING_NEO4J_USERNAME: neo4j
       SPRING_NEO4J_PASSWORD: password
+      SEARCH_SERVICE_URL: "http://search-service:8095"
 
   analytics-service:
     build:
