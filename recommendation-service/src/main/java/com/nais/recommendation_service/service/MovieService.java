@@ -10,15 +10,21 @@ import com.nais.recommendation_service.repository.ActorRepository;
 import com.nais.recommendation_service.repository.DirectorRepository;
 import com.nais.recommendation_service.repository.GenreRepository;
 import com.nais.recommendation_service.repository.MovieRepository;
+import org.neo4j.driver.internal.InternalNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.HashSet;
+
+// Dodaj ove import-e na vrh MovieService klase
+
+import org.neo4j.driver.internal.InternalNode;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -27,6 +33,9 @@ public class MovieService {
     private final DirectorRepository directorRepository;
     private final GenreRepository genreRepository;
     private final Neo4jClient neo4jClient; // Dodajemo Neo4jClient
+    private static final Logger logger = LoggerFactory.getLogger(MovieService.class);
+
+
 
     public MovieService(MovieRepository movieRepository, ActorRepository actorRepository,
                         DirectorRepository directorRepository, GenreRepository genreRepository,
@@ -211,65 +220,296 @@ public class MovieService {
                 .orElse(updatedMovie);
     }
 
-    // --- Complex Query Methods ---
 
     public List<TopRatedMovieDTO> getTopNMoviesByAverageRating(int limit) {
         String cypher = "MATCH (u:User)-[w:WATCHED]->(m:Movie) " +
-                "WITH m, AVG(w.rating) AS averageRating " +
+                "OPTIONAL MATCH (m)-[:BELONGS_TO]->(g:Genre) " +
+                "OPTIONAL MATCH (a:Actor)-[:ACTED_IN]->(m) " +
+                "OPTIONAL MATCH (m)<-[:DIRECTED]-(d:Director) " +
+                "WITH m, AVG(w.rating) AS averageRating, COLLECT(DISTINCT g) AS genres, COLLECT(DISTINCT a) AS actors, head(COLLECT(DISTINCT d)) AS director " +
                 "WHERE averageRating IS NOT NULL " +
-                "RETURN m.id AS movieId, elementId(m) AS elementId, averageRating " + // Vrati movieId i elementId
+                "RETURN m.id AS movieId, m.title AS title, m.releaseYear AS releaseYear, m.durationMinutes AS durationMinutes, averageRating, genres, actors, director " +
                 "ORDER BY averageRating DESC " +
                 "LIMIT $limit";
 
-        Collection<MovieRatingResult> topRatedResults = neo4jClient
-                .query(cypher)
+        logger.debug("Executing Cypher query: {}", cypher);
+
+        List<TopRatedMovieDTO> topRatedResults = neo4jClient.query(cypher)
                 .bind(limit).to("limit")
-                .fetchAs(MovieRatingResult.class)
-                .mappedBy((typeSystem, record) -> {
-                    return new MovieRatingResult(
-                            record.get("movieId").asLong(), // Long id
-                            record.get("elementId").asString(), //element ID
-                            record.get("averageRating").asDouble()
-                    );
+                .fetch().all()
+                .stream()
+                .map(record -> {
+                    TopRatedMovieDTO dto = new TopRatedMovieDTO();
+                    try {
+                        Object movieIdObj = record.get("movieId");
+                        if (movieIdObj != null) {
+                            dto.setId(((Number) movieIdObj).longValue());
+                        } else {
+                            logger.warn("movieId is null for record: {}", record.size());
+                        }
+
+                        dto.setTitle((String) record.get("title"));
+                        dto.setReleaseYear(((Number) record.get("releaseYear")).intValue());
+                        dto.setDurationMinutes(((Number) record.get("durationMinutes")).longValue());
+                        dto.setAverageRating(((Number) record.get("averageRating")).doubleValue());
+
+                        // Konverzija za žanrove
+                        List<Genre> genres = new ArrayList<>();
+                        List<Object> genreObjects = (List<Object>) record.get("genres");
+                        if (genreObjects != null) {
+                            logger.debug("Genres found: {}", genreObjects);
+                            for (Object genreObject : genreObjects) {
+                                if (genreObject instanceof InternalNode) {
+                                    try {
+                                        Long genreId = ((InternalNode) genreObject).id();
+                                        Optional<Genre> genre = genreRepository.findById(genreId);
+                                        genre.ifPresent(genres::add);
+                                    } catch (Exception e) {
+                                        logger.warn("Could not map genre object: {}", genreObject, e);
+                                    }
+                                } else {
+                                    logger.warn("Genre object is not an InternalNode: {}", genreObject);
+                                }
+                            }
+                        }
+                        dto.setGenres(genres);
+
+                        // Konverzija za glumce
+                        List<Actor> actors = new ArrayList<>();
+                        List<Object> actorObjects = (List<Object>) record.get("actors");
+                        if (actorObjects != null) {
+                            logger.debug("Actors found: {}", actorObjects);
+                            for (Object actorObject : actorObjects) {
+                                if (actorObject instanceof InternalNode) {
+                                    try {
+                                        Long actorId = ((InternalNode) actorObject).id();
+                                        Optional<Actor> actor = actorRepository.findById(actorId);
+                                        actor.ifPresent(actors::add);
+                                    } catch (Exception e) {
+                                        logger.warn("Could not map actor object: {}", actorObject, e);
+                                    }
+                                } else {
+                                    logger.warn("Actor object is not an InternalNode: {}", actorObject);
+                                }
+                            }
+                        }
+                        dto.setActors(actors);
+
+                        // Konverzija za režisera
+                        Object directorObject = record.get("director");
+                        Director director = null;
+                        if (directorObject instanceof InternalNode) {
+                            try {
+                                Long directorId = ((InternalNode) directorObject).id();
+                                Optional<Director> directorOptional = directorRepository.findById(directorId);
+                                director = directorOptional.orElse(null);
+                            } catch (Exception e) {
+                                logger.warn("Could not map director object: {}", directorObject, e);
+                            }
+                        } else {
+                            logger.warn("Director object is not an InternalNode: {}", directorObject);
+                        }
+                        dto.setDirector(director);
+                    } catch (Exception e) {
+                        logger.error("Error mapping record: {}", record.size(), e);
+                    }
+
+                    return dto;
                 })
-                .all();
+                .collect(Collectors.toList());
 
-        System.out.println("topRatedResults: " + topRatedResults);
-
-        // Then, get the full movie details for each
-        List<TopRatedMovieDTO> result = new ArrayList<>();
-        for (MovieRatingResult ratingResult : topRatedResults) {
-            Optional<Movie> movieOpt = movieRepository.findByIdWithAllRelationships(ratingResult.getMovieId());//PROMENI NA GETMOVIEID!!!!
-            System.out.println("Obradjujem movieId: " + ratingResult.getElementId());
-
-            if (movieOpt.isPresent()) {
-                Movie movie = movieOpt.get();
-                System.out.println("Film pronadjen: " + movie);
-                TopRatedMovieDTO dto = new TopRatedMovieDTO();
-                dto.setId(movie.getId());
-                dto.setTitle(movie.getTitle());
-                dto.setReleaseYear(movie.getReleaseYear());
-                dto.setDurationMinutes(movie.getDurationMinutes());
-                dto.setAverageRating(ratingResult.getAverageRating());
-                dto.setGenres(movie.getGenres() != null ? new ArrayList<>(movie.getGenres()) : new ArrayList<>());
-                dto.setActors(movie.getActors() != null ? new ArrayList<>(movie.getActors()) : new ArrayList<>());
-                dto.setDirector(movie.getDirector());
-                result.add(dto);
-            } else {
-                System.out.println("Film NIJE pronadjen sa ID: " + ratingResult.getElementId());
-            }
-        }
-        return result;
+        logger.debug("Top rated movies: {}", topRatedResults);
+        return topRatedResults;
     }
-    // Complex CRUD 1
-    @Transactional
-    public List<Movie> incrementMovieReleaseYearByDirector(Long directorId, Integer increment) {
-        return movieRepository.incrementMovieReleaseYearByDirector(directorId, increment);
-    }
+    // Zameni postojeće Complex CRUD metode u MovieService klasi
 
-    // Complex CRUD 2
+// Zameni postojeće Complex CRUD metode u MovieService klasi
+@Transactional
+public List<Movie> incrementMovieReleaseYearByDirector(Long directorId, Integer increment) {
+    System.out.println("Director ID: " + directorId + ", Increment: " + increment);
+
+    String cypher = "MATCH (d:Director)-[:DIRECTED]->(m:Movie) " +
+            "WHERE d.id = $directorId " +
+            "SET m.releaseYear = m.releaseYear + $increment " +
+            "WITH m " +
+            "OPTIONAL MATCH (m)-[:BELONGS_TO]->(g:Genre) " +
+            "OPTIONAL MATCH (a:Actor)-[:ACTED_IN]->(m) " +
+            "OPTIONAL MATCH (m)<-[:DIRECTED]-(director:Director) " +
+            "RETURN m.id AS movieId, m.title AS movieTitle, m.releaseYear AS movieYear, m.durationMinutes AS movieDuration, " +
+            "COLLECT(DISTINCT CASE WHEN g IS NOT NULL THEN {id: g.id, name: g.name} END) AS genres, " +
+            "COLLECT(DISTINCT CASE WHEN a IS NOT NULL THEN {id: a.id, name: a.name} END) AS actors, " +
+            "director.id AS directorId, director.name AS directorName";
+
+    List<Movie> results = neo4jClient.query(cypher)
+            .bind(directorId).to("directorId")
+            .bind(increment).to("increment")
+            .fetch().all()
+            .stream()
+            .map(record -> {
+                Movie movie = new Movie();
+                try {
+                    // Mapiranje osnovnih podataka o filmu
+                    Object movieIdObj = record.get("movieId");
+                    if (movieIdObj != null) {
+                        movie.setId(((Number) movieIdObj).longValue());
+                        movie.setTitle((String) record.get("movieTitle"));
+                        movie.setReleaseYear(((Number) record.get("movieYear")).intValue());
+                        movie.setDurationMinutes(((Number) record.get("movieDuration")).longValue());
+                    }
+
+                    // Mapiranje žanrova
+                    Set<Genre> genres = new HashSet<>();
+                    List<Map<String, Object>> genreList = (List<Map<String, Object>>) record.get("genres");
+                    if (genreList != null) {
+                        for (Map<String, Object> genreMap : genreList) {
+                            if (genreMap != null && genreMap.get("id") != null && genreMap.get("name") != null) {
+                                Object genreIdObj = genreMap.get("id");
+                                String genreName = (String) genreMap.get("name");
+                                if (genreIdObj != null && genreName != null && !genreName.trim().isEmpty()) {
+                                    Genre genre = new Genre();
+                                    genre.setId(((Number) genreIdObj).longValue());
+                                    genre.setName(genreName);
+                                    genres.add(genre);
+                                }
+                            }
+                        }
+                    }
+                    movie.setGenres(genres);
+
+                    // Mapiranje glumaca
+                    Set<Actor> actors = new HashSet<>();
+                    List<Map<String, Object>> actorList = (List<Map<String, Object>>) record.get("actors");
+                    if (actorList != null) {
+                        for (Map<String, Object> actorMap : actorList) {
+                            if (actorMap != null && actorMap.get("id") != null && actorMap.get("name") != null) {
+                                Object actorIdObj = actorMap.get("id");
+                                String actorName = (String) actorMap.get("name");
+                                if (actorIdObj != null && actorName != null && !actorName.trim().isEmpty()) {
+                                    Actor actor = new Actor();
+                                    actor.setId(((Number) actorIdObj).longValue());
+                                    actor.setName(actorName);
+                                    actors.add(actor);
+                                }
+                            }
+                        }
+                    }
+                    movie.setActors(actors);
+
+                    // Mapiranje režisera
+                    Object directorIdObj = record.get("directorId");
+                    String directorName = (String) record.get("directorName");
+                    if (directorIdObj != null && directorName != null) {
+                        Director director = new Director();
+                        director.setId(((Number) directorIdObj).longValue());
+                        director.setName(directorName);
+                        movie.setDirector(director);
+                    }
+
+                } catch (Exception e) {
+                    System.err.println("Error mapping movie: " + e.getMessage());
+                    e.printStackTrace();
+                }
+                return movie;
+            })
+            .filter(m -> m.getId() != null)
+            .collect(Collectors.toList());
+
+    System.out.println("Results count: " + results.size());
+    return results;
+}
+    // Complex CRUD 2 - Dodavanje žanra filmovima izdatim pre određene godine
     @Transactional
     public List<Movie> addGenreToMoviesReleasedBeforeYear(Long genreId, Integer year) {
-        return movieRepository.addGenreToMoviesReleasedBeforeYear(genreId, year);
+        System.out.println("Genre ID: " + genreId + ", Year: " + year);
+
+        String cypher = "MATCH (g:Genre) WHERE g.id = $genreId " +
+                "WITH g " +
+                "MATCH (m:Movie) WHERE m.releaseYear < $year " +
+                "MERGE (m)-[:BELONGS_TO]->(g) " +
+                "WITH m " +
+                "OPTIONAL MATCH (m)-[:BELONGS_TO]->(genre:Genre) " +
+                "OPTIONAL MATCH (a:Actor)-[:ACTED_IN]->(m) " +
+                "OPTIONAL MATCH (m)<-[:DIRECTED]-(director:Director) " +
+                "RETURN m.id AS movieId, m.title AS movieTitle, m.releaseYear AS movieYear, m.durationMinutes AS movieDuration, " +
+                "COLLECT(DISTINCT CASE WHEN genre IS NOT NULL THEN {id: genre.id, name: genre.name} END) AS genres, " +
+                "COLLECT(DISTINCT CASE WHEN a IS NOT NULL THEN {id: a.id, name: a.name} END) AS actors, " +
+                "director.id AS directorId, director.name AS directorName";
+
+        List<Movie> results = neo4jClient.query(cypher)
+                .bind(genreId).to("genreId")
+                .bind(year).to("year")
+                .fetch().all()
+                .stream()
+                .map(record -> {
+                    Movie movie = new Movie();
+                    try {
+                        // Mapiranje osnovnih podataka o filmu
+                        Object movieIdObj = record.get("movieId");
+                        if (movieIdObj != null) {
+                            movie.setId(((Number) movieIdObj).longValue());
+                            movie.setTitle((String) record.get("movieTitle"));
+                            movie.setReleaseYear(((Number) record.get("movieYear")).intValue());
+                            movie.setDurationMinutes(((Number) record.get("movieDuration")).longValue());
+                        }
+
+                        // Mapiranje žanrova
+                        Set<Genre> genres = new HashSet<>();
+                        List<Map<String, Object>> genreList = (List<Map<String, Object>>) record.get("genres");
+                        if (genreList != null) {
+                            for (Map<String, Object> genreMap : genreList) {
+                                if (genreMap != null && genreMap.get("id") != null && genreMap.get("name") != null) {
+                                    Object genreIdObj = genreMap.get("id");
+                                    String genreName = (String) genreMap.get("name");
+                                    if (genreIdObj != null && genreName != null && !genreName.trim().isEmpty()) {
+                                        Genre genre = new Genre();
+                                        genre.setId(((Number) genreIdObj).longValue());
+                                        genre.setName(genreName);
+                                        genres.add(genre);
+                                    }
+                                }
+                            }
+                        }
+                        movie.setGenres(genres);
+
+                        // Mapiranje glumaca
+                        Set<Actor> actors = new HashSet<>();
+                        List<Map<String, Object>> actorList = (List<Map<String, Object>>) record.get("actors");
+                        if (actorList != null) {
+                            for (Map<String, Object> actorMap : actorList) {
+                                if (actorMap != null && actorMap.get("id") != null && actorMap.get("name") != null) {
+                                    Object actorIdObj = actorMap.get("id");
+                                    String actorName = (String) actorMap.get("name");
+                                    if (actorIdObj != null && actorName != null && !actorName.trim().isEmpty()) {
+                                        Actor actor = new Actor();
+                                        actor.setId(((Number) actorIdObj).longValue());
+                                        actor.setName(actorName);
+                                        actors.add(actor);
+                                    }
+                                }
+                            }
+                        }
+                        movie.setActors(actors);
+
+                        // Mapiranje režisera
+                        Object directorIdObj = record.get("directorId");
+                        String directorName = (String) record.get("directorName");
+                        if (directorIdObj != null && directorName != null) {
+                            Director director = new Director();
+                            director.setId(((Number) directorIdObj).longValue());
+                            director.setName(directorName);
+                            movie.setDirector(director);
+                        }
+
+                    } catch (Exception e) {
+                        System.err.println("Error mapping movie: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    return movie;
+                })
+                .filter(m -> m.getId() != null)
+                .collect(Collectors.toList());
+
+        System.out.println("Results count: " + results.size());
+        return results;
     }
 }

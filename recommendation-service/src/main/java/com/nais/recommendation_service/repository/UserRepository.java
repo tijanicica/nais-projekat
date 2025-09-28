@@ -15,11 +15,13 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
    //  Kompleksni upit 4: Korisnici koji su gledali filmove režisera i ocenili ih iznad X
     // --- Kompleksni upiti ---
 
-    // Kompleksni upit 4: Korisnici koji su gledali filmove režisera i ocenili ih iznad X
+// Zameni postojeću metodu u UserRepository sa ovom:
+
+// Zameni postojeću metodu u UserRepository sa ovom:
+
+    // Ostavi osnovnu metodu kako je bila
     @Query("MATCH (u:User)-[w:WATCHED]->(m:Movie)<-[:DIRECTED]-(d:Director) " +
             "WHERE d.name = $directorName AND w.rating > $minRating " +
             "RETURN DISTINCT u")
     List<User> findUsersWhoWatchedDirectorMoviesAndRatedAbove(String directorName, int minRating);
-
-
 }

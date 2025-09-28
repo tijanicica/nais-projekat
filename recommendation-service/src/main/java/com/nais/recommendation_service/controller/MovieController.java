@@ -3,15 +3,19 @@ package com.nais.recommendation_service.controller;
 import com.nais.recommendation_service.model.Movie;
 import com.nais.recommendation_service.service.MovieService;
 import com.nais.recommendation_service.dto.TopRatedMovieDTO; // DODAJTE OVAJ IMPORT
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
     private final MovieService movieService;
+    private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
@@ -122,20 +126,22 @@ public class MovieController {
         return movieService.getTopNMoviesByAverageRating(limit);
     }
 
-    // Complex CRUD 1 Endpoint
     @PutMapping("/director/{directorId}/increment-release-year")
     public ResponseEntity<List<Movie>> incrementMoviesReleaseYearByDirector(
             @PathVariable Long directorId,
             @RequestParam(defaultValue = "1") Integer increment) {
+
+        logger.info("Director ID primljen: {}", directorId);
         List<Movie> updatedMovies = movieService.incrementMovieReleaseYearByDirector(directorId, increment);
         return ResponseEntity.ok(updatedMovies);
     }
 
-    // Complex CRUD 2 Endpoint
     @PostMapping("/before-year/{year}/add-genre/{genreId}")
     public ResponseEntity<List<Movie>> addGenreToMoviesReleasedBeforeYear(
             @PathVariable Integer year,
             @PathVariable Long genreId) {
+
+        logger.info("Genre ID primljen: {}", genreId);
         List<Movie> updatedMovies = movieService.addGenreToMoviesReleasedBeforeYear(genreId, year);
         return ResponseEntity.ok(updatedMovies);
     }
