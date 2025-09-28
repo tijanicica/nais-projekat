@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.nais.history_service.model.FirstWatchMilestone;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -134,16 +135,19 @@ public class HistoryController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * DODATO: DELETE (reset) operacija za 'top_viewed_movies_by_month'.
-     * Resetuje brojač za film u određenom mesecu.
-     * Primer poziva: DELETE /api/history/top-movies/counter/movie/1?yearMonth=2025-09
-     */
+
     @DeleteMapping("/top-movies/counter/movie/{movieId}")
     public ResponseEntity<Void> resetCounter(
             @PathVariable Long movieId,
             @RequestParam String yearMonth) {
         historyService.resetMovieCounterForMonth(yearMonth, movieId);
         return ResponseEntity.noContent().build();
+    }
+
+
+     @GetMapping("/milestones")
+    public ResponseEntity<List<FirstWatchMilestone>> getAllMilestones() {
+        List<FirstWatchMilestone> milestones = historyService.getAllMilestones();
+        return ResponseEntity.ok(milestones);
     }
 }

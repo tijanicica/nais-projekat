@@ -1,0 +1,19 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\history-service",
+    "\\history-service\\src",
+    "\\history-service\\src\\main",
+    "\\history-service\\src\\main\\resources",
+    "\\recommendation-service",
+    "\\recommendation-service\\src",
+    "\\recommendation-service\\src\\main",
+    "\\recommendation-service\\src\\main\\java",
+    "\\recommendation-service\\src\\main\\java\\com",
+    "\\recommendation-service\\src\\main\\java\\com\\nais",
+    "\\recommendation-service\\src\\main\\java\\com\\nais\\recommendation_service",
+    "\\recommendation-service\\src\\main\\java\\com\\nais\\recommendation_service\\model"
+  ],
+  "SelectedNode": "\\analytics-service\\pom.xml",
+  "PreviewInSolutionExplorer": false
+}
