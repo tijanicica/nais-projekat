@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class WatchedRelationship {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Property("rating")
