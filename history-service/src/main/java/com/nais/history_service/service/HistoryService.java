@@ -46,7 +46,7 @@ public class HistoryService {
     // ===================================================================================
 
 
-        public void recordViewingActivity(Long userId, Long movieId, int stoppedAtSeconds, String deviceType, String movieTitle) {
+        public void recordViewingActivity(Long userId, Long movieId, int stoppedAtSeconds, String deviceType) {
         Instant now = Instant.now();
         LocalDate today = LocalDate.ofInstant(now, ZoneOffset.UTC);
         String currentYearMonth = today.format(YEAR_MONTH_FORMATTER);

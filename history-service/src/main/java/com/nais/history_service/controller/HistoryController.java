@@ -31,8 +31,7 @@ public class HistoryController {
                 activityDTO.getUserId(),
                 activityDTO.getMovieId(),
                 activityDTO.getStoppedAtSeconds(),
-                activityDTO.getDeviceType(),
-                activityDTO.getMovieTitle()
+                activityDTO.getDeviceType()
         );
         return ResponseEntity.ok().build();
     }

@@ -1,4 +1,4 @@
-package com.nais.history_service;
+/*package com.nais.history_service;
 
 import com.nais.history_service.service.HistoryService;
 import org.springframework.boot.CommandLineRunner;
@@ -109,4 +109,114 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("Data initialization finished. " + totalEventsCreated + " consistent viewing events recorded.");
     }
 }
+*/
 
+package com.nais.history_service;
+
+import com.nais.history_service.service.HistoryService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
+@Component
+public class DataInitializer implements CommandLineRunner {
+
+    private final HistoryService historyService;
+
+    public DataInitializer(HistoryService historyService) {
+        this.historyService = historyService;
+    }
+
+    // Klasa je sada jednostavnija, bez movieTitle
+    private static class WatchedEvent {
+        long userId;
+        long movieId;
+
+        WatchedEvent(long userId, long movieId) {
+            this.userId = userId;
+            this.movieId = movieId;
+        }
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("Starting data initialization for History Service...");
+
+        // Lista je sada ažurirana da ne sadrži naslove filmova
+        List<WatchedEvent> sourceOfTruthEvents = Arrays.asList(
+                new WatchedEvent(1001, 1),
+                new WatchedEvent(1001, 2),
+                new WatchedEvent(1001, 4),
+                new WatchedEvent(1002, 1),
+                new WatchedEvent(1002, 3),
+                new WatchedEvent(1002, 8),
+                new WatchedEvent(1003, 2),
+                new WatchedEvent(1003, 5),
+                new WatchedEvent(1003, 10),
+                new WatchedEvent(1004, 7),
+                new WatchedEvent(1004, 11),
+                new WatchedEvent(1004, 25),
+                new WatchedEvent(1005, 13),
+                new WatchedEvent(1005, 14),
+                new WatchedEvent(1005, 30),
+                new WatchedEvent(1006, 42),
+                new WatchedEvent(1006, 50),
+                new WatchedEvent(1006, 60),
+                new WatchedEvent(1007, 70),
+                new WatchedEvent(1007, 71),
+                new WatchedEvent(1007, 72),
+                new WatchedEvent(1008, 80),
+                new WatchedEvent(1008, 81),
+                new WatchedEvent(1008, 82),
+                new WatchedEvent(1009, 91),
+                new WatchedEvent(1009, 92),
+                new WatchedEvent(1009, 93),
+                new WatchedEvent(1010, 102),
+                new WatchedEvent(1010, 105),
+                new WatchedEvent(1010, 110),
+                new WatchedEvent(1011, 121),
+                new WatchedEvent(1011, 122),
+                new WatchedEvent(1011, 125),
+                new WatchedEvent(1012, 133),
+                new WatchedEvent(1012, 137),
+                new WatchedEvent(1013, 138),
+                new WatchedEvent(1014, 150),
+                new WatchedEvent(1015, 160),
+                new WatchedEvent(1016, 170),
+                new WatchedEvent(1010, 1),
+                new WatchedEvent(1015, 2),
+                new WatchedEvent(1020, 4),
+                new WatchedEvent(1018, 10),
+                new WatchedEvent(1017, 133)
+        );
+
+        Random random = new Random();
+        String[] deviceTypes = {"Smart TV", "Laptop", "Mobile", "Tablet"};
+        int totalEventsCreated = 0;
+
+        for (WatchedEvent event : sourceOfTruthEvents) {
+
+            int numberOfSessions = 5 + random.nextInt(10);
+
+            for (int i = 0; i < numberOfSessions; i++) {
+ 
+                int stoppedAtSeconds = 100 + random.nextInt(8000); 
+                String deviceType = deviceTypes[random.nextInt(deviceTypes.length)];
+
+                // Poziv metode je sada ažuriran i šalje samo 4 argumenta
+                historyService.recordViewingActivity(
+                        event.userId,
+                        event.movieId,
+                        stoppedAtSeconds,
+                        deviceType
+                );
+                totalEventsCreated++;
+            }
+        }
+
+        System.out.println("Data initialization finished. " + totalEventsCreated + " consistent viewing events recorded.");
+    }
+}
