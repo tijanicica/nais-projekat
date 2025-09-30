@@ -1,4 +1,4 @@
-package com.nais.history_service;
+/*package com.nais.history_service;
 
 import com.nais.history_service.service.HistoryService;
 import org.springframework.boot.CommandLineRunner;
@@ -85,18 +85,16 @@ public class DataInitializer implements CommandLineRunner {
         String[] deviceTypes = {"Smart TV", "Laptop", "Mobile", "Tablet"};
         int totalEventsCreated = 0;
 
-        // Prolazimo kroz svaku od 45 "istinitih" veza
         for (WatchedEvent event : sourceOfTruthEvents) {
 
-            // Za svaku vezu, generišemo nasumičan broj događaja (npr. između 5 i 14)
-            int numberOfSessions = 5 + random.nextInt(10); // Generisaće od 5 do 14 sesija
+
+            int numberOfSessions = 5 + random.nextInt(10);
 
             for (int i = 0; i < numberOfSessions; i++) {
-                // Generišemo nasumične podatke za polja koja se menjaju po sesiji
-                int stoppedAtSeconds = 100 + random.nextInt(8000); // Gledao između ~2 min i ~2.2h
+ 
+                int stoppedAtSeconds = 100 + random.nextInt(8000); 
                 String deviceType = deviceTypes[random.nextInt(deviceTypes.length)];
 
-                // Pozivamo servisnu metodu sa KONZISTENTNIM ID-jevima i nasumičnim podacima
                 historyService.recordViewingActivity(
                         event.userId,
                         event.movieId,
@@ -111,10 +109,9 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("Data initialization finished. " + totalEventsCreated + " consistent viewing events recorded.");
     }
 }
+*/
 
-
-
-/*package com.nais.history_service;
+package com.nais.history_service;
 
 import com.nais.history_service.service.HistoryService;
 import org.springframework.boot.CommandLineRunner;
@@ -133,16 +130,14 @@ public class DataInitializer implements CommandLineRunner {
         this.historyService = historyService;
     }
 
-    // Pomoćna klasa samo za čuvanje podataka iz neo4j.txt
+    // Klasa je sada jednostavnija, bez movieTitle
     private static class WatchedEvent {
         long userId;
         long movieId;
-        String movieTitle;
 
-        WatchedEvent(long userId, long movieId, String movieTitle) {
+        WatchedEvent(long userId, long movieId) {
             this.userId = userId;
             this.movieId = movieId;
-            this.movieTitle = movieTitle;
         }
     }
 
@@ -150,48 +145,78 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Starting data initialization for History Service...");
 
-        // Lista događaja "prepisana" iz WATCHED veza u neo4j.txt
-        // Dodajte još događaja po potrebi da imate dovoljno test podataka
-        List<WatchedEvent> events = Arrays.asList(
-                new WatchedEvent(1001, 1, "Inception"),
-                new WatchedEvent(1001, 2, "The Matrix"),
-                new WatchedEvent(1001, 4, "The Dark Knight"),
-                new WatchedEvent(1002, 1, "Inception"),
-                new WatchedEvent(1002, 3, "Pulp Fiction"),
-                new WatchedEvent(1002, 8, "The Lord of the Rings: The Fellowship of the Ring"),
-                new WatchedEvent(1003, 2, "The Matrix"),
-                new WatchedEvent(1003, 5, "Forrest Gump"),
-                new WatchedEvent(1003, 10, "Interstellar"),
-                new WatchedEvent(1004, 7, "Raiders of the Lost Ark"),
-                new WatchedEvent(1004, 11, "The Shawshank Redemption"),
-                new WatchedEvent(1004, 25, "The Avengers"),
-                new WatchedEvent(1005, 13, "Titanic"),
-                new WatchedEvent(1005, 14, "Avatar"),
-                new WatchedEvent(1005, 30, "Inglourious Basterds"),
-                new WatchedEvent(1009, 91, "Star Wars: A New Hope"),
-                new WatchedEvent(1009, 92, "The Empire Strikes Back"),
-                new WatchedEvent(1012, 133, "John Wick")
+        // Lista je sada ažurirana da ne sadrži naslove filmova
+        List<WatchedEvent> sourceOfTruthEvents = Arrays.asList(
+                new WatchedEvent(1001, 1),
+                new WatchedEvent(1001, 2),
+                new WatchedEvent(1001, 4),
+                new WatchedEvent(1002, 1),
+                new WatchedEvent(1002, 3),
+                new WatchedEvent(1002, 8),
+                new WatchedEvent(1003, 2),
+                new WatchedEvent(1003, 5),
+                new WatchedEvent(1003, 10),
+                new WatchedEvent(1004, 7),
+                new WatchedEvent(1004, 11),
+                new WatchedEvent(1004, 25),
+                new WatchedEvent(1005, 13),
+                new WatchedEvent(1005, 14),
+                new WatchedEvent(1005, 30),
+                new WatchedEvent(1006, 42),
+                new WatchedEvent(1006, 50),
+                new WatchedEvent(1006, 60),
+                new WatchedEvent(1007, 70),
+                new WatchedEvent(1007, 71),
+                new WatchedEvent(1007, 72),
+                new WatchedEvent(1008, 80),
+                new WatchedEvent(1008, 81),
+                new WatchedEvent(1008, 82),
+                new WatchedEvent(1009, 91),
+                new WatchedEvent(1009, 92),
+                new WatchedEvent(1009, 93),
+                new WatchedEvent(1010, 102),
+                new WatchedEvent(1010, 105),
+                new WatchedEvent(1010, 110),
+                new WatchedEvent(1011, 121),
+                new WatchedEvent(1011, 122),
+                new WatchedEvent(1011, 125),
+                new WatchedEvent(1012, 133),
+                new WatchedEvent(1012, 137),
+                new WatchedEvent(1013, 138),
+                new WatchedEvent(1014, 150),
+                new WatchedEvent(1015, 160),
+                new WatchedEvent(1016, 170),
+                new WatchedEvent(1010, 1),
+                new WatchedEvent(1015, 2),
+                new WatchedEvent(1020, 4),
+                new WatchedEvent(1018, 10),
+                new WatchedEvent(1017, 133)
         );
 
         Random random = new Random();
         String[] deviceTypes = {"Smart TV", "Laptop", "Mobile", "Tablet"};
+        int totalEventsCreated = 0;
 
-        for (WatchedEvent event : events) {
-            // Generišemo nasumične podatke za polja koja nemamo u neo4j.txt
-            int stoppedAtSeconds = 600 + random.nextInt(3000); // Gledao između 10 i 60 minuta
-            String deviceType = deviceTypes[random.nextInt(deviceTypes.length)];
+        for (WatchedEvent event : sourceOfTruthEvents) {
 
-            // Pozivamo našu glavnu servisnu metodu
-            // Ona će konzistentno popuniti SVIH 5 tabela za ovaj jedan događaj
-            historyService.recordViewingActivity(
-                    event.userId,
-                    event.movieId,
-                    stoppedAtSeconds,
-                    deviceType,
-                    event.movieTitle
-            );
+            int numberOfSessions = 5 + random.nextInt(10);
+
+            for (int i = 0; i < numberOfSessions; i++) {
+ 
+                int stoppedAtSeconds = 100 + random.nextInt(8000); 
+                String deviceType = deviceTypes[random.nextInt(deviceTypes.length)];
+
+                // Poziv metode je sada ažuriran i šalje samo 4 argumenta
+                historyService.recordViewingActivity(
+                        event.userId,
+                        event.movieId,
+                        stoppedAtSeconds,
+                        deviceType
+                );
+                totalEventsCreated++;
+            }
         }
 
-        System.out.println("Data initialization finished. " + events.size() + " viewing events recorded.");
+        System.out.println("Data initialization finished. " + totalEventsCreated + " consistent viewing events recorded.");
     }
-}*/
+}

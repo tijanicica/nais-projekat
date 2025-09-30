@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/history") // Vraćamo na ispravan prefiks sa /api
+@RequestMapping("/history") 
 @RequiredArgsConstructor
 public class HistoryController {
 
@@ -31,8 +31,7 @@ public class HistoryController {
                 activityDTO.getUserId(),
                 activityDTO.getMovieId(),
                 activityDTO.getStoppedAtSeconds(),
-                activityDTO.getDeviceType(),
-                activityDTO.getMovieTitle()
+                activityDTO.getDeviceType()
         );
         return ResponseEntity.ok().build();
     }
@@ -83,10 +82,6 @@ public class HistoryController {
 
     // --- DELETE ---
 
-    /**
-     * DELETE operacija za 'viewing_history_by_user'.
-     * Primer poziva: DELETE /api/history/user/1001/event?viewedAt=2025-09-26T10:15:30.00Z
-     */
     @DeleteMapping("/user/{userId}/event")
     public ResponseEntity<Void> deleteHistoryEvent(
             @PathVariable Long userId,
@@ -95,11 +90,6 @@ public class HistoryController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * DODATO: DELETE operacija za 'viewing_progress_by_user_movie'.
-     * Briše film iz "Continue Watching" liste.
-     * Primer poziva: DELETE /api/history/progress/user/1001/movie/2
-     */
     @DeleteMapping("/progress/user/{userId}/movie/{movieId}")
     public ResponseEntity<Void> deleteViewingProgress(
             @PathVariable Long userId,
@@ -108,11 +98,7 @@ public class HistoryController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * DODATO: DELETE operacija za 'user_activity_by_device'.
-     * Briše sve aktivnosti korisnika na određenom uređaju.
-     * Primer poziva: DELETE /api/history/devices/user/1001?deviceType=Laptop
-     */
+
     @DeleteMapping("/devices/user/{userId}")
     public ResponseEntity<Void> deleteDeviceActivity(
             @PathVariable Long userId,
@@ -121,11 +107,6 @@ public class HistoryController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * DODATO: DELETE operacija za 'viewing_activity_by_movie_date'.
-     * Briše analitički zapis o gledanju.
-     * Primer poziva: DELETE /api/history/analytics/event/user/1001/movie/2?date=2025-09-26
-     */
     @DeleteMapping("/analytics/event/user/{userId}/movie/{movieId}")
     public ResponseEntity<Void> deleteViewingActivityByDate(
             @PathVariable Long userId,

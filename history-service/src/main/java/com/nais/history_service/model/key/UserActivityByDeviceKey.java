@@ -19,7 +19,7 @@ public class UserActivityByDeviceKey implements Serializable {
     @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private Long userId;
 
-    @PrimaryKeyColumn(name = "device_type", ordinal = 1, type = PrimaryKeyType.CLUSTERED) // "web", "mobile", "tv"
+    @PrimaryKeyColumn(name = "device_type", ordinal = 1, type = PrimaryKeyType.CLUSTERED) 
     private String deviceType;
 
     @PrimaryKeyColumn(name = "last_active", ordinal = 2, type = PrimaryKeyType.CLUSTERED)

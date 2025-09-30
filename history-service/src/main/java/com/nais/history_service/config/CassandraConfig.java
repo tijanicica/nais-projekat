@@ -19,7 +19,7 @@ import java.util.List;
 @EnableCassandraRepositories(basePackages = "com.nais.history_service.repository")
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
-    // Vrednosti iz application.properties ostaju iste
+
     @Value("${spring.cassandra.keyspace-name}")
     private String keyspace;
 
@@ -29,11 +29,9 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     @Value("${spring.cassandra.port}")
     private int port;
 
-    // ISPRAVKA: Uklonjena jedna tačka iz @Value anotacije
     @Value("${spring.cassandra.schema-action}")
     private String schemaAction;
 
-    // getContactPoints i getPort ostaju isti
     @Override
     public String getContactPoints() {
         return contactPoints;
@@ -44,7 +42,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         return port;
     }
 
-    // getSchemaAction i getKeyspaceName ostaju isti
+ 
     @Override
     public SchemaAction getSchemaAction() {
         return SchemaAction.valueOf(schemaAction);
@@ -55,7 +53,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         return keyspace;
     }
 
-    // getKeyspaceCreations ostaje isti
+
     @Override
     protected List<CreateKeyspaceSpecification> getKeyspaceCreations() {
         return Collections.singletonList(CreateKeyspaceSpecification.createKeyspace(keyspace)
@@ -64,17 +62,12 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
                 .withSimpleReplication(1L));
     }
 
-    // getEntityBasePackages ostaje isti
     @Override
     public String[] getEntityBasePackages() {
         return new String[] {"com.nais.history_service.model"};
     }
 
-    /**
-     * DODATO: Ova metoda kreira Bean koji konfiguriše drajver.
-     * Ovde podešavamo timeout na 15 sekundi.
-     * Spring će automatski koristiti ovaj Bean prilikom kreiranja konekcije.
-     */
+
     @Bean
     public DriverConfigLoader driverConfigLoader() {
         return DriverConfigLoader.programmaticBuilder()

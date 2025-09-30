@@ -1,4 +1,3 @@
-// Putanja: history-service/src/main/java/com/nais/history_service/model/key/FirstWatchMilestoneKey.java
 
 package com.nais.history_service.model.key;
 
@@ -11,9 +10,12 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 @Data
 public class FirstWatchMilestoneKey {
 
+
+    //na koju policu idu podaci- PARTITIONED
     @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private Long userId;
 
+    //kako su podaci poredjani na polici- CLUSTERED
     @PrimaryKeyColumn(name = "movie_id", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
     private Long movieId;
 }
