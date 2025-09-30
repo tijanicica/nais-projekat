@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-// import java.util.Map; // Uklonjeno ako se ne koristi
+// import java.util.Map;
 
 
 @RestController
@@ -93,7 +93,7 @@ public class UserController {
 
     // --- Complex Query Endpoints ---
 
-    // Complex Query 4 Endpoint
+    //Kompleksni Upit 2 : Korisnici koji su gledali filmove režisera i ocenili ih iznad X
     @GetMapping("/watched-director-movies")
     public List<User> getUsersWhoWatchedDirectorMoviesAndRatedAbove(
             @RequestParam String directorName,
@@ -101,7 +101,7 @@ public class UserController {
         return userService.getUsersWhoWatchedDirectorMoviesAndRatedAbove(directorName, minRating);
     }
 
-    // Complex Query 5 Endpoint
+    //Kompleksni Upit 3 : Glumci sa najviše žanrova filmova
     @GetMapping("/actors-by-genre-count")
     public List<ActorGenreCountDTO> getActorsByMostGenres(@RequestParam(defaultValue = "5") int limit) {
         return userService.getActorsByMostGenres(limit);

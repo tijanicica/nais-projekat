@@ -98,10 +98,7 @@ public class UserService {
 
     // --- Complex Query Methods ---
 
-    // Complex Query 4
-    // Zameni postojeću getUsersWhoWatchedDirectorMoviesAndRatedAbove metodu u UserService klasi
-
-    // Complex Query 4 - Korisnici koji su gledali filmove režisera i ocenili ih iznad X
+    // Kompleksni Upit 2 : Korisnici koji su gledali filmove režisera i ocenili ih iznad X
     public List<User> getUsersWhoWatchedDirectorMoviesAndRatedAbove(String directorName, int minRating) {
         String cypher = "MATCH (u:User)-[w:WATCHED]->(m:Movie)<-[:DIRECTED]-(d:Director) " +
                 "WHERE d.name = $directorName AND w.rating > $minRating " +
@@ -227,7 +224,9 @@ public class UserService {
                 .filter(w -> w.getMovie() != null) // Filtriraj null movie objekte
                 .collect(Collectors.toSet());
     }
-    // Complex Query 5 (Actors by Most Genres) - Vraća liste sa punim podacima
+
+
+    // Kompleksni Upit 3 : Glumci sa najviše žanrova filmova, vraca punu listu za filmove
     public List<ActorGenreCountDTO> getActorsByMostGenres(int limit) {
         String cypher = "MATCH (a:Actor)-[:ACTED_IN]->(m:Movie)-[:BELONGS_TO]->(g:Genre) " +
                 "WITH a, COLLECT(DISTINCT g.name) AS distinctGenres " +
