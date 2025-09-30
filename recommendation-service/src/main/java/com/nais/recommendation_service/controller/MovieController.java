@@ -120,12 +120,12 @@ public class MovieController {
         }
     }
 
-    // Complex Query 1 Endpoint
+    // Kompleksni Upit 1 : Pronađi Top N filmova po prosečnoj oceni
     @GetMapping("/top-rated")
     public List<TopRatedMovieDTO> getTopRatedMovies(@RequestParam(defaultValue = "10") int limit) {
         return movieService.getTopNMoviesByAverageRating(limit);
     }
-
+  //  Kompleksni CRUD Upit 1 : Povećaj godinu izdanja filmova režisera
     @PutMapping("/director/{directorId}/increment-release-year")
     public ResponseEntity<List<Movie>> incrementMoviesReleaseYearByDirector(
             @PathVariable Long directorId,
@@ -135,7 +135,7 @@ public class MovieController {
         List<Movie> updatedMovies = movieService.incrementMovieReleaseYearByDirector(directorId, increment);
         return ResponseEntity.ok(updatedMovies);
     }
-
+    //Kompleksni CRUD Upit 2 (MovieService): Dodaj žanr filmovima objavljenim pre određene godine
     @PostMapping("/before-year/{year}/add-genre/{genreId}")
     public ResponseEntity<List<Movie>> addGenreToMoviesReleasedBeforeYear(
             @PathVariable Integer year,

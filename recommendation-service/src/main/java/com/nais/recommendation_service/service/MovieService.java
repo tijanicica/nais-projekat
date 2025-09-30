@@ -32,7 +32,7 @@ public class MovieService {
     private final ActorRepository actorRepository;
     private final DirectorRepository directorRepository;
     private final GenreRepository genreRepository;
-    private final Neo4jClient neo4jClient; // Dodajemo Neo4jClient
+    private final Neo4jClient neo4jClient;
     private static final Logger logger = LoggerFactory.getLogger(MovieService.class);
 
 
@@ -88,7 +88,7 @@ public class MovieService {
         movie.setGenres(managedGenres);
 
         Movie savedMovie = movieRepository.save(movie);
-        // Vratite ga ponovo učitanog sa svim relacijama
+
         return movieRepository.findByIdWithAllRelationships(savedMovie.getId())
                 .orElse(savedMovie);
     }
@@ -149,7 +149,7 @@ public class MovieService {
             movie.setGenres(updatedGenres);
 
             Movie updatedMovie = movieRepository.save(movie);
-            // Vratite ga ponovo učitanog sa svim relacijama
+
             return movieRepository.findByIdWithAllRelationships(updatedMovie.getId())
                     .orElse(updatedMovie);
         }).orElseThrow(() -> new RuntimeException("Movie not found with id " + id));
@@ -220,7 +220,7 @@ public class MovieService {
                 .orElse(updatedMovie);
     }
 
-
+//Kompleksni Upit 1 : Pronađi Top N filmova po prosečnoj oceni
     public List<TopRatedMovieDTO> getTopNMoviesByAverageRating(int limit) {
         String cypher = "MATCH (u:User)-[w:WATCHED]->(m:Movie) " +
                 "OPTIONAL MATCH (m)-[:BELONGS_TO]->(g:Genre) " +
@@ -321,9 +321,9 @@ public class MovieService {
         logger.debug("Top rated movies: {}", topRatedResults);
         return topRatedResults;
     }
-    // Zameni postojeće Complex CRUD metode u MovieService klasi
 
-// Zameni postojeće Complex CRUD metode u MovieService klasi
+
+// Kompleksni CRUD Upit 1 : Povećaj godinu izdanja filmova režisera
 @Transactional
 public List<Movie> incrementMovieReleaseYearByDirector(Long directorId, Integer increment) {
     System.out.println("Director ID: " + directorId + ", Increment: " + increment);
@@ -417,7 +417,7 @@ public List<Movie> incrementMovieReleaseYearByDirector(Long directorId, Integer 
     System.out.println("Results count: " + results.size());
     return results;
 }
-    // Complex CRUD 2 - Dodavanje žanra filmovima izdatim pre određene godine
+    // Kompleksni CRUD Upit 2 : Dodaj žanr filmovima objavljenim pre određene godine
     @Transactional
     public List<Movie> addGenreToMoviesReleasedBeforeYear(Long genreId, Integer year) {
         System.out.println("Genre ID: " + genreId + ", Year: " + year);
