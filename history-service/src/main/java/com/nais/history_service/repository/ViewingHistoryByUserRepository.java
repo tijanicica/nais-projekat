@@ -10,9 +10,5 @@ import java.util.List;
 @Repository
 public interface ViewingHistoryByUserRepository extends CassandraRepository<ViewingHistoryByUser, ViewingHistoryByUserKey> {
 
-    /**
-     * READ operacija: Pronalazi sve događaje u istoriji za određenog korisnika.
-     * Ovo je ključni upit za ovu tabelu.
-     */
     List<ViewingHistoryByUser> findByKeyUserId(Long userId);
 }

@@ -10,9 +10,5 @@ import java.util.List;
 @Repository
 public interface ViewingProgressByUserMovieRepository extends CassandraRepository<ViewingProgressByUserMovie, ViewingProgressByUserMovieKey> {
 
-    /**
-     * READ operacija: Pronalazi sve zapise o progresu za jednog korisnika.
-     * Korisno za "Continue Watching" listu.
-     */
     List<ViewingProgressByUserMovie> findByKeyUserId(Long userId);
 }

@@ -1,4 +1,3 @@
-// Putanja: history-service/src/main/java/com/nais/history_service/model/FirstWatchMilestone.java
 
 package com.nais.history_service.model;
 

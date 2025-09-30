@@ -15,6 +15,6 @@ public class TopViewedMoviesByMonth {
     private TopViewedMoviesByMonthKey key;
 
     @Column("view_count")
-    @CassandraType(type = CassandraType.Name.COUNTER) // Definišemo da je ovo counter
+    @CassandraType(type = CassandraType.Name.COUNTER)
     private Long viewCount;
 }

@@ -11,9 +11,7 @@ import java.time.LocalDate;
 @Repository
 public interface ViewingActivityByMovieDateRepository extends CassandraRepository<ViewingActivityByMovieDate, ViewingActivityByMovieDateKey> {
 
-    /**
-     * READ (agregacija) operacija: Broji jedinstvene gledaoce za film na određeni dan.
-     */
+
     @Query("SELECT COUNT(*) FROM viewing_activity_by_movie_date WHERE movie_id = ?0 AND view_date = ?1")
     Long countByKeyMovieIdAndKeyViewDate(Long movieId, LocalDate viewDate);
 }

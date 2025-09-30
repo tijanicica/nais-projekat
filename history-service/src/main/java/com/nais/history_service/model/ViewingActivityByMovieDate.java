@@ -12,5 +12,4 @@ public class ViewingActivityByMovieDate {
     @PrimaryKey
     private ViewingActivityByMovieDateKey key;
 
-    // Ova tabela nema dodatna polja, jer služi samo za beleženje događaja.
 }

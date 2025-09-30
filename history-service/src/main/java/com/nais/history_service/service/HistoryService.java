@@ -45,12 +45,8 @@ public class HistoryService {
     // 1. GLAVNA CREATE OPERACIJA
     // ===================================================================================
 
-    /**
-     * Kreira zapise u svih 5 tabela na osnovu jednog događaja gledanja.
-     * Ovo pokriva 'CREATE' zahtev za sve entitete.
-     */
+
         public void recordViewingActivity(Long userId, Long movieId, int stoppedAtSeconds, String deviceType, String movieTitle) {
-        // --- POSTOJEĆA LOGIKA OSTAJE NETAKNUTA ---
         Instant now = Instant.now();
         LocalDate today = LocalDate.ofInstant(now, ZoneOffset.UTC);
         String currentYearMonth = today.format(YEAR_MONTH_FORMATTER);
@@ -81,7 +77,7 @@ public class HistoryService {
         milestoneKey.setUserId(userId);
         milestoneKey.setMovieId(movieId);
         
-        // Proveravamo u bazi da li zapis već postoji. Ako ne postoji, ovo je PRVO gledanje.
+
         boolean isFirstWatch = !milestoneRepository.findById(milestoneKey).isPresent();
 
         if (isFirstWatch) {
@@ -94,7 +90,6 @@ public class HistoryService {
      private void executeFirstWatchSaga(Long userId, Long movieId, String deviceType, Instant eventTime) {
         FirstWatchMilestone milestone = null;
 
-        // --- Korak 1: UPIS "dostignuća" u lokalnu bazu (Cassandra) ---
         try {
             FirstWatchMilestoneKey key = new FirstWatchMilestoneKey();
             key.setUserId(userId);
@@ -111,7 +106,7 @@ public class HistoryService {
             throw new RuntimeException("Neuspeli upis u Cassandru.", e);
         }
 
-        // --- Korak 2: UPIS analitičkog događaja u Analytics servis (InfluxDB) ---
+
         try {
             Map<String, String> eventData = new HashMap<>();
             eventData.put("userId", String.valueOf(userId));
@@ -122,7 +117,6 @@ public class HistoryService {
             System.out.println("SAGA [Korak 2]: Uspešno poslat 'first-watch' događaj u Analytics servis.");
         } catch (Exception e) {
             System.err.println("SAGA FAILED [Korak 2]: Slanje događaja u Analytics servis nije uspelo. Pokrećem kompenzaciju!");
-            // --- Kompenzacija za Korak 1 ---
             compensateMilestoneCreation(milestone);
             throw new RuntimeException("Neuspelo slanje događaja u Analytics servis.", e);
         }
@@ -143,7 +137,7 @@ public class HistoryService {
     }
 
     // ===================================================================================
-    // 2. READ OPERACIJE (Po jedna za svaku tabelu)
+    // 2. READ OPERACIJE 
     // ===================================================================================
 
     public List<ViewingHistoryByUser> getUserViewingHistory(Long userId) {
@@ -171,12 +165,9 @@ public class HistoryService {
 
 
     // ===================================================================================
-    // 3. UPDATE OPERACIJE (Po jedna za svaku tabelu gde ima smisla)
+    // 3. UPDATE OPERACIJE 
     // ===================================================================================
 
-    /**
-     * UPDATE za 'viewing_progress_by_user_movie'.
-     */
     public void updateViewingProgress(Long userId, Long movieId, int newProgressSeconds) {
         ViewingProgressByUserMovieKey progressKey = new ViewingProgressByUserMovieKey(userId, movieId);
         ViewingProgressByUserMovie progress = new ViewingProgressByUserMovie();
@@ -186,9 +177,7 @@ public class HistoryService {
         viewingProgressRepository.save(progress);
     }
 
-    /**
-     * UPDATE za 'top_viewed_movies_by_month'.
-     */
+
     private void updateTopMovieCounter(String yearMonth, Long movieId) {
         String cql = String.format(
                 "UPDATE top_viewed_movies_by_month SET view_count = view_count + 1 WHERE year_month = '%s' AND movie_id = %d",
@@ -197,34 +186,24 @@ public class HistoryService {
         cassandraTemplate.getCqlOperations().execute(cql);
     }
 
-    // NAPOMENA: Za tabele 'ViewingHistoryByUser', 'UserActivityByDevice' i 'ViewingActivityByMovieDate'
-    // klasično ažuriranje nema poslovnog smisla jer su one logovi događaja.
-    // CREATE operacija je dovoljna demonstracija za njih.
 
 
     // ===================================================================================
     // 4. DELETE OPERACIJE (Po jedna za svaku tabelu)
     // ===================================================================================
 
-    /**
-     * DELETE za 'viewing_history_by_user'.
-     */
+
     public void deleteViewingHistoryEvent(Long userId, Instant viewedAt) {
         ViewingHistoryByUserKey key = new ViewingHistoryByUserKey(userId, viewedAt);
         viewingHistoryRepository.deleteById(key);
     }
 
-    /**
-     * DELETE za 'viewing_progress_by_user_movie'.
-     */
+
     public void deleteViewingProgress(Long userId, Long movieId) {
         ViewingProgressByUserMovieKey key = new ViewingProgressByUserMovieKey(userId, movieId);
         viewingProgressRepository.deleteById(key);
     }
 
-    /**
-     * DELETE za 'user_activity_by_device'.
-     */
     public void deleteDeviceActivity(Long userId, String deviceType) {
         List<UserActivityByDevice> activities = userActivityRepository.findByKeyUserIdAndKeyDeviceType(userId, deviceType);
         if (activities != null && !activities.isEmpty()) {
@@ -232,17 +211,12 @@ public class HistoryService {
         }
     }
 
-    /**
-     * DELETE za 'viewing_activity_by_movie_date'.
-     */
     public void deleteViewingActivityByDate(Long movieId, LocalDate viewDate, Long userId) {
         ViewingActivityByMovieDateKey key = new ViewingActivityByMovieDateKey(movieId, viewDate, userId);
         viewingActivityByDateRepository.deleteById(key);
     }
 
-    /**
-     * DELETE (resetovanje) za 'top_viewed_movies_by_month'.
-     */
+
     public void resetMovieCounterForMonth(String yearMonth, Long movieId) {
         TopViewedMoviesByMonthKey key = new TopViewedMoviesByMonthKey(yearMonth, movieId);
         topMoviesRepository.findById(key).ifPresent(counter -> {
